@@ -1,0 +1,26 @@
+plugins:
+  - babel
+  - jest
+  - react
+
+extends:
+  - airbnb-base
+  - 'plugin:jest/recommended'
+  - 'plugin:react/recommended'
+  - 'prettier'
+  - 'prettier/react'
+  - 'prettier/standard'
+
+parser: babel-eslint
+
+env:
+  browser: true
+  node: true
+  jest: true
+
+settings:
+  react:
+    version: '16.6'
+
+rules:
+  import/prefer-default-export: 'off'

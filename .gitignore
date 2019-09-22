@@ -42,3 +42,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Node JS ###
+node_modules
+/client/yarn.lock
