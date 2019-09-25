@@ -1,0 +1,6 @@
+addons:
+  sonarcloud:
+    organization: fs7-final-project
+    token: <your_organization_token>
+script:
+  - sonar-scanner
