@@ -1,24 +1,22 @@
-dist: trusty
-
 language: java
-
-jdk:
-  - oraclejdk8
+sudo: false
+install: true
 
 addons:
   sonarcloud:
     organization: "fs7-final-project"
     token:
-      secure: "tsyNcsVwh+9vQSIq2f7Ih1g0eWqqo5WtWZeglWA6ErRWfwZ9rjKFNK2UaHtHF7IhZ3bKOV7ah8i2mvyfwiSaUoDpy3YchwQ+tRIUalPQ/SYlZt5G0eSeaUp7ELfBR4s8A7T2acaq7SSXCahaB7xFlvyo9TZpX1BYgFmCHALOxX/+m6xUnqtglI3ekVErSacIdHp1bfVFyiwNwIDMnXSDhoPZ1yEAFcD4ZsReL2NG1pzq0AkX4BizwaJWXohKBY//o86AXUKpe3lmx2vc7eFrzvxj/xuzUR467yk38n+ArX9HevwnQWN/OuKiq8ZwU9TWXEH+loaewDdka78Y8cTFxMIb3kyAejvo5OeOwOVOnkYI7LZoDA5r4gtj9zwHtQ2sjKZhW7HnZmz6/CXlTvHz0Al8/GrDgbLshRDztr8DLHPHupoimQ1LSbTn043Kjr2vf9R9euHEv0v5/vVCxmifHqGuwzQXmtZiSQaEcdgymXq/++EAqGhhb6WxXx9BrFpqfc9bSFw7qQAnp7GqkvLBd4QP0eCD9afOl54qc4nY64hA2VMcxzSdNexMrwynByotETdKgbsVwOy8hQbANIg6Dh/XZ1UCduXFRmweyqIV+/3q+YCfXZyPbKUmBFFlOOJlv3csrk6PWKBH43e712XJyZfrRNFPtY0U5rfiPfxdgyY="
+      secure: "YE6gmS5vhblCe/65htC7AEWO62a6Ck/MCB8yiALYdsncZWU6KmU11sEkMloIaeisFgKCuocWXkulbpeUNmbqj+8n+u6Bs5oeI4mxTNQjX5onM26GMxGQebYv6kAxnfF/Z5yGYRzJFCzqjd4NFFlsA1VDg+H53YB1Ld7vlBkvjznQy1ViZuMV2n0mF4+HtT/70/6Q1a98rUlhUkshmNCiqKiv8P4qo4n7F6P67g+W5UWUrn4z2sEt6hSLDte6HvLeMY2r+E3EXd2+K8DSFeJHVrIgGmlvVLUct1MQC7/9Z57Aqizw0NYgEm/hJiFXEZoxu4nzqe6Ja52EAZTFuuRHuLvYxWvGT4hMC3UbSJKI7EE89K3Ch6IeRW685d7P/F11vSZFeA8kW2UTzTe78O9ifOTQGfG3XgjR8/lVEPnzpdHChcV3MuyS0J3vsqpqXdbIL5qrHfj1aK7GOMf97Sb4tzMGNUoBzVqUGIxGtDZXEtxissBpRLILJKe1HpqwpJ41J/xyzO/Mez48+QKuW+8LwknjbWJ4gVuMzkY6x0BvdmMv69glFnqSw+iT3bvDq/vm1IzCVMMmk/plv04PyNInDlnEknKQVmqgFiq3BBM7sluCTxRMNBM3I1dx//Z+VXa0HieEXsA/oUSVcdh1d4MKgNhM0ref47RFA0y3/KIobDc="
+
+jdk:
+  - openjdk8
+
+script:
+  # JaCoCo is used to have code coverage, "-Pcoverage" activates the maven profile in the pom.xml
+  # - mvn clean verify sonar:sonar -Pcoverage
+  - mvn clean test
 
 cache:
   directories:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
-
-script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project
-  #- mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=fs7-final-project
-  #- mvn clean verify sonar:sonar
-  - mvn clean test
