@@ -1,24 +1,16 @@
 dist: trusty
-
 language: java
-
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 addons:
   sonarcloud:
-    organization: "fs7-final-project"
+    organization: fs7-final-project
     token:
-      secure: "tsyNcsVwh+9vQSIq2f7Ih1g0eWqqo5WtWZeglWA6ErRWfwZ9rjKFNK2UaHtHF7IhZ3bKOV7ah8i2mvyfwiSaUoDpy3YchwQ+tRIUalPQ/SYlZt5G0eSeaUp7ELfBR4s8A7T2acaq7SSXCahaB7xFlvyo9TZpX1BYgFmCHALOxX/+m6xUnqtglI3ekVErSacIdHp1bfVFyiwNwIDMnXSDhoPZ1yEAFcD4ZsReL2NG1pzq0AkX4BizwaJWXohKBY//o86AXUKpe3lmx2vc7eFrzvxj/xuzUR467yk38n+ArX9HevwnQWN/OuKiq8ZwU9TWXEH+loaewDdka78Y8cTFxMIb3kyAejvo5OeOwOVOnkYI7LZoDA5r4gtj9zwHtQ2sjKZhW7HnZmz6/CXlTvHz0Al8/GrDgbLshRDztr8DLHPHupoimQ1LSbTn043Kjr2vf9R9euHEv0v5/vVCxmifHqGuwzQXmtZiSQaEcdgymXq/++EAqGhhb6WxXx9BrFpqfc9bSFw7qQAnp7GqkvLBd4QP0eCD9afOl54qc4nY64hA2VMcxzSdNexMrwynByotETdKgbsVwOy8hQbANIg6Dh/XZ1UCduXFRmweyqIV+/3q+YCfXZyPbKUmBFFlOOJlv3csrk6PWKBH43e712XJyZfrRNFPtY0U5rfiPfxdgyY="
-
+      secure: j8IEAohThlp2+Efy5hVLRzUv2/D4caJ4QmI83f/9JpYBz3Y8MfM/Tj9Yp13ynTnmNgK2gaRDOrmlV+nVWZtrf6dq+KWTIgeVWTXbzHAPMNMNJs0yXpjiFY6Ptm5tzI+52Es1kRyr+SHR1NY5o4F6fBBBoqBZ2PVn//V/9N+U/AOt2gb0TIPFKUA/yaKqx9ShZWUonsiaxiWwnfDVoMDcQsEQSrSMGPEvapzRsDvhyosHiyJrk7Xs5n/mab3gIiY1dKmcecNJIUfZIRps1+sGxv+xoavXiiSS2TPtiS294Do699Gyl2HkP+FtSM7M7p/5rvboY+zvj5p8XSbbwi4B0rjkVsmzQFMXPJJ+lW4b/IS7yby3kwFp6ugGaUriIRwqK04VruuVDy545xo3c7Gc3GtMjlpNwbbhWdCunZOGtopvsnaJMh51zgACEnR7pfUVkLp8TMV4Tc/NeIX+6QQrhRvkH6FfzzLo3FmL2A1JMTfLereTca6OXq/TrtNB957KVyK9OyWIFWSbJprp+RCDcRWrG9ecgyNANirxBvqfUH1IXPfUUyDd+LAdErqSJyHb27GBLt1lx6YTV7Z9UOMgtjq/gbdq2KQnazQSf8AaGDC4spFF2eCEWGpBdwD+AsH1XQ0qHWsV16OPWZ7ryxhLg9JiAdYFstJoQgg0qy72Mk8=
 cache:
   directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
-
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project
-  #- mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=fs7-final-project
-  #- mvn clean verify sonar:sonar
-  - mvn clean test
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project
