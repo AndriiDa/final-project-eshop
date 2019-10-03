@@ -14,10 +14,15 @@ jdk:
 
 script:
   # JaCoCo is used to have code coverage, "-Pcoverage" activates the maven profile in the pom.xml
-  - mvn clean verify sonar:sonar -Pcoverage
+  #- mvn clean verify sonar:sonar -Pcoverage
+  - mvn clean verify sonar:sonar
   #- mvn clean test
 
 cache:
   directories:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
+
+#env:
+#  global:
+#    - secure: "j+PKX9qob17k6plaTD1Tp/ca9qKm1TEqgQ359t6DIFn9jtnjxLpzQDkwTq+hMH0pdEVaJ2jTh7CZzgt56olpsRVwkQFfrNKhTNdUnhIO3cBWBQszkolwGehzans2SWBfliEvceC6xybZ0lHGkt5EgXiP4V326D6w87raAQkpH+BbuwnInYInSrYI/T8uomiv0jBnK8PP3VuWTKeIrnmrV0wHRYt9Scl4UOqF0S+G5qtMRo0kfLg0l+G9rx4yNpnGjpL08rUoEP8kd6hrb9kYDhNoqWyAJWx8PZjCRU8g78/GceREDeTPo6CgrMUHlM6gi5mLJoXVVbgje0qTazRBuPTmIgiqFnTJciojgCuA+VeKLuEsL89w7pgdCF+asj3Abce0Z0nsJYTikJ1PSC6f6jokSUF5B5bRblzR2zDuaxH9yh+momY7RXM/VT4iuWOBJkG5MrusyXZHz+zOM401l5eDaFig0TBKsgr2ebVVz/W6ZK2eduJYfeCvnZqNlKKobAhth88H2bWM7zqjj4xrIsPvYF50MAJ5zxUDzIpAk+XcDUzvy+zXTfQucgjNtjK8pR99pwRd2z25lbXRv0rs4qOMZ2BUKfOT5VMs+HC/nP6bkyUlucHTYsmz6xHTun4HnuEASdUfdUdKYpRiUFi2iC4Wbh/7XXJ1FSSgFtZlt6U="
