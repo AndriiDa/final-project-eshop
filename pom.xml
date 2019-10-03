@@ -17,6 +17,11 @@
     <properties>
         <java.version>1.8</java.version>
         <maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
+
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.organization>fs7-danit</sonar.organization>
+        <sonar.projectKey>fs7-final-project</sonar.projectKey>
+        <sonar.login>b7907221b9645c332f83ecb0f691c8665c0186de</sonar.login>
     </properties>
 
     <dependencies>
