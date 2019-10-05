@@ -28,7 +28,9 @@ script:
   #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project
   # - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
   # - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=fs7-final-project -Dsonar.organization=fs7-danit -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=b7907221b9645c332f83ecb0f691c8665c0186de
-  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project -Dsonar.login=b7907221b9645c332f83ecb0f691c8665c0186de
+
+#  commented by nazar on 5.10
+#  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project -Dsonar.login=b7907221b9645c332f83ecb0f691c8665c0186de
 
 #  need to copy contents of build folder to src/main/resourses/static
   - npm run build --prefix client/
