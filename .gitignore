@@ -46,3 +46,4 @@ build/
 ### Node JS ###
 node_modules
 /client/yarn.lock
+package-lock.json
