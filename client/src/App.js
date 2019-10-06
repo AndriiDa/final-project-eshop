@@ -1,25 +1,27 @@
-import React from 'react';
-import {Route} from "react-router-dom";
-import './App.scss';
-import Header from "./components/Header/Header";
-import Login from "./components/Login/Login";
-import Navbar from "./components/Navbar/Navbar";
-import SliderForGoods from "./components/SliderForGoods/SliderForGoods";
-import ListOfGoods from "./components/ListOfGoods/ListOfGoods";
-import Footer from "./components/Footer/Footer";
+import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import "./App.scss";
+import HeaderComponent from "./components/header/header.component";
+import Login from "./components/login/login.component";
+import Navbar from "./components/navbar/navbar.component";
+import Slider from "./components/slider/slider.component";
+import Goods from "./components/goods/goods.component";
+import FooterComponent from "./components/footer/footer.component";
 
-const App = (props) => {
-  console.log('hi');
+const App = () => {
+  console.log("hi");
   return (
-    <div>
-      <Header />
-      <Navbar />
-      <Route path='/login' component={() => <Login />}/>
-      <SliderForGoods/>
-      <ListOfGoods/>
-      <Footer/>
-    </div>
-    )
+    <BrowserRouter>
+      <div>
+        <HeaderComponent />
+        <Navbar />
+        <Route path="/login" component={() => <Login />} />
+        <Slider />
+        <Goods />
+        <FooterComponent />
+      </div>
+    </BrowserRouter>
+  );
 };
 
 export default App;
