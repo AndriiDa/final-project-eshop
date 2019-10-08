@@ -15,7 +15,7 @@ cache:
   directories:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
-    - ./client/node_modules/
+    - $HOME/client/node_modules/
 
 before_script:
   - npm install --prefix client/
@@ -26,9 +26,11 @@ script:
   #- mvn clean verify sonar:sonar
   #- mvn clean test
   #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project
-  # - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
-  # - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=fs7-final-project -Dsonar.organization=fs7-danit -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=b7907221b9645c332f83ecb0f691c8665c0186de
-  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project -Dsonar.login=b7907221b9645c332f83ecb0f691c8665c0186de
+  #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+  #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=fs7-final-project -Dsonar.organization=fs7-danit -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=b7907221b9645c332f83ecb0f691c8665c0186de
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project -Dsonar.login=b7907221b9645c332f83ecb0f691c8665c0186de
+  #- mvn clean test jacoco:report coveralls:report
+  #  need to copy contents of build folder to src/main/resourses/static
   - npm run build --prefix client/
-
-
+after_success:
+  - mvn clean test jacoco:report coveralls:report
