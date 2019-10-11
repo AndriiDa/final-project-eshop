@@ -9,6 +9,7 @@ import Goods from "./components/goods/goods.component";
 import FooterComponent from "./components/footer/footer.component";
 
 const App = () => {
+
   console.log("hi");
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ const App = () => {
       </div>
     </BrowserRouter>
   );
+
 };
 
 export default App;
