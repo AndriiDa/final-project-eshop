@@ -1,18 +1,29 @@
-import React from 'react';
-import './App.scss';
+import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import "./App.scss";
+import HeaderComponent from "./components/header/header.component";
+import Login from "./components/login/login.component";
+import Navbar from "./components/navbar/navbar.component";
+import Slider from "./components/slider/slider.component";
+import Goods from "./components/goods/goods.component";
+import FooterComponent from "./components/footer/footer.component";
 
 const App = () => {
-  console.log('hi');
 
-  return <div>
-    <button type="button" className="btn btn-primary">Primary</button>
-    <button type="button" className="btn btn-secondary">Secondary</button>
-    <button type="button" className="btn btn-success">Success</button>
-    <button type="button" className="btn btn-info">Info</button>
-    <button type="button" className="btn btn-warning">Warning</button>
-    <button type="button" className="btn btn-danger">Danger</button>
-    <button type="button" className="btn btn-link">Link</button>
-  </div>;
+  console.log("hi");
+  return (
+    <BrowserRouter>
+      <div>
+        <HeaderComponent />
+        <Navbar />
+        <Route path="/login" component={() => <Login />} />
+        <Slider />
+        <Goods />
+        <FooterComponent />
+      </div>
+    </BrowserRouter>
+  );
+
 };
 
 export default App;
