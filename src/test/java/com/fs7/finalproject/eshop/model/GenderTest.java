@@ -4,17 +4,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class GenderTest {
-
     @Test
-    public void getShortNameEqualsMWhenGenderIsMale() {
+    public void returnsShortNameMWhenGenderIsMale() {
         Gender gender = Gender.MALE;
         Assert.assertEquals("M", gender.getShortName());
     }
-
     @Test
-    public void getShortNameEqualsFWhenGenderIsFemale() {
+    public void returnsShortNameFWhenGenderIsFemale() {
         Gender gender = Gender.FEMALE;
         Assert.assertEquals("F", gender.getShortName());
     }
-
 }
