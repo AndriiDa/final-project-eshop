@@ -1,53 +1,57 @@
 package com.fs7.finalproject.eshop.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fs7.finalproject.eshop.model.Address;
+import com.fs7.finalproject.eshop.model.Gender;
+import com.fs7.finalproject.eshop.model.Role;
 import com.fs7.finalproject.eshop.model.User;
-import com.fs7.finalproject.eshop.repositories.UserRepository;
-import org.junit.Assert;
+import com.fs7.finalproject.eshop.services.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
+  @Autowired
+  private MockMvc mockMvc;
 
-    @MockBean
-    UserRepository userRepository;
+  @MockBean
+  UserServiceImpl userService;
 
-    ObjectMapper objectMapper = new ObjectMapper();
+//  ObjectMapper mapper = new ObjectMapper();
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Test
+  public void findAll() throws Exception {
+    // given
+    User user = User.builder()
+            .id(1L)
+            .firstName("Petya")
+            .lastName("Ivanov")
+            .loginName("p.ivanov")
+            .email("p_ivanov@gmail.com")
+            .gender(Gender.MALE)
+            .role(Role.ADMIN)
+            .address(Address.builder().id(1L).addressLine("Ivanov address").build())
+            .build();
 
-    @Test
-    public void shouldReturnCreatedUser() throws Exception {
-//        CreateUserRequest request = new CreateUserRequest();
-//
-//        User user = new User();
-//        user.setFirstName("Vasia");
-//        user.setLastName("Pupkin");
-//
-//        when(userRepository.save(any(CreateUserRequest.class))).thenReturn(user);
-//
-//        mockMvc.perform(post("/current")
-//                .content(objectMapper.writeValueAsString(request))
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .andExpect(status().isOk()))
-//                .andExpect(("$.lastName").value(request.getLastName()));
+    List<User> users = Arrays.asList(user);
+    given(userService.findAll()).willReturn(users);
 
-        boolean result = true;
-        Assert.assertTrue(result);
-
-    }
-
+    //when + then
+    this.mockMvc.perform(get("/api/v1/users"))
+            .andExpect(status().isOk())
+            .andExpect(content().json("[{'id':1,'firstName':'Petya','lastName':'Ivanov','middleName':null,'email':'p_ivanov@gmail.com','loginName':'p.ivanov','loginPassword':null,'phoneNumber':null,'gender':'MALE','birthDate':null,'address':{'id':1,'addressLine':'Ivanov address'},'emailVerified':false,'verificationCode':null,'role':'ADMIN','active':false}]"));
+  }
 }

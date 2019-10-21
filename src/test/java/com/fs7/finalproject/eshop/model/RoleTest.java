@@ -1,25 +1,22 @@
 package com.fs7.finalproject.eshop.model;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
-@Slf4j
 public class RoleTest {
   public Role role;
 
   @Before
   public void setUp() throws Exception {
-    log.info("Start test: enum RoleTest...");
     // given
     role = Role.ADMIN;
   }
 
   @Test
   public void checkExecGetShortName() {
-    log.info("Test: check exec GetShortName...");
     //when
     //then
     assertEquals(Role.valueOf("ADMIN"), role);
@@ -28,7 +25,6 @@ public class RoleTest {
 
   @Test
   public void checkExecFromShortName() {
-    log.info("Test: check exec FromShortName...");
     //when
     //then
     assertEquals(Role.fromShortName("A"), role);
