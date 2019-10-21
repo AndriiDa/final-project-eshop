@@ -20,6 +20,10 @@ spring:
       path: /console
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+#    generate-ddl: false
+#    hibernate:
+#      ddl-auto: update
+
 
 ---
 

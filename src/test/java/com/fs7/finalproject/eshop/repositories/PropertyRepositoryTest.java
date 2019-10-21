@@ -30,18 +30,23 @@ public class PropertyRepositoryTest {
 
   @Test
   public void checkSaveProperty() {
-    Property property = new Property();
-    property.setName("test property");
+    // given
+    Property property = Property.builder()
+            .name("property1")
+            .build();
+    // when
     property = entityManager.persistAndFlush(property);
+    //then
     assertThat(propertyRepository.findById(property.getId()).get()).isEqualTo(property);
   }
 
   @Test
   public void whenFindByName_thenReturnProperty() {
     // given
-    Property property = new Property();
-    property.setName("property1");
-    property = entityManager.persistAndFlush(property);
+    Property property = Property.builder()
+            .name("property1")
+            .build();
+    entityManager.persistAndFlush(property);
     // when
     Optional<Property> findExOptional = propertyRepository.findByName("property1");
     Optional<Property> findNoneExOptional = propertyRepository.findByName("property2");
