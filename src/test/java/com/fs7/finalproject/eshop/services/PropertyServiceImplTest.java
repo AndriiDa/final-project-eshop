@@ -1,7 +1,6 @@
 package com.fs7.finalproject.eshop.services;
 
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 public class PropertyServiceImplTest {
