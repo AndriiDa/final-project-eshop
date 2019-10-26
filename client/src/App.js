@@ -1,29 +1,26 @@
-import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
-import "./App.scss";
-import HeaderComponent from "./components/header/header.component";
-import Login from "./components/login/login.component";
-import Navbar from "./components/navbar/navbar.component";
-import Slider from "./components/slider/slider.component";
-import Goods from "./components/goods/goods.component";
-import FooterComponent from "./components/footer/footer.component";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchCategoryStart } from './redux/category/category.actions';
+import './App.scss';
 
-const App = () => {
+const App = ({ fetchCategoryStarted }) => {
+  useEffect(() => {
+    fetchCategoryStarted();
+  }, []);
 
-  console.log("hi");
-  return (
-    <BrowserRouter>
-      <div>
-        <HeaderComponent />
-        <Navbar />
-        <Route path="/login" component={() => <Login />} />
-        <Slider />
-        <Goods />
-        <FooterComponent />
-      </div>
-    </BrowserRouter>
-  );
-
+  return <p>Working!</p>;
 };
 
-export default App;
+App.propTypes = {
+  fetchCategoryStarted: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = dispatch => ({
+  fetchCategoryStarted: () => dispatch(fetchCategoryStart())
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);

@@ -1,0 +1,16 @@
+{
+  "categories": {
+    "men": {
+      "title": "Men",
+      "img": "url/string"
+    },
+    "women": {
+      "title": "Women",
+      "img": "url/string"
+    },
+    "babyclothes": {
+      "title": "Baby clothes",
+      "img": "url/string"
+    }
+  }
+}
