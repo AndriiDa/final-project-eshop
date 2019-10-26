@@ -1,0 +1,36 @@
+language: java
+sudo: false
+install: true
+
+addons:
+  sonarcloud:
+    organization: "fs7-danit"
+    token:
+      secure: "j+PKX9qob17k6plaTD1Tp/ca9qKm1TEqgQ359t6DIFn9jtnjxLpzQDkwTq+hMH0pdEVaJ2jTh7CZzgt56olpsRVwkQFfrNKhTNdUnhIO3cBWBQszkolwGehzans2SWBfliEvceC6xybZ0lHGkt5EgXiP4V326D6w87raAQkpH+BbuwnInYInSrYI/T8uomiv0jBnK8PP3VuWTKeIrnmrV0wHRYt9Scl4UOqF0S+G5qtMRo0kfLg0l+G9rx4yNpnGjpL08rUoEP8kd6hrb9kYDhNoqWyAJWx8PZjCRU8g78/GceREDeTPo6CgrMUHlM6gi5mLJoXVVbgje0qTazRBuPTmIgiqFnTJciojgCuA+VeKLuEsL89w7pgdCF+asj3Abce0Z0nsJYTikJ1PSC6f6jokSUF5B5bRblzR2zDuaxH9yh+momY7RXM/VT4iuWOBJkG5MrusyXZHz+zOM401l5eDaFig0TBKsgr2ebVVz/W6ZK2eduJYfeCvnZqNlKKobAhth88H2bWM7zqjj4xrIsPvYF50MAJ5zxUDzIpAk+XcDUzvy+zXTfQucgjNtjK8pR99pwRd2z25lbXRv0rs4qOMZ2BUKfOT5VMs+HC/nP6bkyUlucHTYsmz6xHTun4HnuEASdUfdUdKYpRiUFi2iC4Wbh/7XXJ1FSSgFtZlt6U="
+
+jdk:
+  - openjdk8
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+    - $HOME/client/node_modules/
+
+before_script:
+  - npm install --prefix client/
+
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  #- mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=fs7-final-project
+  #- mvn clean verify sonar:sonar
+  #- mvn clean test
+  #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project
+  #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+  #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=fs7-final-project -Dsonar.organization=fs7-danit -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=b7907221b9645c332f83ecb0f691c8665c0186de
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=fs7-final-project -Dsonar.login=b7907221b9645c332f83ecb0f691c8665c0186de
+  #- mvn clean test jacoco:report coveralls:report
+  #  need to copy contents of build folder to src/main/resourses/static
+  - npm run build --prefix client/
+after_success:
+  - mvn clean test jacoco:report coveralls:report
