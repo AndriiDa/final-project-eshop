@@ -1,6 +1,7 @@
 package com.fs7.finalproject.eshop.model;
 
 import lombok.Data;
+import lombok.Builder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ADDRESSES")
 @Data
+@Builder
 public class Address {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
