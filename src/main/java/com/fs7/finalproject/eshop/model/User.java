@@ -34,6 +34,10 @@ public class User {
   @Column(name = "ID", updatable = false)
   private Long id;
 
+  //  @Version
+  //  @Column(name = "version")
+  //  private int version = 0;
+
   @Column(name = "FIRST_NAME", nullable = false, length = 100)
   private String firstName;
 
