@@ -17,7 +17,7 @@ App.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchCategoryStarted: () => dispatch(fetchCategoryStart())
+  fetchCategoryStarted: () => dispatch(fetchCategoryStarted())
 });
 
 export default connect(
