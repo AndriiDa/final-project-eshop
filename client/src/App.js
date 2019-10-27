@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCategoryStart } from './redux/category/category.actions';
+import { fetchCategoryStarted } from './redux/category/category.actions';
 import './App.scss';
 
 const App = ({ fetchCategoryStarted }) => {

@@ -1,6 +1,6 @@
 import CategoryActionTypes from './category.types';
 
-export const fetchCategoryStart = () => ({
+export const fetchCategoryStarted = () => ({
   type: CategoryActionTypes.FETCH_CATEGORY_START
 });
 
