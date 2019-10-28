@@ -1,6 +1,7 @@
 package com.fs7.finalproject.eshop.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +14,8 @@ import java.util.Date;
 @Entity
 @Table(name = "VENDORS")
 @Data
-public class Vendor {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(updatable = false)
-  private Long id;
+@NoArgsConstructor
+public class Vendor extends BaseEntity{
 
   @Column(name = "name")
   private String name;

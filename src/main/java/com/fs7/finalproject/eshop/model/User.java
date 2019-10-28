@@ -2,6 +2,7 @@ package com.fs7.finalproject.eshop.model;
 
 import com.fs7.finalproject.eshop.model.convert.GenderConverter;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -20,11 +21,8 @@ import java.util.Date;
 @Entity
 @Table(name = "USERS")
 @Data
-public class User {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(updatable = false)
-  private Long id;
+@NoArgsConstructor
+public class User extends BaseEntity{
 
   @Column(nullable = false)
   private String firstName;
