@@ -1,7 +1,9 @@
 package com.fs7.finalproject.eshop.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ADDRESSES")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 public class Address {

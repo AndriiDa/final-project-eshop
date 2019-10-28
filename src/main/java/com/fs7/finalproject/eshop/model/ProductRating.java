@@ -15,6 +15,16 @@ import javax.persistence.Table;
 public class ProductRating {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(updatable = false)
+  @Column(name = "ID", updatable = false)
   private Long id;
+
+  @Column(name = "USER_ID", nullable = false)
+  private Long userId;
+
+  @Column(name = "PRODUCT_ID", nullable = false)
+  private Long productId;
+
+  @Column(name = "VALUE", nullable = false)
+  private int value;
+
 }
