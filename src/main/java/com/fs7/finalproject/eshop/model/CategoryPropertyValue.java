@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "CATEGORY_PROPERTY_VALUES")
 @Data
 @Builder
-public class CaregoryPropertyValue {
+public class CategoryPropertyValue {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(updatable = false)
