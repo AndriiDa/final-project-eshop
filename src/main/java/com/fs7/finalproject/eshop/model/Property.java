@@ -2,8 +2,6 @@ package com.fs7.finalproject.eshop.model;
 
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,6 +33,6 @@ public class Property {
   @Column(name = "DESCRIPTION", length = 1000)
   private String description;
 
-  @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<PropertyValue> values = new HashSet<>();
+  @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<PropertyValue> values = new HashSet<PropertyValue>();
 }
