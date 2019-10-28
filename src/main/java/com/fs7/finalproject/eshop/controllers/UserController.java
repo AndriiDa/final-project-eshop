@@ -67,4 +67,6 @@ public class UserController {
 //    response.put("deleted", Boolean.TRUE);
 //    return response;
 //  }
+//  https://medium.com/skillhive/how-to-retrieve-a-parent-field-from-a-child-entity-in-a-one-to-many-bidirectional-jpa-relationship-4b3cd707bfb7
+//  http://www.myjavablog.com/2019/01/01/one-to-many-relationship-with-spring-boot-spring-data-jpa-h2-database/
 }
