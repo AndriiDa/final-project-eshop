@@ -1,5 +1,6 @@
 package com.fs7.finalproject.eshop.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
@@ -14,22 +15,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PRODUCT_RATING")
+@Table(name = "CATEGORY_PROPERTY_VALUES")
 @Data
-public class ProductRating {
+@Builder
+public class CategoryPropertyValue {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "ID", updatable = false)
+  @Column(updatable = false)
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "USER_ID", referencedColumnName = "ID", nullable = false)
-  private User user;
+  @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID", nullable = false)
+  private Category category;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", nullable = false)
-  private Product product;
+  @JoinColumn(name = "PROPERTY_VALUE_ID", referencedColumnName = "ID", nullable = false)
+  private PropertyValue propertyValue;
 
-  @Column(name = "VALUE", nullable = false)
-  private int value;
+  @Column(name = "SEQUENCE", nullable = false)
+  private int sequence;
 }
