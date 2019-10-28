@@ -17,26 +17,26 @@ import java.util.Date;
 @NoArgsConstructor
 public class Vendor extends BaseEntity{
 
-  @Column(name = "name")
+  @Column(name = "NAME")
   private String name;
 
-  @Column(name = "notes")
+  @Column(name = "NOTES")
   private String notes;
 
-  @Column(name = "is_active")
-  private Boolean is_active;
+  @Column(name = "IS_ACTIVE")
+  private Boolean isActive;
 
-  @Column(name = "cr_time")
-  private Date cr_time;
+  @Column(name = "CR_TIME")
+  private Date crTime;
 
-  @Column(name = "cr_user_id")
-  private Long cr_user_id;
+  @Column(name = "CR_USER_ID")
+  private Long crUserId;
 
-  @Column(name = "lm_time")
-  private Date lm_time;
+  @Column(name = "LM_TIME")
+  private Date lmTime;
 
-  @Column(name = "lm_user_id")
-  private Long lm_user_id;
+  @Column(name = "LM_USER_ID")
+  private Long lmUserId;
 
 
 
