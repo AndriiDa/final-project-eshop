@@ -1,4 +1,5 @@
-INSERT INTO USERS (first_name, last_name, email) VALUES
-  ('Vasya', 'Pupkin', 'vpupkin@gmail.com'),
-  ('Dasha', 'Ivanova', 'divanova@gmail.com'),
-  ('Ivan', 'Petrov', 'petrov@gmail.com');
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (1, 'Розмір', NULL);
+
+INSERT INTO PROPERTY_VALUES (ID, NAME, DESCRIPTION, PROPERTY_ID) VALUES (1, '15', NULL, 1);
+INSERT INTO PROPERTY_VALUES (ID, NAME, DESCRIPTION, PROPERTY_ID) VALUES (2, '17', NULL, 1);
+INSERT INTO PROPERTY_VALUES (ID, NAME, DESCRIPTION, PROPERTY_ID) VALUES (3, '18', NULL, 1);

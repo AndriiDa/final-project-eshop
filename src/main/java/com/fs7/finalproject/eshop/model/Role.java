@@ -1,15 +1,28 @@
 package com.fs7.finalproject.eshop.model;
 
 public enum Role {
-  A("Admin"), C("Customer"), G("Guest");
+  ADMIN("A"), CUSTOMER("C"), GUEST("G");
 
-  private final String role;
+  private final String shortName;
 
-  Role(String gender) {
-    this.role = gender;
+  Role(String shortName) {
+    this.shortName = shortName;
   }
 
-  public String getRole() {
-    return this.role;
+  public String getShortName() {
+    return this.shortName;
+  }
+
+  public static Role fromShortName(String shortName) {
+    switch (shortName) {
+      case "A":
+        return Role.ADMIN;
+      case "C":
+        return Role.CUSTOMER;
+      case "G":
+        return Role.GUEST;
+      default:
+        throw new IllegalArgumentException("ShortName [" + shortName + "] not supported");
+    }
   }
 }
