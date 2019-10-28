@@ -91,6 +91,6 @@ public class UserRepositoryTest {
     // when
     List<User> users = userRepository.findAll();
     // then
-    assertThat(users).hasSize(3);
+    assertThat(users).hasSize(8);
   }
 }

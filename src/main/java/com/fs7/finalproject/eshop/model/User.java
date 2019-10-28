@@ -2,8 +2,11 @@ package com.fs7.finalproject.eshop.model;
 
 import com.fs7.finalproject.eshop.model.convert.GenderConverter;
 import com.fs7.finalproject.eshop.model.convert.RoleConverter;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,6 +29,8 @@ import java.util.Date;
 @Table(name = "USERS", uniqueConstraints = {
         @UniqueConstraint(columnNames = "LOGIN_NAME"),
         @UniqueConstraint(columnNames = "EMAIL")})
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 public class User {

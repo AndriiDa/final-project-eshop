@@ -34,5 +34,5 @@ public class Property {
   private String description;
 
   @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private Set<PropertyValue> values = new HashSet<PropertyValue>();
+  private Set<PropertyValue> values = new HashSet<>();
 }

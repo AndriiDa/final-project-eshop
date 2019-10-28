@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -61,10 +62,10 @@ public class Product {
   private int quantity;
 
   @Column(name = "BASE_PRICE", nullable = true)
-  private int basePrice;
+  private BigDecimal basePrice;
 
   @Column(name = "DISCOUNT_PRICE", nullable = true)
-  private int discountPrice;
+  private BigDecimal discountPrice;
 
   @Column(name = "IS_OFFER", nullable = false)
   private boolean isOffer;
@@ -80,13 +81,13 @@ public class Product {
   private Date crTime;
 
   @Column(name = "CR_USER_ID", nullable = false)
-  private int crUserId;
+  private Long crUserId;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "LM_TIME", nullable = true)
+  @Column(name = "LM_TIME")
   private Date lmTime;
 
-  @Column(name = "LM_USER_ID", nullable = true)
-  private int lmUserId;
+  @Column(name = "LM_USER_ID")
+  private Long lmUserId;
 
 }

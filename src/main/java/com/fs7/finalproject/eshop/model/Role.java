@@ -1,7 +1,7 @@
 package com.fs7.finalproject.eshop.model;
 
 public enum Role {
-  ADMIN("A"), CUSTOMER("C"), GUEST("G");
+  ADMIN("A"), CUSTOMER("C"), GUEST("G"), USER("U");
 
   private final String shortName;
 
@@ -21,6 +21,8 @@ public enum Role {
         return Role.CUSTOMER;
       case "G":
         return Role.GUEST;
+      case "U":
+        return Role.USER;
       default:
         throw new IllegalArgumentException("ShortName [" + shortName + "] not supported");
     }
