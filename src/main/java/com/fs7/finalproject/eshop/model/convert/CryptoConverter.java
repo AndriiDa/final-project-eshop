@@ -7,12 +7,12 @@ import javax.persistence.Converter;
 @Converter
 public class CryptoConverter implements AttributeConverter<String, String> {
   @Override
-  public String convertToDatabaseColumn(String s) {
+  public String convertToDatabaseColumn(String ccNumber) {
     return null;
   }
 
   @Override
-  public String convertToEntityAttribute(String s) {
+  public String convertToEntityAttribute(String ccNumber) {
     return null;
   }
 //  private static final String ALGORITHM = "AES/ECB/PKCS5Padding";
