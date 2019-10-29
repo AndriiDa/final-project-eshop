@@ -25,12 +25,12 @@ public class Cart {
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "USER_ID", referencedColumnName = "ID", nullable = false,
-          foreignKey = @ForeignKey(name = "FK_CARTS_USER_ID"))
+          foreignKey = @ForeignKey(name = "FK_CARTS_USERS_USER_ID"))
   private User user;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", nullable = false,
-          foreignKey = @ForeignKey(name = "FK_CARTS_PRODUCT_ID"))
+          foreignKey = @ForeignKey(name = "FK_CARTS_PRODUCTS_PRODUCT_ID"))
   private Product product;
 
   @Column(name = "QUANTITY", nullable = false)
