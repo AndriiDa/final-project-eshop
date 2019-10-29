@@ -14,6 +14,10 @@ import javax.persistence.Table;
 @Table(name = "ORDER_ITEMS")
 @Data
 @NoArgsConstructor
-public class OrderItem extends BaseEntity{
+public class OrderItem{
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(updatable = false)
+  private Long id;
 
 }

@@ -14,6 +14,9 @@ import javax.persistence.Table;
 @Table(name = "CARTS")
 @Data
 @NoArgsConstructor
-public class Cart extends BaseEntity{
-
+public class Cart{
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(updatable = false)
+  private Long id;
 }

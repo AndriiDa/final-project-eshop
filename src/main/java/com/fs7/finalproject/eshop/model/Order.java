@@ -14,5 +14,9 @@ import javax.persistence.Table;
 @Table(name = "ORDERS")
 @Data
 @NoArgsConstructor
-public class Order extends BaseEntity{
+public class Order{
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(updatable = false)
+  private Long id;
 }

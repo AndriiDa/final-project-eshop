@@ -14,6 +14,9 @@ import javax.persistence.Table;
 @Table(name = "COMMENTS")
 @Data
 @NoArgsConstructor
-public class Comment extends BaseEntity{
-
+public class Comment{
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(updatable = false)
+  private Long id;
 }
