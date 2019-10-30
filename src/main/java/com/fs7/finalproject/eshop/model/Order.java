@@ -23,8 +23,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "ORDERS")
 @Data
+@Table(name = "ORDERS")
 public class Order{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,7 +73,7 @@ public class Order{
   @ColumnDefault("0.00")
   private BigDecimal total;
 
-  @Column(name = "STATUS", columnDefinition = "CHAR")
+  @Column(name = "STATUS", columnDefinition = "CHAR", nullable = false)
   private String status;
 
   @CreatedDate
