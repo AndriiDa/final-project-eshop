@@ -22,9 +22,9 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "CATEGORIES")
 @Data
 @Builder
+@Table(name = "CATEGORIES")
 public class Category {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
