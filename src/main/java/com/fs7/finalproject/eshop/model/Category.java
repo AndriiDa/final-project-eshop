@@ -2,11 +2,15 @@ package com.fs7.finalproject.eshop.model;
 
 import lombok.Builder;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,9 +22,9 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "CATEGORIES")
 @Data
 @Builder
+@Table(name = "CATEGORIES")
 public class Category {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +32,9 @@ public class Category {
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID", nullable = false)
+  @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID", nullable = false,
+          foreignKey = @ForeignKey(name = "FK_CATEGORIES_CATEGORIES_PARENT_ID"))
   private Category category;
-  //  @Column(name = "PARENT_ID")
-  //  private Long parentId;
 
   @Column(name = "IS_GROUP", nullable = false)
   private boolean isGroup;
@@ -49,21 +52,26 @@ public class Category {
   private String description;
 
   @Column(name = "IS_ACTIVE", nullable = false)
+  @ColumnDefault("true")
   private boolean isActive;
 
+  @CreatedDate
   @Column(name = "CR_TIME", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date crTime;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false)
+  @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
+          foreignKey = @ForeignKey(name = "FK_CATEGORIES_USERS_CR_USER_ID"))
   private User crUser;
 
+  @LastModifiedDate
   @Column(name = "LM_TIME")
   @Temporal(TemporalType.TIMESTAMP)
   private Date lmTime;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID")
+  @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
+          foreignKey = @ForeignKey(name = "FK_CATEGORIES_USERS_LM_USER_ID"))
   private User lmUser;
 }

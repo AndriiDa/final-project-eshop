@@ -21,8 +21,6 @@ public enum Role {
         return Role.CUSTOMER;
       case "G":
         return Role.GUEST;
-      case "U":
-        return Role.USER;
       default:
         throw new IllegalArgumentException("ShortName [" + shortName + "] not supported");
     }
