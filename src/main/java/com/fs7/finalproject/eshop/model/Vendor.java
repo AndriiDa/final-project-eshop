@@ -15,7 +15,11 @@ import java.util.Date;
 @Table(name = "VENDORS")
 @Data
 @NoArgsConstructor
-public class Vendor extends BaseEntity{
+public class Vendor {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(updatable = false)
+  private Long id;
 
   @Column(name = "NAME")
   private String name;
@@ -37,8 +41,6 @@ public class Vendor extends BaseEntity{
 
   @Column(name = "LM_USER_ID")
   private Long lmUserId;
-
-
 
 
 }

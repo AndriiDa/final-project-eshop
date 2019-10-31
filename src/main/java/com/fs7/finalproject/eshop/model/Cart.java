@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CARTS")
 @Data
-public class Cart {
+public class Cart{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(updatable = false)

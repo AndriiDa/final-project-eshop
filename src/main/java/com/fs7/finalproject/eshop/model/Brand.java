@@ -15,7 +15,11 @@ import java.util.Date;
 @Table(name = "BRANDS")
 @Data
 @NoArgsConstructor
-public class Brand extends BaseEntity{
+public class Brand {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(updatable = false)
+  private Long id;
 
   @Column(name = "NAME")
   private String name;
