@@ -26,9 +26,16 @@ public class VendorController {
   }
 
   @PostMapping
+  public void postAllVendors() {
+  }
 
   @PutMapping({"vendorId"})
+  public void putAllVendors() {
+  }
+
 
   @DeleteMapping("{vendorId}")
+  public void deleteAllVendors() {
+  }
 
 }
