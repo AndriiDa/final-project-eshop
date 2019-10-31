@@ -1,4 +1,4 @@
 package com.fs7.finalproject.eshop.controllers;
 
-public class VendorController {
+public class BrandController {
 }
