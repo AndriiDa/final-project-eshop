@@ -24,8 +24,10 @@ public class VendorController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Vendor>> getAllVendors() {
-    return ResponseEntity.ok(vendorService.findAll());
+  public String getAllVendors() {
+    return "All Vendors";
+//      public ResponseEntity<List<Vendor>> getAllVendors() {
+//    return ResponseEntity.ok(vendorService.findAll());
   }
 
   @PostMapping
