@@ -31,8 +31,8 @@ public class Category {
   @Column(updatable = false)
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID", nullable = false,
+  @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID",
           foreignKey = @ForeignKey(name = "FK_CATEGORIES_CATEGORIES_PARENT_ID"))
   private Category category;
 
