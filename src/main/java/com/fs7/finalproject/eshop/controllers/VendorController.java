@@ -16,10 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/vendors")
 public class VendorController {
-  private VendorServiceImpl vendorService;
+  private VendorService vendorService;
 
   @Autowired
-  public VendorController(VendorServiceImpl vendorService) {
+  public VendorController(VendorService vendorService) {
     this.vendorService = vendorService;
   }
 
