@@ -47,4 +47,4 @@ INSERT INTO USERS (ID, ADDRESS_ID, BIRTH_DATE, EMAIL, EMAIL_VERIFIED, FIRST_NAME
                   ,GENDER, IS_ACTIVE, LAST_NAME, LOGIN_NAME, LOGIN_PASSWORD, MIDDLE_NAME, PHONE_NUMBER
                   ,ROLE, VERIFICATION_CODE)
 VALUES (5, 5, '1998-12-01', 'kolyada@gmail.com', 1, 'Степан', 'M', 1, 'Коляда', 'kolyada', 'kolyada123',
-        'Афанасович', '+380509987654', 'U', '1123');
+        'Афанасович', '+380509987654', 'C', '1123');
