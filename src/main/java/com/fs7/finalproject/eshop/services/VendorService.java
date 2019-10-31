@@ -1,4 +1,4 @@
 package com.fs7.finalproject.eshop.services;
 
-public class VendorService {
+public class VendorServiceImpl {
 }
