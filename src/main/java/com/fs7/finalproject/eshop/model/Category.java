@@ -33,7 +33,7 @@ public class Category {
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID", nullable = false,
-          foreignKey = @ForeignKey(name = "FK_CATEGORIES_CATEGORIES_PARENT_ID"))
+          foreignKey = @ForeignKey(name = "FK_CATEGORIES_PARENT_ID"))
   private Category category;
 
   @Column(name = "IS_GROUP", nullable = false)
