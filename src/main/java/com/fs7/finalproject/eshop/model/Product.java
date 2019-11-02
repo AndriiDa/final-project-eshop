@@ -1,5 +1,6 @@
 package com.fs7.finalproject.eshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -17,7 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -92,6 +92,7 @@ public class Product {
   //      foreignKey = @ForeignKey(name = "PRODUCT_CR_USER_ID"))
   //  private Collection<User> crUsers;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
       foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_CR_USER_ID"))
@@ -107,6 +108,7 @@ public class Product {
   //      foreignKey = @ForeignKey(name = "PRODUCT_LM_USER_ID"))
   //  private Collection<User> lmUsers;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
       foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_LM_USER_ID"))
