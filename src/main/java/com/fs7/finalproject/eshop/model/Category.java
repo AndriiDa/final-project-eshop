@@ -25,7 +25,7 @@ import java.util.Date;
 
 @Entity
 @Data
-@Builder
+//@Builder
 @Table(name = "CATEGORIES")
 public class Category {
   @Id
