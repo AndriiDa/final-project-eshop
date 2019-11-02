@@ -51,11 +51,45 @@ VALUES (5, 5, '1998-12-01', 'kolyada@gmail.com', 1, 'Степан', 'M', 1, 'К�
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
 VALUES (1, NULL, '100', 'Ноутбуки и компьютеры', NULL, NULL, 1, 1, '2019-10-31', 1, NULL, NULL);
+
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
-VALUES (2, NULL, '200', 'Бытовая техника', NULL, NULL, 1, 1, '2019-10-31', 1, NULL, NULL);
+VALUES (11, 1, '110', 'Ноутбуки', NULL, 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/69/69532.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
-VALUES (3, NULL, '300', 'Товары для дома', NULL, NULL, 1, 1, '2019-10-31', 1, NULL, NULL);
+VALUES (12, 11, '111', 'Для несложных задач', NULL, 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/114/114266.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
-VALUES (4, NULL, '400', 'Спорт и увлечения', NULL, NULL, 1, 1, '2019-10-31', 1, NULL, NULL);
+VALUES (13, 11, '112', 'Универсальные', NULL, 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/114/114278.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
-VALUES (5, NULL, '500', 'Одежда, обувь и украшения', NULL, NULL, 1, 1, '2019-10-31', 1, NULL, NULL);
+VALUES (14, 11, '113', 'Для бизнеса', NULL, 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/114/114290.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (15, 11, '114', 'Геймерские ноутбуки', NULL, 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/113/113920.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (16, 11, '115', 'Ноутбуки с SSD', NULL, 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/114/114314.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (17, 11, '116', 'Ноутбуки с Windows', NULL, 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/115/115013.120x150.jp', 1, 1, '2019-10-31', 1, NULL, NULL);
+
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (18, 1, '120', 'Планшеты', NULL, 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/69/69546.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (19, 18, '121', 'Бюджетные', NULL, 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/95/95085.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (20, 18, '122', 'Трансформеры', NULL, 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/95/95099.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (2, NULL, '200', 'Товары для дома', NULL, NULL, 1, 1, '2019-10-31', 1, NULL, NULL);
+
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (21, 2, '201', 'Домашний текстиль', NULL, 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/112/112058.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (22, 21, '202', 'Матрасы', NULL, 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/55/55450.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (23, 21, '203', 'Одеяла', NULL, 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/55/55750.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (24, 2, '204', 'Мебель', NULL, 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/45/45843.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (25, 24, '205', 'Обеденные столы', NULL, 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/124/124590.120x150.jpg', 1, 1, '2019-10-31', 1, NULL, NULL);
+
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (3, NULL, '300', 'Спорт и увлечения', NULL, NULL, 1, 1, '2019-10-31', 1, NULL, NULL);
+INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_TIME, CR_USER_ID, LM_TIME, LM_USER_ID)
+VALUES (4, NULL, '400', 'Одежда, обувь и украшения', NULL, NULL, 1, 1, '2019-10-31', 1, NULL, NULL);
