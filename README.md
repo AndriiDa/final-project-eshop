@@ -5,6 +5,6 @@
 ## Run the application
 
 ### Run the backend
-git clone https://github.com/AndriiDa/final-project-eshop.git
-cd final-project-eshop
-mvn spring-boot:run
+git clone https://github.com/AndriiDa/final-project-eshop.git  
+cd final-project-eshop  
+mvn spring-boot:run  
