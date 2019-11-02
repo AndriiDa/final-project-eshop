@@ -1,7 +1,9 @@
 package com.fs7.finalproject.eshop.model;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -23,7 +25,6 @@ import java.util.Date;
 
 @Entity
 @Data
-@Builder
 @Table(name = "CATEGORIES")
 public class Category {
   @Id
@@ -31,9 +32,11 @@ public class Category {
   @Column(updatable = false)
   private Long id;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_CATEGORIES_PARENT_ID"))
+  @JsonBackReference
   private Category category;
 
   @Column(name = "IS_GROUP", nullable = false)
@@ -60,6 +63,7 @@ public class Category {
   @Temporal(TemporalType.TIMESTAMP)
   private Date crTime;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_CATEGORIES_USERS_CR_USER_ID"))
@@ -70,6 +74,7 @@ public class Category {
   @Temporal(TemporalType.TIMESTAMP)
   private Date lmTime;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
           foreignKey = @ForeignKey(name = "FK_CATEGORIES_USERS_LM_USER_ID"))
