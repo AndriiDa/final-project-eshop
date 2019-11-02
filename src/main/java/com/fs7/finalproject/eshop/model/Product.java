@@ -2,15 +2,22 @@ package com.fs7.finalproject.eshop.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -80,14 +87,30 @@ public class Product {
   @Column(name = "CR_TIME", nullable = false)
   private Date crTime;
 
-  @Column(name = "CR_USER_ID", nullable = false)
-  private Long crUserId;
+  //  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  //  @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
+  //      foreignKey = @ForeignKey(name = "PRODUCT_CR_USER_ID"))
+  //  private Collection<User> crUsers;
+
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
+      foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_CR_USER_ID"))
+  private User crUser;
+
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "LM_TIME")
   private Date lmTime;
 
-  @Column(name = "LM_USER_ID")
-  private Long lmUserId;
+  //  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  //  @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
+  //      foreignKey = @ForeignKey(name = "PRODUCT_LM_USER_ID"))
+  //  private Collection<User> lmUsers;
+
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
+      foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_LM_USER_ID"))
+  private User lmUser;
+
 
 }

@@ -1,6 +1,7 @@
 package com.fs7.finalproject.eshop.model;
 
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
