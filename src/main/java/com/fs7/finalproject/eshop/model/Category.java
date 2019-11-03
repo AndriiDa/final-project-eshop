@@ -2,8 +2,8 @@ package com.fs7.finalproject.eshop.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Data;
-
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -25,6 +25,7 @@ import java.util.Date;
 
 @Entity
 @Data
+//@Builder
 @Table(name = "CATEGORIES")
 public class Category {
   @Id
@@ -33,9 +34,9 @@ public class Category {
   private Long id;
 
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID", nullable = false,
-          foreignKey = @ForeignKey(name = "FK_CATEGORIES_PARENT_ID"))
+  @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID",
+          foreignKey = @ForeignKey(name = "FK_CATEGORIES_CATEGORIES_PARENT_ID"))
   @JsonBackReference
   private Category category;
 
