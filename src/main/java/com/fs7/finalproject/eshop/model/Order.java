@@ -69,6 +69,7 @@ public class Order{
   private String notes;
 
   //Make Calculate from Items
+  //, precision = 9, scale = 2
   @Column(name = "TOTAL",  nullable = false)
   @ColumnDefault("0.00")
   private BigDecimal total;
