@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,13 +27,13 @@ import javax.validation.constraints.Email;
 import java.util.Date;
 
 @Entity
-@Table(name = "USERS", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "LOGIN_NAME"),
-        @UniqueConstraint(columnNames = "EMAIL")})
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
+@Table(name = "USERS", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "LOGIN_NAME"),
+        @UniqueConstraint(columnNames = "EMAIL")})
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,7 +74,8 @@ public class User {
 
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID")
+  @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID",
+          foreignKey = @ForeignKey(name = "FK_USERS_ADDRESSES_ADDRESS_ID"))
   private Address address;
 
   private boolean emailVerified;
