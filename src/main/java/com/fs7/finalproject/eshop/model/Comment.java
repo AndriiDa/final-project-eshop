@@ -20,9 +20,9 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "COMMENTS")
 @Data
 @Builder
+@Table(name = "COMMENTS")
 public class Comment {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

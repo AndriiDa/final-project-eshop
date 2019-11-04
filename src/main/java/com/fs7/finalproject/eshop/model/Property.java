@@ -2,7 +2,6 @@ package com.fs7.finalproject.eshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
@@ -19,10 +18,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "PROPERTIES", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "NAME")})
 @Data
 @Builder
+@Table(name = "PROPERTIES", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "NAME")})
 public class Property {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
