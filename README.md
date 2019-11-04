@@ -9,7 +9,7 @@ git clone https://github.com/AndriiDa/final-project-eshop.git
 cd final-project-eshop  
 mvn spring-boot:run  
 
-maps points (ready for now, GET only):  
+mapped endpoints (ready for now, GET only):  
 http://localhost:9000/api/v1/categories  
 http://localhost:9000/api/v1/products  
 http://localhost:9000/api/v1/users  
