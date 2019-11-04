@@ -1,6 +1,8 @@
 package com.fs7.finalproject.eshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
@@ -33,6 +35,7 @@ public class Property {
   @Column(name = "DESCRIPTION", length = 1000)
   private String description;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private Set<PropertyValue> values = new HashSet<PropertyValue>();
+  private Set<PropertyValue> values = new HashSet<>();
 }

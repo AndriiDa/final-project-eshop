@@ -1,5 +1,6 @@
 package com.fs7.finalproject.eshop.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
@@ -15,24 +16,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CARTS")
 @Data
-public class Cart{
+@Builder
+@Table(name = "CATEGORY_PROPERTY_VALUES")
+public class CategoryPropertyValue {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(updatable = false)
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "USER_ID", referencedColumnName = "ID", nullable = false,
-          foreignKey = @ForeignKey(name = "FK_CARTS_USERS_USER_ID"))
-  private User user;
+  @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID", nullable = false,
+          foreignKey = @ForeignKey(name = "FK_CATEGORY_PROPERTY_VALUES_CATEGORIES_CATEGORY_ID"))
+  private Category category;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", nullable = false,
-          foreignKey = @ForeignKey(name = "FK_CARTS_PRODUCTS_PRODUCT_ID"))
-  private Product product;
+  @JoinColumn(name = "PROPERTY_VALUE_ID", referencedColumnName = "ID", nullable = false,
+          foreignKey = @ForeignKey(name = "FK_CATEGORY_PROPERTY_VALUES_CATEGORIES_PROPERTY_VALUE_ID"))
+  private PropertyValue propertyValue;
 
-  @Column(name = "QUANTITY", nullable = false)
-  private int quantity;
+  @Column(name = "SEQUENCE", nullable = false)
+  private int sequence;
 }

@@ -1,15 +1,23 @@
 package com.fs7.finalproject.eshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -61,10 +69,10 @@ public class Product {
   private int quantity;
 
   @Column(name = "BASE_PRICE", nullable = true)
-  private int basePrice;
+  private BigDecimal basePrice;
 
   @Column(name = "DISCOUNT_PRICE", nullable = true)
-  private int discountPrice;
+  private BigDecimal discountPrice;
 
   @Column(name = "IS_OFFER", nullable = false)
   private boolean isOffer;
@@ -79,14 +87,32 @@ public class Product {
   @Column(name = "CR_TIME", nullable = false)
   private Date crTime;
 
-  @Column(name = "CR_USER_ID", nullable = false)
-  private int crUserId;
+  //  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  //  @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
+  //      foreignKey = @ForeignKey(name = "PRODUCT_CR_USER_ID"))
+  //  private Collection<User> crUsers;
+
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
+      foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_CR_USER_ID"))
+  private User crUser;
+
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "LM_TIME", nullable = true)
+  @Column(name = "LM_TIME")
   private Date lmTime;
 
-  @Column(name = "LM_USER_ID", nullable = true)
-  private int lmUserId;
+  //  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  //  @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
+  //      foreignKey = @ForeignKey(name = "PRODUCT_LM_USER_ID"))
+  //  private Collection<User> lmUsers;
+
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
+      foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_LM_USER_ID"))
+  private User lmUser;
+
 
 }
