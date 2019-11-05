@@ -3,13 +3,9 @@ package com.fs7.finalproject.eshop.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "VENDORS")
@@ -20,6 +16,9 @@ public class Vendor {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(updatable = false)
   private Long id;
+
+  @OneToMany
+  private List<Product> products;
 
   @Column(name = "NAME")
   private String name;

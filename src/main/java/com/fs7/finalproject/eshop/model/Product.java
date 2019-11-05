@@ -3,19 +3,7 @@ package com.fs7.finalproject.eshop.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.FetchType;
-import javax.persistence.CascadeType;
-import javax.persistence.ForeignKey;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,7 +11,7 @@ import java.util.Date;
 @Entity
 @Table(name = "PRODUCTS")
 @Data
-public class Product {
+public class  Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "ID", updatable = false)
@@ -32,6 +20,7 @@ public class Product {
   @Column(name = "CATEGORY_ID", nullable = false)
   private Long categoryId;
 
+  @ManyToOne
   @Column(name = "VENDOR_ID", nullable = false)
   private Long vendorId;
 
