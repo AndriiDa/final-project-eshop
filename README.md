@@ -8,3 +8,16 @@
 git clone https://github.com/AndriiDa/final-project-eshop.git  
 cd final-project-eshop  
 mvn spring-boot:run  
+
+mapped endpoints (ready for now, GET only):  
+http://localhost:9000/api/v1/categories  
+http://localhost:9000/api/v1/products  
+http://localhost:9000/api/v1/users  
+
+The backend part is deployed to heroku.  
+So the backend endpoints above can be accessed using the following links:  
+https://fs7-eshop.herokuapp.com/api/v1/categories  
+https://fs7-eshop.herokuapp.com/api/v1/products  
+https://fs7-eshop.herokuapp.com/api/v1/users  
+
+To be continued soon ...  
