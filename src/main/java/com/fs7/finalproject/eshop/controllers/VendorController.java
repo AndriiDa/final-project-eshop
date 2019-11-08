@@ -19,7 +19,7 @@ public class VendorController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Vendor>> findAll(){
+  public ResponseEntity<List<Vendor>> findAll() {
     return ResponseEntity.ok(vendorService.findAll());
   }
 }

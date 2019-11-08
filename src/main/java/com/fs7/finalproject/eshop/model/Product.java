@@ -3,15 +3,27 @@ package com.fs7.finalproject.eshop.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
-import javax.persistence.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "PRODUCTS")
 @Data
-public class  Product {
+public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "ID", updatable = false)
@@ -20,9 +32,9 @@ public class  Product {
   @Column(name = "CATEGORY_ID", nullable = false)
   private Long categoryId;
 
-  @ManyToOne
-  @Column(name = "VENDOR_ID", nullable = false)
-  private Long vendorId;
+  @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @JoinColumn(name = "VENDOR_ID")
+  private Vendor vendor;
 
   @Column(name = "SKU_CODE", nullable = true, length = 50)
   private String skuCode;
@@ -84,7 +96,7 @@ public class  Product {
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
-      foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_CR_USER_ID"))
+          foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_CR_USER_ID"))
   private User crUser;
 
 
@@ -100,7 +112,7 @@ public class  Product {
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
-      foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_LM_USER_ID"))
+          foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_LM_USER_ID"))
   private User lmUser;
 
 
