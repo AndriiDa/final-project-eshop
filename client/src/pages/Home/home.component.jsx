@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FlexContainer } from "../../stateless/FlexContainer/flex-container.styles";
+
 import { connect } from "react-redux";
 import { fetchCategoryStart } from "../../redux/category/category.actions";
+import SidebarComponent from "./components/Sidebar/sidebar.component";
 
 const HomeComponent = ({fetchCategoryStarted}) => {
     useEffect(() => {
@@ -11,7 +13,10 @@ const HomeComponent = ({fetchCategoryStarted}) => {
     }, []);
 
     return (
-        <FlexContainer>Home</FlexContainer>
+        <Fragment>
+            <SidebarComponent/>
+            <FlexContainer>Home</FlexContainer>
+        </Fragment>
     );
 };
 
