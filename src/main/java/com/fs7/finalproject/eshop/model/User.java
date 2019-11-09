@@ -1,15 +1,19 @@
 package com.fs7.finalproject.eshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fs7.finalproject.eshop.model.convert.GenderConverter;
 import com.fs7.finalproject.eshop.model.convert.RoleConverter;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,11 +27,13 @@ import javax.validation.constraints.Email;
 import java.util.Date;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
 @Table(name = "USERS", uniqueConstraints = {
         @UniqueConstraint(columnNames = "LOGIN_NAME"),
         @UniqueConstraint(columnNames = "EMAIL")})
-@Data
-@Builder
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,8 +72,10 @@ public class User {
   @Temporal(TemporalType.DATE)
   private Date birthDate;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID")
+  @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID",
+          foreignKey = @ForeignKey(name = "FK_USERS_ADDRESSES_ADDRESS_ID"))
   private Address address;
 
   private boolean emailVerified;

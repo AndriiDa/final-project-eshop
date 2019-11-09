@@ -1,7 +1,7 @@
 package com.fs7.finalproject.eshop.model;
 
 public enum Role {
-  ADMIN("A"), CUSTOMER("C"), GUEST("G");
+  ADMIN("A"), CUSTOMER("C"), GUEST("G"), USER("U");
 
   private final String shortName;
 

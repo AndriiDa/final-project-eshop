@@ -2,6 +2,9 @@ server:
   port: 9000
 
 spring:
+  datasource:
+    data: classpath*:db/data/*.sql
+    schema: classpath*:db/schema/*.sql
   profiles:
     active: local
 
@@ -20,9 +23,9 @@ spring:
       path: /console
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-#    generate-ddl: false
-#    hibernate:
-#      ddl-auto: update
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
 
 
 ---
