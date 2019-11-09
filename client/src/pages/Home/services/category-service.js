@@ -1,6 +1,5 @@
 import { ReactHttpClient } from '@salilvnair/react-httpclient';
 
-
 class CategoryService {
   constructor() {
     this.categoryService = new ReactHttpClient();

@@ -1,27 +1,24 @@
-import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {fetchCategoryStarted} from './redux/category/category.actions';
+// React components
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import HomeComponent from "./pages/Home/home.component";
+// Redux
+import { Provider } from 'react-redux';
+import { store } from "./redux/store";
+// styles
 import './App.scss';
 
-const App = ({fetchCategoryStarted}) => {
-    useEffect(() => {
-        fetchCategoryStarted();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    return <p>Working!</p>;
+const App = () => {
+    return (
+        <Provider store={store}>
+            <Router>
+                <Switch>
+                    <Route exact path="/" component={HomeComponent}/>
+                    <Route render={() => <div></div>}/>
+                </Switch>
+            </Router>
+        </Provider>
+    );
 };
 
-App.propTypes = {
-    fetchCategoryStarted: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = dispatch => ({
-    fetchCategoryStarted: () => dispatch(fetchCategoryStarted())
-});
-
-export default connect(
-    null,
-    mapDispatchToProps
-)(App);
+export default App;
