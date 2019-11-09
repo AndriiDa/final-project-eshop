@@ -7,6 +7,7 @@ import { fetchCategoryStart } from "../../redux/category/category.actions";
 const HomeComponent = ({fetchCategoryStarted}) => {
     useEffect(() => {
         fetchCategoryStarted();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

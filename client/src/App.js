@@ -1,5 +1,5 @@
 // React components
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HomeComponent from "./pages/Home/home.component";
 // Redux
@@ -22,26 +22,3 @@ const App = () => {
 };
 
 export default App;
-
-// import { connect } from 'react-redux';
-// import { fetchCategoryStart } from './redux/category/category.actions';
-// const App = ({ fetchCategoryStarted }) => {
-//   useEffect(() => {
-//     fetchCategoryStarted();
-//   }, []);
-//
-//   return <p>Working!</p>;
-// };
-//
-// App.propTypes = {
-//   fetchCategoryStarted: PropTypes.func.isRequired
-// };
-//
-// const mapDispatchToProps = dispatch => ({
-//   fetchCategoryStarted: () => dispatch(fetchCategoryStart())
-// });
-//
-// export default connect(
-//   null,
-//   mapDispatchToProps
-// )(App);
