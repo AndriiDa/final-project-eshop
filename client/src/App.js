@@ -9,16 +9,16 @@ import { store } from "./redux/store";
 import './App.scss';
 
 const App = () => {
-    return (
-        <Provider store={store}>
-            <Router>
-                <Switch>
-                    <Route exact path="/" component={HomeComponent}/>
-                    <Route render={() => <div></div>}/>
-                </Switch>
-            </Router>
-        </Provider>
-    );
+  return (
+    <Provider store={ store }>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={ HomeComponent }/>
+          <Route render={ () => <div></div> }/>
+        </Switch>
+      </Router>
+    </Provider>
+  );
 };
 
 export default App;
