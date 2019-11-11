@@ -26,7 +26,8 @@ public class Vendor {
   @Column(updatable = false)
   private Long id;
 
-  @OneToMany(mappedBy = "vendor", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @OneToMany(mappedBy = "vendor", fetch = FetchType.LAZY,
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private List<Product> products;
 
   @Column(name = "NAME")
