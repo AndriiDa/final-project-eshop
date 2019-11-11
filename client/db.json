@@ -1,16 +1,76 @@
 {
-  "categories": {
-    "men": {
-      "title": "Men",
-      "img": "url/string"
+  "categories": [
+    {
+      "id": "1",
+      "code": "1001000001",
+      "name": "Portable Audio & Headphones",
+      "imgUrl": "https://image.flaticon.com/icons/svg/126/126508.svg",
+      "crTime": "2019-11-09T10:37:42.276+0000",
+      "crUserId": "1",
+      "lmTime": null,
+      "lmUser": null,
+      "group": true,
+      "active": true
     },
-    "women": {
-      "title": "Women",
-      "img": "url/string"
+    {
+      "id": "2",
+      "code": "1002000001",
+      "name": "TV, Video & Home Audio Electronics",
+      "imgUrl": "https://image.flaticon.com/icons/svg/126/126508.svg",
+      "crTime": "2019-11-09T10:37:42.276+0000",
+      "crUserId": "1",
+      "lmTime": null,
+      "lmUser": null,
+      "group": true,
+      "active": true
     },
-    "babyclothes": {
-      "title": "Baby clothes",
-      "img": "url/string"
+    {
+      "id": "3",
+      "code": "1002000001",
+      "name": "Video Games & Consoles",
+      "imgUrl": "https://image.flaticon.com/icons/svg/126/126508.svg",
+      "crTime": "2019-11-09T10:37:42.276+0000",
+      "crUserId": "1",
+      "lmTime": null,
+      "lmUser": null,
+      "group": true,
+      "active": true
+    },
+    {
+      "id": "4",
+      "code": "1002000001",
+      "name": "Cameras & Photo",
+      "imgUrl": "https://image.flaticon.com/icons/svg/126/126508.svg",
+      "crTime": "2019-11-09T10:37:42.276+0000",
+      "crUserId": "1",
+      "lmTime": null,
+      "lmUser": null,
+      "group": true,
+      "active": true
+    },
+    {
+      "id": "5",
+      "code": "1002000001",
+      "name": "Smart Watches",
+      "imgUrl": "https://image.flaticon.com/icons/svg/126/126508.svg",
+      "crTime": "2019-11-09T10:37:42.276+0000",
+      "crUserId": "1",
+      "lmTime": null,
+      "lmUser": null,
+      "group": true,
+      "active": true
+    },
+    {
+      "id": "6",
+      "code": "1002000001",
+      "name": "Computers, Tablets & Network Hardware",
+      "imgUrl": "https://image.flaticon.com/icons/svg/126/126508.svg",
+      "crTime": "2019-11-09T10:37:42.276+0000",
+      "crUserId": "1",
+      "lmTime": null,
+      "lmUser": null,
+      "group": true,
+      "active": true
     }
-  }
+  ]
 }
