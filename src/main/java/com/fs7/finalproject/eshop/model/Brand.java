@@ -3,6 +3,7 @@ package com.fs7.finalproject.eshop.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.CascadeType;
@@ -41,7 +42,9 @@ public class Brand {
   @ColumnDefault("true")
   private Boolean isActive;
 
+  @CreationTimestamp
   @Column(name = "CR_TIME", nullable = false)
+  @ColumnDefault("CURRENT_TIMESTAMP")
   @Temporal(TemporalType.TIMESTAMP)
   private Date crTime;
 
