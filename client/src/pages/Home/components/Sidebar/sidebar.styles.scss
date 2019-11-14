@@ -1,0 +1,36 @@
+.nav-side-menu {
+  box-sizing: border-box;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  position: fixed;
+  top: 0;
+  width: 350px;
+  height: 100%;
+  text-rendering: optimizeSpeed;
+
+  h2 {
+    padding: 24px;
+  }
+
+  li {
+    padding: 12px 12px 12px 22px;
+    cursor: pointer;
+
+    .list-item-align {
+      width: 70%;
+      text-align: left;
+    }
+
+    .arrow-icon {
+      width: 20px;
+      transform: rotate(90deg);
+    }
+
+    img {
+      margin-right: 10px;
+      width: 20px;
+    }
+  }
+
+}
