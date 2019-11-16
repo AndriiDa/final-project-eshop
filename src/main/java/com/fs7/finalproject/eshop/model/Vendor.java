@@ -46,6 +46,7 @@ public class Vendor {
   private Boolean isActive;
 
   @Column(name = "CR_TIME", nullable = false)
+  @ColumnDefault("CURRENT_TIMESTAMP")
   @Temporal(TemporalType.TIMESTAMP)
   private Date crTime;
 
