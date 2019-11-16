@@ -13,10 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Data
-@Table(name = "PRODUCT_RATING")
+@Table(name = "PRODUCT_RATING", uniqueConstraints = {
+        @UniqueConstraint(name = "IX_PRODUCT_RATING_USER_ID_PRODUCT_ID", columnNames = {"USER_ID", "PRODUCT_ID"})})
 public class ProductRating {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

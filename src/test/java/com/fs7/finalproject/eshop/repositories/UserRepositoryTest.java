@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -38,6 +39,7 @@ public class UserRepositoryTest {
             .email("p_ivanov@gmail.com")
             .gender(Gender.MALE)
             .role(Role.ADMIN)
+            .crTime(new Date())
             .address(Address.builder().addressLine("Ivanov address").build())
             .build();
     userTwo = User.builder()
@@ -47,6 +49,7 @@ public class UserRepositoryTest {
             .email("v_petrov@gmail.com")
             .gender(Gender.MALE)
             .role(Role.ADMIN)
+            .crTime(new Date())
             .address(Address.builder().addressLine("Petrov address").build())
             .build();
     userThree = User.builder()
@@ -56,6 +59,7 @@ public class UserRepositoryTest {
             .email("d_smirnova@gmail.com")
             .gender(Gender.FEMALE)
             .role(Role.ADMIN)
+            .crTime(new Date())
             .address(Address.builder().addressLine("Smirnova address").build())
             .build();
   }

@@ -2,8 +2,10 @@ package com.fs7.finalproject.eshop.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -21,12 +23,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import java.util.Date;
 
 @Entity
 @Data
-//@Builder
-@Table(name = "CATEGORIES")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "CATEGORIES", uniqueConstraints = {
+        @UniqueConstraint(name = "IX_CATEGORIES_NAME", columnNames = "NAME")})
 public class Category {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +67,7 @@ public class Category {
 
   @CreatedDate
   @Column(name = "CR_TIME", nullable = false)
+  @ColumnDefault("CURRENT_TIMESTAMP")
   @Temporal(TemporalType.TIMESTAMP)
   private Date crTime;
 

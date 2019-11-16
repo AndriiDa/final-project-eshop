@@ -14,11 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Data
 @Builder
-@Table(name = "CATEGORY_PROPERTY_VALUES")
+@Table(name = "CATEGORY_PROPERTY_VALUES", uniqueConstraints = {
+        @UniqueConstraint(name = "IX_CATEGORY_CATEGORY_ID_PROPERTY_VALUE_ID",
+                columnNames = {"CATEGORY_ID", "PROPERTY_VALUE_ID"})})
 public class CategoryPropertyValue {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
