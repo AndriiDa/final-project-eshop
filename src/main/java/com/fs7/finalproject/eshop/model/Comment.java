@@ -2,6 +2,7 @@ package com.fs7.finalproject.eshop.model;
 
 import lombok.Builder;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.CascadeType;
@@ -32,13 +33,11 @@ public class Comment {
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "USER_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_COMMENTS_USERS_USER_ID"))
-
   private User user;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_COMMENTS_PRODUCTS_PRODUCT_ID"))
-
   private Product product;
 
   @Column(name = "MESSAGE", columnDefinition = "TEXT", nullable = false)
@@ -46,6 +45,7 @@ public class Comment {
 
   @CreatedDate
   @Column(name = "CR_TIME", nullable = false)
+  @ColumnDefault("CURRENT_TIMESTAMP")
   @Temporal(TemporalType.TIMESTAMP)
   private Date crTime;
 }

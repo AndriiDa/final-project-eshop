@@ -1,8 +1,8 @@
 package com.fs7.finalproject.eshop.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -15,6 +15,8 @@ import javax.persistence.Table;
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ADDRESSES")
 public class Address {
   @Id

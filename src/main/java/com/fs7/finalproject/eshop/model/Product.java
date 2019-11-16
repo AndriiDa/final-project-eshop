@@ -1,6 +1,7 @@
 package com.fs7.finalproject.eshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -23,6 +24,7 @@ import java.util.Date;
 
 @Entity
 @Data
+@Builder
 @Table(name = "PRODUCTS")
 public class Product {
   @Id
@@ -30,8 +32,11 @@ public class Product {
   @Column(name = "ID", updatable = false)
   private Long id;
 
-  @Column(name = "CATEGORY_ID", nullable = false)
-  private Long categoryId;
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID", nullable = false,
+          foreignKey = @ForeignKey(name = "FK_PRODUCTS_CATEGORIES_CATEGORY_ID"))
+  private Category category;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "VENDOR_ID", referencedColumnName = "ID", nullable = false,
