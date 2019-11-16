@@ -13,11 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ADDRESSES")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Builder
+@Table(name = "ADDRESSES")
 public class Address {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

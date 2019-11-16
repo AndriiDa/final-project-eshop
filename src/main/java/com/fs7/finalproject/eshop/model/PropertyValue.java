@@ -20,7 +20,8 @@ import javax.persistence.UniqueConstraint;
 @Data
 @Builder
 @Table(name = "PROPERTY_VALUES",
-        uniqueConstraints = {@UniqueConstraint(name = "IX_PROPERTY_VALUES_PROPERTY_ID_NAME", columnNames = {"PROPERTY_ID", "NAME"})})
+        uniqueConstraints = {
+                @UniqueConstraint(name = "IX_PROPERTY_VALUES_PROPERTY_ID_NAME", columnNames = {"PROPERTY_ID", "NAME"})})
 public class PropertyValue {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
