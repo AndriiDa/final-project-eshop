@@ -1,21 +1,23 @@
-import React from 'react'
-import { Map } from "react-lodash";
+import React from "react";
+import PropTypes from "prop-types";
+import AccordionWrapperComponent from "../../../../stateless/Accordion/accordion-wrapper.component";
+import "./sidebar.styles.scss";
 
-import CategoryItemComponent from "../../../../stateless/CategoryItem/category-item.component";
-
-import './sidebar.styles.scss';
-
-const SidebarComponent = ({ elements }) => {
+const SidebarComponent = ({ categoryItems }) => {
   return (
     <div className="nav-side-menu">
       <h2>Portal menu</h2>
-      <ul>
-        <Map collection={ elements } iteratee={
-          elem => <CategoryItemComponent key={ elem.id } categoryName={ elem }/> }
-        />
-      </ul>
+      <AccordionWrapperComponent elements={categoryItems} />
     </div>
-  )
+  );
+};
+
+SidebarComponent.defaultProps = {
+  categoryItems: []
+};
+
+SidebarComponent.propTypes = {
+  categoryItems: PropTypes.instanceOf(Array)
 };
 
 export default SidebarComponent;

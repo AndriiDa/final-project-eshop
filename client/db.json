@@ -1,12 +1,41 @@
 {
   "categories": [
     {
+      "id": "0",
+      "code": "1001000001",
+      "name": "Sales",
+      "imgUrl": "https://image.flaticon.com/icons/svg/126/126508.svg",
+      "crTime": "2019-11-09T10:37:42.276+0000",
+      "crUserId": "1",
+      "lmTime": null,
+      "lmUser": null,
+      "group": true,
+      "active": true
+    },
+    {
       "id": "1",
       "code": "1001000001",
       "name": "Portable Audio & Headphones",
       "imgUrl": "https://image.flaticon.com/icons/svg/126/126508.svg",
       "crTime": "2019-11-09T10:37:42.276+0000",
       "crUserId": "1",
+      "subcateogry": {
+        "102458761": {
+          "name": "Headphones"
+        },
+        "102458762": {
+          "name": "Audio Docks & Mini Speackers"
+        },
+        "102458763": {
+          "name": "iPods & MP3 Players"
+        },
+        "102458764": {
+          "name": "Portable Audio Accessories"
+        },
+        "102458765": {
+          "name": "Portable AM/FM Radios"
+        }
+      },
       "lmTime": null,
       "lmUser": null,
       "group": true,
