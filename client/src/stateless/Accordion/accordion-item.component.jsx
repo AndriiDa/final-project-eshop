@@ -1,15 +1,10 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from "react";
 import PropTypes from "prop-types";
 import { ReactComponent as ArrowIcon } from "../../assets/images/icons/arrow.svg";
+import "./accordion-item.style.scss";
 
-const AccordionItemComponent = ({
-  name,
-  imgUrl,
-  children,
-  isCollapsed,
-  handleClick
-}) => {
+const AccordionItemComponent = props => {
+  const { name, imgUrl, children, isCollapsed, handleClick } = props;
   const style = {
     collapsed: {
       display: "none"
@@ -24,14 +19,16 @@ const AccordionItemComponent = ({
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <li
-      className="d-flex justify-content-between well"
-      onClick={() => handleClick()}
-    >
-      <img src={imgUrl} alt={name} />
-      <span className="list-item-align">{name}</span>
-      <ArrowIcon />
+    <li>
+      <button
+        type="button"
+        className="d-flex justify-content-between well expand"
+        onClick={() => handleClick()}
+      >
+        <img src={imgUrl} alt={name} />
+        <span className="list-item-align">{name}</span>
+        <ArrowIcon />
+      </button>
       <div
         style={isCollapsed ? style.collapsed : style.expanded}
         aria-expanded={isCollapsed}

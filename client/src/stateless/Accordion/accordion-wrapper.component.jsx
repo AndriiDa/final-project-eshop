@@ -1,15 +1,14 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import PropTypes from "prop-types";
-
 import AccordionItemComponent from "./accordion-item.component";
 
 const AccordionWrapperComponent = props => {
-  const { elements, defaultIndex, onItemClick } = props;
+  const { elements, defaultIndex } = props;
 
   const [bindIndex, setBindIndex] = React.useState(defaultIndex);
 
   const changeItem = itemIndex => {
-    if (typeof props.onItemClick === "function") onItemClick(itemIndex);
     if (itemIndex !== bindIndex) setBindIndex(itemIndex);
   };
 
@@ -18,6 +17,7 @@ const AccordionWrapperComponent = props => {
       {elements.length &&
         elements.map((item, index) => (
           <AccordionItemComponent
+            key={`${item.name}${item.name}`}
             isCollapsed={bindIndex !== index}
             name={item.name}
             handleClick={() => changeItem(index)}
@@ -37,8 +37,7 @@ AccordionWrapperComponent.defaultProps = {
 
 AccordionWrapperComponent.propTypes = {
   elements: PropTypes.instanceOf(Array),
-  defaultIndex: PropTypes.number,
-  onItemClick: PropTypes.func.isRequired
+  defaultIndex: PropTypes.number
 };
 
 export default AccordionWrapperComponent;

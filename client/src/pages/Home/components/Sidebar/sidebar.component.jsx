@@ -7,10 +7,7 @@ const SidebarComponent = ({ categoryItems }) => {
   return (
     <div className="nav-side-menu">
       <h2>Portal menu</h2>
-      <AccordionWrapperComponent
-        elements={categoryItems}
-        onItemClick={window.console.log}
-      />
+      <AccordionWrapperComponent elements={categoryItems} />
     </div>
   );
 };
