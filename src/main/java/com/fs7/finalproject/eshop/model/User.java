@@ -34,8 +34,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "USERS", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "LOGIN_NAME"),
-        @UniqueConstraint(columnNames = "EMAIL")})
+        @UniqueConstraint(name = "IX_USERS_LOGIN_NAME", columnNames = "LOGIN_NAME"),
+        @UniqueConstraint(name = "IX_USERS_EMAIL", columnNames = "EMAIL")})
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
