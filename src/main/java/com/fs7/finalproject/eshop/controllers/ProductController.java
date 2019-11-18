@@ -2,6 +2,7 @@ package com.fs7.finalproject.eshop.controllers;
 
 import com.fs7.finalproject.eshop.model.Product;
 import com.fs7.finalproject.eshop.services.ProductService;
+import com.fs7.finalproject.eshop.services.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/v1/products")
 public class ProductController {
   @Autowired
-  private ProductService productService;
+  private ProductServiceImpl productService;
 
   @GetMapping
   public ResponseEntity<List<Product>> findAll() {

@@ -21,7 +21,7 @@ import java.util.Set;
 @Data
 @Builder
 @Table(name = "PROPERTIES", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "NAME")})
+        @UniqueConstraint(name = "IX_PROPERTIES_NAME", columnNames = "NAME")})
 public class Property {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
