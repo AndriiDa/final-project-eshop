@@ -1,8 +1,10 @@
 package com.fs7.finalproject.eshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -25,6 +27,8 @@ import java.util.Date;
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "PRODUCTS")
 public class Product {
   @Id
@@ -38,6 +42,7 @@ public class Product {
           foreignKey = @ForeignKey(name = "FK_PRODUCTS_CATEGORIES_CATEGORY_ID"))
   private Category category;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "VENDOR_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_PRODUCTS_VENDORS_VENDOR_ID"))
@@ -49,6 +54,7 @@ public class Product {
   @Column(name = "TITLE", nullable = false, length = 200)
   private String title;
 
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "BRAND_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_PRODUCTS_BRANDS_BRAND_ID"))
@@ -117,6 +123,6 @@ public class Product {
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
-          foreignKey = @ForeignKey(name = "FK_VENDORS_USERS_LM_USER_ID"))
+          foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_LM_USER_ID"))
   private User lmUser;
 }

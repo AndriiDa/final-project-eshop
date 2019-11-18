@@ -3,6 +3,7 @@ package com.fs7.finalproject.eshop.controllers;
 import com.fs7.finalproject.eshop.model.Category;
 import com.fs7.finalproject.eshop.model.Product;
 import com.fs7.finalproject.eshop.services.ProductService;
+import com.fs7.finalproject.eshop.services.ProductServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ProductControllerTest {
   private MockMvc mockMvc;
 
   @MockBean
-  ProductService productService;
+  ProductServiceImpl productService;
 
 //  ObjectMapper mapper = new ObjectMapper();
 
