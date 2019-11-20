@@ -8,6 +8,7 @@ import SidebarComponent from "./components/Sidebar/sidebar.component";
 const HomeComponent = ({ categoryItems, fetchCategoryStarted }) => {
   useEffect(() => {
     fetchCategoryStarted();
+// eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
