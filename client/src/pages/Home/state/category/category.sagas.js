@@ -1,6 +1,6 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { fetchCategorySuccess, fetchCategoryFailure } from './category.actions';
-import { categoryService } from '../../pages/Home/services/category-service';
+import { categoryService } from '../../services/category-service';
 import CategoryActionTypes from './category.types';
 
 export function* fetchCategoryItemsAsync() {
