@@ -4,7 +4,13 @@ import PropTypes from "prop-types";
 import AccordionItemComponent from "./accordion-item.component";
 
 const AccordionWrapperComponent = props => {
-  const { elements, defaultIndex } = props;
+  const {
+    elements,
+    defaultIndex,
+    childContentKey,
+    innerStyledItem,
+    handleChild
+  } = props;
 
   const [openedItems, setBindIndex] = React.useState([defaultIndex]);
 
@@ -21,14 +27,16 @@ const AccordionWrapperComponent = props => {
       {elements.length &&
         elements.map((item, index) => (
           <AccordionItemComponent
-            key={`${item.name}${item.name}`}
-            isCollapsed={!openedItems.includes(index)}
+            key={item.id}
             name={item.name}
-            handleClick={() => changeItem(index)}
             imgUrl={item.imgUrl}
-            // eslint-disable-next-line react/no-children-prop
-            children="childrens"
-          />
+            isCollapsed={!openedItems.includes(index)}
+            innerComponent={innerStyledItem}
+            handleClick={() => changeItem(index)}
+            handleChild={handleChild}
+          >
+            {item[childContentKey]}
+          </AccordionItemComponent>
         ))}
     </ul>
   );

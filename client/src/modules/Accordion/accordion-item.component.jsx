@@ -4,7 +4,16 @@ import { ReactComponent as ArrowIcon } from "../../assets/images/icons/arrow.svg
 import "./accordion-item.style.scss";
 
 const AccordionItemComponent = props => {
-  const { name, imgUrl, children, isCollapsed, handleClick } = props;
+  const {
+    name,
+    imgUrl,
+    children,
+    isCollapsed,
+    innerComponent,
+    handleClick,
+    handleChild
+  } = props;
+
   const style = {
     collapsed: {
       display: "none"
@@ -17,6 +26,8 @@ const AccordionItemComponent = props => {
       width: "100%"
     }
   };
+
+  const StyledItem = innerComponent;
 
   return (
     <li>
@@ -33,7 +44,14 @@ const AccordionItemComponent = props => {
         style={isCollapsed ? style.collapsed : style.expanded}
         aria-expanded={isCollapsed}
       >
-        {children}
+        {children.length > 0 &&
+          children.map(item => {
+            return (
+              <StyledItem key={item.id} onClick={() => handleChild(item)}>
+                {item.name}
+              </StyledItem>
+            );
+          })}
       </div>
     </li>
   );
@@ -42,7 +60,8 @@ const AccordionItemComponent = props => {
 AccordionItemComponent.defaultProps = {
   name: "",
   imgUrl: "",
-  children: ""
+  children: "",
+  innerComponent: null
 };
 
 AccordionItemComponent.propTypes = {
@@ -50,7 +69,10 @@ AccordionItemComponent.propTypes = {
   imgUrl: PropTypes.string,
   children: PropTypes.string,
   isCollapsed: PropTypes.bool.isRequired,
-  handleClick: PropTypes.func.isRequired
+  handleClick: PropTypes.func.isRequired,
+  handleChild: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  innerComponent: PropTypes.any
 };
 
 export default AccordionItemComponent;

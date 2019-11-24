@@ -2,10 +2,10 @@
   box-sizing: border-box;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
   font-family: Roboto, sans-serif;
-  font-size: 16px;
+  font-size: 13px;
   position: fixed;
   top: 0;
-  width: 350px;
+  width: 300px;
   height: 100%;
   text-rendering: optimizeSpeed;
 
@@ -30,8 +30,7 @@
 
     img {
       margin-right: 10px;
-      width: 20px;
+      width: 16px;
     }
   }
-
 }
