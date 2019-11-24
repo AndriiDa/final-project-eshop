@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AccordionWrapperComponent from "../../../../stateless/Accordion/accordion-wrapper.component";
+import AccordionWrapperComponent from "../../../../modules/Accordion/accordion-wrapper.component";
 import "./sidebar.styles.scss";
 
 const SidebarComponent = ({ categoryItems }) => {

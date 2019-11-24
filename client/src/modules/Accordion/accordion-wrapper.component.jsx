@@ -6,10 +6,14 @@ import AccordionItemComponent from "./accordion-item.component";
 const AccordionWrapperComponent = props => {
   const { elements, defaultIndex } = props;
 
-  const [bindIndex, setBindIndex] = React.useState(defaultIndex);
+  const [openedItems, setBindIndex] = React.useState([defaultIndex]);
 
   const changeItem = itemIndex => {
-    if (itemIndex !== bindIndex) setBindIndex(itemIndex);
+    if (!openedItems.includes(itemIndex)) {
+      setBindIndex([...openedItems, itemIndex]);
+    } else {
+      setBindIndex(openedItems.filter(item => item !== itemIndex));
+    }
   };
 
   return (
@@ -18,7 +22,7 @@ const AccordionWrapperComponent = props => {
         elements.map((item, index) => (
           <AccordionItemComponent
             key={`${item.name}${item.name}`}
-            isCollapsed={bindIndex !== index}
+            isCollapsed={!openedItems.includes(index)}
             name={item.name}
             handleClick={() => changeItem(index)}
             imgUrl={item.imgUrl}
