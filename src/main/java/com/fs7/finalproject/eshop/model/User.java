@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,13 +29,13 @@ import javax.validation.constraints.Email;
 import java.util.Date;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "USERS", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "LOGIN_NAME"),
-        @UniqueConstraint(columnNames = "EMAIL")})
+        @UniqueConstraint(name = "IX_USERS_LOGIN_NAME", columnNames = "LOGIN_NAME"),
+        @UniqueConstraint(name = "IX_USERS_EMAIL", columnNames = "EMAIL")})
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,5 +89,13 @@ public class User {
   @Column(nullable = false)
   private Role role;
 
+  @Column(name = "IS_ACTIVE", nullable = false)
+  @ColumnDefault("false")
   private boolean isActive;
+
+  @CreatedDate
+  @Column(name = "CR_TIME", nullable = false)
+  @ColumnDefault("CURRENT_TIMESTAMP")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date crTime;
 }

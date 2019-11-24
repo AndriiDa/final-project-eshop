@@ -1,7 +1,9 @@
 package com.fs7.finalproject.eshop.controllers;
 
+import com.fs7.finalproject.eshop.model.Category;
 import com.fs7.finalproject.eshop.model.Product;
 import com.fs7.finalproject.eshop.services.ProductService;
+import com.fs7.finalproject.eshop.services.ProductServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +27,24 @@ public class ProductControllerTest {
   private MockMvc mockMvc;
 
   @MockBean
-  ProductService productService;
+  ProductServiceImpl productService;
 
 //  ObjectMapper mapper = new ObjectMapper();
 
   @Test
   public void findAll() throws Exception {
     // given
-    Product product = new Product();
-    product.setId(1L);
-    product.setCategoryId(2L);
-    product.setTitle("Product Title");
-    product.setDescription("Product Description");
+    Product product = Product.builder()
+            .id(1L)
+            .title("Product Title")
+            .description("Product Description")
+            .category(
+                    Category.builder()
+                            .id(2L)
+                            .code("Product Code")
+                            .name("Product Category")
+                            .build())
+            .build();
 
     List<Product> products = Arrays.asList(product);
     given(productService.findAll()).willReturn(products);
@@ -44,6 +52,6 @@ public class ProductControllerTest {
     //when + then
     this.mockMvc.perform(get("/api/v1/products"))
             .andExpect(status().isOk())
-            .andExpect(content().json("[{'id':1,'categoryId':2,'title':'Product Title','description':'Product Description'}]"));
+            .andExpect(content().json("[{'id':1,'category': {'id':2, 'code':'Product Code','name':'Product Category'},'title':'Product Title','description':'Product Description'}]"));
   }
 }
