@@ -10,6 +10,7 @@ const AccordionItemComponent = props => {
     children,
     isCollapsed,
     innerComponent,
+    menuItem,
     handleClick,
     handleChild
   } = props;
@@ -27,17 +28,18 @@ const AccordionItemComponent = props => {
     }
   };
 
-  const StyledItem = innerComponent;
+  const SubStyledItem = innerComponent;
+  const MenuStyledItem = menuItem;
 
   return (
-    <li>
+    <MenuStyledItem>
       <button
         type="button"
         className="d-flex justify-content-between well expand"
         onClick={() => handleClick()}
       >
         <img src={imgUrl} alt={name} />
-        <span className="list-item-align">{name}</span>
+        <span>{name}</span>
         <ArrowIcon />
       </button>
       <div
@@ -47,13 +49,13 @@ const AccordionItemComponent = props => {
         {children.length > 0 &&
           children.map(item => {
             return (
-              <StyledItem key={item.id} onClick={() => handleChild(item)}>
+              <SubStyledItem key={item.id} onClick={() => handleChild(item)}>
                 {item.name}
-              </StyledItem>
+              </SubStyledItem>
             );
           })}
       </div>
-    </li>
+    </MenuStyledItem>
   );
 };
 
@@ -61,7 +63,8 @@ AccordionItemComponent.defaultProps = {
   name: "",
   imgUrl: "",
   children: "",
-  innerComponent: null
+  innerComponent: null,
+  menuItem: null
 };
 
 AccordionItemComponent.propTypes = {
@@ -72,7 +75,9 @@ AccordionItemComponent.propTypes = {
   handleClick: PropTypes.func.isRequired,
   handleChild: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  innerComponent: PropTypes.any
+  innerComponent: PropTypes.any,
+  // eslint-disable-next-line react/forbid-prop-types
+  menuItem: PropTypes.any
 };
 
 export default AccordionItemComponent;

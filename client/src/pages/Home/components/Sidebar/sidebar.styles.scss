@@ -13,24 +13,10 @@
     padding: 24px;
   }
 
-  li {
-    padding: 12px 12px 12px 22px;
-    cursor: pointer;
-
-    .list-item-align {
-      width: 70%;
-      text-align: left;
-    }
-
-    .arrow-icon {
-      width: 20px;
-      margin: 0 10px;
-      transform: rotate(90deg);
-    }
-
-    img {
-      margin-right: 10px;
-      width: 16px;
-    }
+  // .class has been wrote in inline svg
+  .arrow-icon {
+    width: 20px;
+    margin: 0 10px;
+    transform: rotate(90deg);
   }
 }

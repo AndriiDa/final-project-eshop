@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AccordionWrapperComponent from "../../../../modules/Accordion/accordion-wrapper.component";
-import { SubMenuItem } from "./sidebar.styles";
+import { InnerContent, MenuItem } from "./sidebar.styles";
 import "./sidebar.styles.scss";
 
 const SidebarComponent = ({ categoryItems }) => {
   const handleClickInChild = item => {
-    console.log(item);
+    window.console.log(item);
   };
 
   return (
@@ -16,7 +16,8 @@ const SidebarComponent = ({ categoryItems }) => {
         elements={categoryItems}
         defaultIndex={0}
         childContentKey="subcategory"
-        innerStyledItem={SubMenuItem}
+        innerStyledItem={InnerContent}
+        menuItem={MenuItem}
         handleChild={handleClickInChild}
       />
     </div>

@@ -9,6 +9,7 @@ const AccordionWrapperComponent = props => {
     defaultIndex,
     childContentKey,
     innerStyledItem,
+    menuItem,
     handleChild
   } = props;
 
@@ -32,6 +33,7 @@ const AccordionWrapperComponent = props => {
             imgUrl={item.imgUrl}
             isCollapsed={!openedItems.includes(index)}
             innerComponent={innerStyledItem}
+            menuItem={menuItem}
             handleClick={() => changeItem(index)}
             handleChild={handleChild}
           >
