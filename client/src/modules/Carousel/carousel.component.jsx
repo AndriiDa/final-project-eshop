@@ -26,7 +26,7 @@ const Carousel = props => {
       setActive((active + 1) % carouselItems.length);
     }, 2000);
     return () => clearTimeout(scrollInterval);
-  });
+  }, []);
 
   const slider = React.useRef(null);
 
