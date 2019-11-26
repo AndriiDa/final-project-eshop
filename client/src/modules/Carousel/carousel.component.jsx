@@ -36,18 +36,12 @@ const Carousel = props => {
   };
 
   return (
-    // eslint-disable-next-line
     <div style={style.carousel} ref={slider} onClick={() => onButtonClick()}>
       {carouselItems.map(({ ...rest }, index) => {
         const activeStyle =
           active === index ? style.visible : style.carouselItem;
         return (
-          <ItemComponent
-            key={rest.id}
-            activeStyle={activeStyle}
-            // eslint-disable-next-line
-            {...rest}
-          />
+          <ItemComponent key={rest.id} activeStyle={activeStyle} {...rest} />
         );
       })}
     </div>
