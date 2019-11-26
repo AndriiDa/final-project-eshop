@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -33,11 +32,11 @@ const Carousel = props => {
 
   const onButtonClick = () => {
     // `current` указывает на смонтированный элемент `input`
-    console.log(slider.current);
+    window.console.log(slider.current);
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    // eslint-disable-next-line
     <div style={style.carousel} ref={slider} onClick={() => onButtonClick()}>
       {carouselItems.map(({ ...rest }, index) => {
         const activeStyle =
@@ -46,7 +45,7 @@ const Carousel = props => {
           <ItemComponent
             key={rest.id}
             activeStyle={activeStyle}
-            // eslint-disable-next-line react/jsx-props-no-spreading
+            // eslint-disable-next-line
             {...rest}
           />
         );

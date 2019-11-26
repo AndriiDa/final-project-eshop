@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { fetchCategoryStart } from "./state/category/category.actions";
-import SidebarComponent from "./components/Sidebar/sidebar.component";
+
 import CloseoutComponent from "./components/Сloseout/closeout.component";
+import SidebarComponent from "./components/Sidebar/sidebar.component";
 
 const HomeComponent = ({ categoryItems, fetchCategoryStarted }) => {
   useEffect(() => {
     fetchCategoryStarted();
-    // eslint-disable-line
+    // eslint-disable-next-line
   }, []);
 
   return (
