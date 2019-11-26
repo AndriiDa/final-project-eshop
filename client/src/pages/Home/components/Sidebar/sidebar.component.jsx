@@ -16,8 +16,8 @@ const SidebarComponent = ({ categoryItems }) => {
         elements={categoryItems}
         defaultIndex={0}
         childContentKey="subcategory"
-        innerStyledItem={InnerContent}
         menuItem={MenuItem}
+        innerStyledItem={InnerContent}
         handleChild={handleClickInChild}
       />
     </div>

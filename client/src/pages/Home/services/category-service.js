@@ -1,4 +1,4 @@
-import { ReactHttpClient } from '@salilvnair/react-httpclient';
+import { ReactHttpClient } from "@salilvnair/react-httpclient";
 
 class CategoryService {
   constructor() {
@@ -10,4 +10,5 @@ class CategoryService {
   }
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export const categoryService = new CategoryService();

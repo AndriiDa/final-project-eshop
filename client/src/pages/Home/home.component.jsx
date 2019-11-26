@@ -3,18 +3,23 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { fetchCategoryStart } from "./state/category/category.actions";
+
+import CloseoutComponent from "./components/Сloseout/closeout.component";
 import SidebarComponent from "./components/Sidebar/sidebar.component";
 
 const HomeComponent = ({ categoryItems, fetchCategoryStarted }) => {
   useEffect(() => {
     fetchCategoryStarted();
-// eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
 
   return (
-    <>
+    <div className="d-flex">
       <SidebarComponent categoryItems={categoryItems.length && categoryItems} />
-    </>
+      <div className="flex-grow-1">
+        <CloseoutComponent />
+      </div>
+    </div>
   );
 };
 
