@@ -55,7 +55,6 @@ Carousel.defaultProps = {
 
 Carousel.propTypes = {
   carouselItems: PropTypes.instanceOf(Array),
-  // eslint-disable-next-line react/forbid-prop-types
   innerComponent: PropTypes.any
 };
 
