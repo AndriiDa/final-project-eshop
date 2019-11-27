@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -31,5 +32,10 @@ public class CategoryService {
 
   public void save(Category category) {
     categoryRepository.save(category);
+  }
+
+  public CategoryDto findCategoryById(Long categoryId) {
+    Optional<Category> category = categoryRepository.findById(categoryId);
+    return category.map(category1 -> modelMapper.map(category1, CategoryDto.class)).orElse(null);
   }
 }
