@@ -41,14 +41,18 @@ public class CategoryService {
       switch (param) {
         case ("code"):
           String code = String.valueOf(allParams.get(param));
-          List<CategoryDto> result1 = result0.stream().filter(category -> category.getCode().equalsIgnoreCase(code)).collect(Collectors.toList());
+          List<CategoryDto> result1 = result0
+              .stream()
+              .filter(category -> category.getCode().equalsIgnoreCase(code)).collect(Collectors.toList());
           if (!result1.isEmpty()) {
             filterResults.put(param, result1);
           }
           break;
         case ("name"):
           String name = String.valueOf(allParams.get(param));
-          List<CategoryDto> result2 = result0.stream().filter(category -> category.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
+          List<CategoryDto> result2 = result0
+              .stream()
+              .filter(category -> category.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
           if (!result2.isEmpty()) {
             filterResults.put(param, result2);
           }
@@ -66,6 +70,8 @@ public class CategoryService {
           if (!result4.isEmpty()) {
             filterResults.put(param, result4);
           }
+          break;
+        default:
           break;
       }
     }

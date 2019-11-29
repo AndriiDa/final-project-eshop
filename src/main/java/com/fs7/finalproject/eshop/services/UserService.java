@@ -18,8 +18,8 @@ public class UserService {
   public List<User> findAll() {
     List<User> result = new ArrayList<>();
     userRepository.findAll().forEach(user -> {
-//      UserDto userDto = modelMapper.map(user, UserDto.class);
-        result.add(user);
+      //UserDto userDto = modelMapper.map(user, UserDto.class);
+      result.add(user);
     });
     return result;
   }

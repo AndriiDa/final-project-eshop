@@ -29,15 +29,6 @@ public class CategoryController {
 
   @GetMapping
   public ResponseEntity<List<CategoryDto>> findAll(@RequestParam(required = false) Map<String,String> allParams) {
-
-
-
-//      @RequestParam(name="parentid", required = false) Long categoryId,
-//                                                   @RequestParam(name="code", required = false) String code,
-//                                                   @RequestParam(name="isgroup", required = false) Boolean isGroup,
-//                                                   @RequestParam(name="isactive", required = false) Boolean isActive,
-//                                                   @RequestParam(name="name", required = false) String name) {
-
     return ResponseEntity.ok(categoryService.findAll(allParams));
   }
 
