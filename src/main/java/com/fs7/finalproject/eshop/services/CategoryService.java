@@ -43,7 +43,8 @@ public class CategoryService {
           String code = String.valueOf(allParams.get(param));
           List<CategoryDto> result1 = result0
               .stream()
-              .filter(category -> category.getCode().equalsIgnoreCase(code)).collect(Collectors.toList());
+              .filter(category -> category.getCode().equalsIgnoreCase(code))
+              .collect(Collectors.toList());
           if (!result1.isEmpty()) {
             filterResults.put(param, result1);
           }
@@ -52,23 +53,48 @@ public class CategoryService {
           String name = String.valueOf(allParams.get(param));
           List<CategoryDto> result2 = result0
               .stream()
-              .filter(category -> category.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
+              .filter(category -> category.getName().equalsIgnoreCase(name))
+              .collect(Collectors.toList());
           if (!result2.isEmpty()) {
             filterResults.put(param, result2);
           }
           break;
         case ("isgroup"):
           Boolean isGroup = Boolean.valueOf(allParams.get(param));
-          List<CategoryDto> result3 = result0.stream().filter(CategoryDto::isGroup).collect(Collectors.toList());
+          List<CategoryDto> result3 = result0
+              .stream()
+              .filter(CategoryDto::isGroup)
+              .collect(Collectors.toList());
           if (!result3.isEmpty()) {
             filterResults.put(param, result3);
           }
           break;
         case ("isactive"):
           Boolean isActive = Boolean.valueOf(allParams.get(param));
-          List<CategoryDto> result4 = result0.stream().filter(CategoryDto::isActive).collect(Collectors.toList());
+          List<CategoryDto> result4 = result0
+              .stream()
+              .filter(CategoryDto::isActive)
+              .collect(Collectors.toList());
           if (!result4.isEmpty()) {
             filterResults.put(param, result4);
+          }
+          break;
+        case ("parentcategoryid"):
+          List<CategoryDto> result5;
+          if (allParams.get(param).equalsIgnoreCase("null")) {
+            result5 = result0
+                .stream()
+                .filter(category -> (category.getParentCategoryId() == null))
+                .collect(Collectors.toList());
+          } else {
+            Long parentcategoryid = Long.valueOf(allParams.get(param));
+            result5 = result0
+                .stream()
+                .filter(category -> category.getParentCategoryId().equals(parentcategoryid))
+                .collect(Collectors.toList());
+          }
+          if (!result5.isEmpty()) {
+            filterResults.put(param, result5);
           }
           break;
         default:
@@ -77,8 +103,9 @@ public class CategoryService {
     }
 
     result0.clear();
+    int i = 0;
     for (String param : filterResults.keySet()) {
-      if (result0.isEmpty()) {
+      if (i++ == 0) {
         result0.addAll(filterResults.get(param));
       } else {
         result0.retainAll(filterResults.get(param));

@@ -11,20 +11,23 @@ mvn spring-boot:run
 
 #### mapped endpoints:  
 ##### CATEGORY  
-GET http://localhost:9000/api/v1/categories - retrieve all categories  
+GET http://localhost:9000/api/v1/categories - retrieve all categories including sub-categories  
+(sub-categories have not null parentcategoryid)  
+GET http://localhost:9000/api/v1/categories/?parentcategoryid=null - retrieve all top-level categories  
 GET http://localhost:9000/api/v1/categories/?isgroup=true  
 GET http://localhost:9000/api/v1/categories/?isactine=true  
-GET http://localhost:9000/api/v1/categories/?name=<name>  
-GET http://localhost:9000/api/v1/categories/?code=<code>  
+GET http://localhost:9000/api/v1/categories/?name=string  
+GET http://localhost:9000/api/v1/categories/?code=string  
+GET http://localhost:9000/api/v1/categories/?isgroup=true&isactive=true&name=Photography   
 GET http://localhost:9000/api/v1/categories/{id} - retrieve category with id={id}  
 POST http://localhost:9000/api/v1/categories - add a new category  
 PUT http://localhost:9000/api/v1/categories/{id} - update category with id={id}  
 DELETE http://localhost:9000/api/v1/categories/{id} - delete category with id={id}  
 
-##### PRODUCTS
+##### PRODUCTS  
 http://localhost:9000/api/v1/products  
 
-##### USERS
+##### USERS  
 http://localhost:9000/api/v1/users  
 
 The backend part is deployed to heroku.  
