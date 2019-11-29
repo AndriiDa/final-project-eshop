@@ -1,4 +1,4 @@
-package com.fs7.finalproject.eshop.dto;
+package com.fs7.finalproject.eshop.model.dto;
 
 import com.fs7.finalproject.eshop.model.Category;
 import org.junit.Test;
@@ -26,12 +26,12 @@ public class CategoryDtoTest {
     Category category = new Category();
     category.setName("Category name");
     category.setDescription("Category description");
-    category.setCategory(new Category());
+    category.setParentCategory(new Category());
 
     CategoryDto categoryDto = modelMapper.map(category, CategoryDto.class);
     assertEquals(category.getName(), categoryDto.getName());
     assertEquals(category.getDescription(), categoryDto.getDescription());
-    assertEquals(category.getCategory().getId(), categoryDto.getCategoryId());
+    assertEquals(category.getParentCategory().getId(), categoryDto.getParentCategoryId());
   }
 
 }

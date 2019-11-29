@@ -44,7 +44,7 @@ public class Category {
   @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID",
           foreignKey = @ForeignKey(name = "FK_CATEGORIES_CATEGORIES_PARENT_ID"))
   @JsonBackReference
-  private Category category;
+  private Category parentCategory;
 
   @Column(name = "IS_GROUP", nullable = false)
   private boolean isGroup;
@@ -72,7 +72,7 @@ public class Category {
   private Date crTime;
 
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_CATEGORIES_USERS_CR_USER_ID"))
   private User crUser;
@@ -83,7 +83,7 @@ public class Category {
   private Date lmTime;
 
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
           foreignKey = @ForeignKey(name = "FK_CATEGORIES_USERS_LM_USER_ID"))
   private User lmUser;
