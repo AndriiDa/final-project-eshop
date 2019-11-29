@@ -1,7 +1,9 @@
 package com.fs7.finalproject.eshop.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -23,6 +25,8 @@ import java.util.Date;
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "COMMENTS")
 public class Comment {
   @Id

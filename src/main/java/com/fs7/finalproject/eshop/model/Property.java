@@ -1,8 +1,10 @@
 package com.fs7.finalproject.eshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +22,8 @@ import java.util.Set;
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "PROPERTIES", uniqueConstraints = {
         @UniqueConstraint(name = "IX_PROPERTIES_NAME", columnNames = "NAME")})
 public class Property {

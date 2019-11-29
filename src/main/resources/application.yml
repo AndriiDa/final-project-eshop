@@ -27,7 +27,6 @@ spring:
     hibernate:
       ddl-auto: update
 
-
 ---
 
 spring:
@@ -36,5 +35,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/fp_eshop_db?createDatabaseIfNotExist=true
     username: postgres
     password: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 ---

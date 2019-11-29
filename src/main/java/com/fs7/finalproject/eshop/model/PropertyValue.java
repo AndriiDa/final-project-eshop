@@ -1,7 +1,9 @@
 package com.fs7.finalproject.eshop.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +21,8 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "PROPERTY_VALUES",
         uniqueConstraints = {
                 @UniqueConstraint(name = "IX_PROPERTY_VALUES_PROPERTY_ID_NAME", columnNames = {"PROPERTY_ID", "NAME"})})
