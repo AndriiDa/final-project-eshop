@@ -1,4 +1,4 @@
-package com.fs7.finalproject.eshop.dto;
+package com.fs7.finalproject.eshop.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -11,8 +11,7 @@ public class CategoryDto {
   @Id
   private Long id;
 
-  @JsonIgnore
-  private Long categoryId;
+  private Long parentCategoryId;
 
   private boolean isGroup;
 

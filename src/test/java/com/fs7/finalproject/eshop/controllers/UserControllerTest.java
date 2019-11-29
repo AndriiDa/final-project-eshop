@@ -4,7 +4,7 @@ import com.fs7.finalproject.eshop.model.Address;
 import com.fs7.finalproject.eshop.model.Gender;
 import com.fs7.finalproject.eshop.model.Role;
 import com.fs7.finalproject.eshop.model.User;
-import com.fs7.finalproject.eshop.services.UserServiceImpl;
+import com.fs7.finalproject.eshop.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class UserControllerTest {
   private MockMvc mockMvc;
 
   @MockBean
-  UserServiceImpl userService;
+  UserService userService;
 
 //  ObjectMapper mapper = new ObjectMapper();
 

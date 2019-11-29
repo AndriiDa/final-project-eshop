@@ -1,7 +1,7 @@
 package com.fs7.finalproject.eshop.controllers;
 
 import com.fs7.finalproject.eshop.model.User;
-import com.fs7.finalproject.eshop.services.UserServiceImpl;
+import com.fs7.finalproject.eshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 public class UserController {
   @Autowired
-  private UserServiceImpl userService;
+  private UserService userService;
 
   @GetMapping
   public ResponseEntity<List<User>> findAll() {

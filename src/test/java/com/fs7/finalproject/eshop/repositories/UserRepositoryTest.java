@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -93,7 +94,8 @@ public class UserRepositoryTest {
     entityManager.persistAndFlush(userTwo);
     entityManager.persistAndFlush(userThree);
     // when
-    List<User> users = userRepository.findAll();
+    List<User> users = new ArrayList<>();
+    userRepository.findAll().forEach(users::add);
     // then
     assertThat(users).hasSize(8);
   }
