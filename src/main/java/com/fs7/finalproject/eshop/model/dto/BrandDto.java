@@ -2,7 +2,7 @@ package com.fs7.finalproject.eshop.model.dto;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Data
