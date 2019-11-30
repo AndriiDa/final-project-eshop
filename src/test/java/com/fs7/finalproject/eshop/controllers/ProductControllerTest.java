@@ -3,9 +3,9 @@ package com.fs7.finalproject.eshop.controllers;
 import com.fs7.finalproject.eshop.model.Category;
 import com.fs7.finalproject.eshop.model.Product;
 import com.fs7.finalproject.eshop.services.ProductService;
-import com.fs7.finalproject.eshop.services.ProductServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,9 +28,11 @@ public class ProductControllerTest {
   private MockMvc mockMvc;
 
   @MockBean
-  ProductServiceImpl productService;
+  ProductService productService;
 
-//  ObjectMapper mapper = new ObjectMapper();
+  private ModelMapper modelMapper = new ModelMapper();
+
+  //ObjectMapper mapper = new ObjectMapper();
 
   @Test
   public void findAll() throws Exception {
@@ -47,7 +50,10 @@ public class ProductControllerTest {
             .build();
 
     List<Product> products = Arrays.asList(product);
-    given(productService.findAll()).willReturn(products);
+    given(productService.findAll()
+        .stream()
+        .map(item->(modelMapper.map(item, Product.class))).collect(Collectors.toList())
+    ).willReturn(products);
 
     //when + then
     this.mockMvc.perform(get("/api/v1/products"))
