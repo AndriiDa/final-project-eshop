@@ -3,6 +3,7 @@ package com.fs7.finalproject.eshop.services;
 import com.fs7.finalproject.eshop.model.dto.CategoryDto;
 import com.fs7.finalproject.eshop.model.Category;
 import com.fs7.finalproject.eshop.model.User;
+import com.fs7.finalproject.eshop.model.dto.PropertyDto;
 import com.fs7.finalproject.eshop.repositories.CategoryRepository;
 import com.fs7.finalproject.eshop.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -18,14 +19,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
-  @Autowired
   private CategoryRepository categoryRepository;
-
-  @Autowired
   private UserRepository userRepository;
+  private ModelMapper modelMapper;
 
   @Autowired
-  private ModelMapper modelMapper;
+  public CategoryService(CategoryRepository categoryRepository, UserRepository userRepository, ModelMapper modelMapper) {
+    this.categoryRepository = categoryRepository;
+    this.userRepository = userRepository;
+    this.modelMapper = modelMapper;
+  }
 
   public List<CategoryDto> findAll(Map<String, String> allParams) {
     List<CategoryDto> result = new ArrayList<>();
@@ -115,7 +118,7 @@ public class CategoryService {
     return result0.size() == 0 ? result : result0;
   }
 
-  public Long createCategory(CategoryDto categoryDto) {
+  public Long create(CategoryDto categoryDto) {
     Category category = modelMapper.map(categoryDto, Category.class);
     Long userId = categoryDto.getCrUserId();
     User crUser = userRepository.findById(userId).orElse(null);
@@ -127,13 +130,13 @@ public class CategoryService {
     categoryRepository.save(category);
   }
 
-  public CategoryDto findCategoryById(Long categoryId) {
-    Optional<Category> category = categoryRepository.findById(categoryId);
+  public CategoryDto findById(Long id) {
+    Optional<Category> category = categoryRepository.findById(id);
     return category.map(category1 -> modelMapper.map(category1, CategoryDto.class)).orElse(null);
   }
 
-  public int updateCategory(Long categoryId, CategoryDto categoryDto) {
-    if (findCategoryById(categoryId) != null) {
+  public int update(Long id, CategoryDto categoryDto) {
+    if (findById(id) != null) {
       Category category = modelMapper.map(categoryDto, Category.class);
       Long crUserId = categoryDto.getCrUserId();
       Long lmUserId = categoryDto.getLmUserId();
@@ -141,7 +144,7 @@ public class CategoryService {
       User lmUser = userRepository.findById(lmUserId).orElse(null);
       category.setCrUser(crUser);
       category.setLmUser(lmUser);
-      category.setId(categoryId);
+      category.setId(id);
       categoryRepository.save(category);
       return 1;
     } else {
@@ -149,12 +152,17 @@ public class CategoryService {
     }
   }
 
-  public int deleteCategory(Long categoryId) {
-    if (findCategoryById(categoryId) != null) {
-      categoryRepository.deleteById(categoryId);
+  public int delete(Long id) {
+    if (findById(id) != null) {
+      categoryRepository.deleteById(id);
       return 1;
     } else {
       return 0;
     }
+  }
+
+  public List<PropertyDto> findPropertiesByCategoryId(Long id) {
+    List<PropertyDto> result = new ArrayList<>();
+    return result;
   }
 }

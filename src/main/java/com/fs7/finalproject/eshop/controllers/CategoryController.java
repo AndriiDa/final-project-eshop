@@ -1,7 +1,6 @@
 package com.fs7.finalproject.eshop.controllers;
 
 import com.fs7.finalproject.eshop.model.dto.CategoryDto;
-import com.fs7.finalproject.eshop.model.Category;
 import com.fs7.finalproject.eshop.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,17 +23,21 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
-  @Autowired
   private CategoryService categoryService;
 
+  @Autowired
+  public CategoryController(CategoryService categoryService) {
+    this.categoryService = categoryService;
+  }
+
   @GetMapping
-  public ResponseEntity<List<CategoryDto>> findAll(@RequestParam(required = false) Map<String,String> allParams) {
+  public ResponseEntity<List<CategoryDto>> findAll(@RequestParam(required = false) Map<String, String> allParams) {
     return ResponseEntity.ok(categoryService.findAll(allParams));
   }
 
   @GetMapping(path = "/{id}")
   public ResponseEntity<CategoryDto> findCategoryById(@PathVariable("id") Long id) {
-    CategoryDto categoryDto = categoryService.findCategoryById(id);
+    CategoryDto categoryDto = categoryService.findById(id);
     if (categoryDto == null) {
       return ResponseEntity.notFound().build();
     } else {
@@ -42,21 +45,27 @@ public class CategoryController {
     }
   }
 
+  //@GetMapping(path = "/{id}/products")
+  //public ResponseEntity<List<ProductDto>> findPropertiesByCategoryId(@PathVariable("id") Long id) {
+  //  return ResponseEntity.ok(categoryService.findProductsByCategoryId(id));
+  //}
+
+
   @PostMapping
   @PatchMapping
   public ResponseEntity<Long> createCategory(@RequestBody CategoryDto categoryDto) {
-    return ResponseEntity.ok(categoryService.createCategory(categoryDto));
+    return ResponseEntity.ok(categoryService.create(categoryDto));
   }
 
   @PutMapping(path = "/{id}")
   @ResponseStatus(HttpStatus.OK)
   public int updateCategory(@PathVariable("id") Long id, @RequestBody CategoryDto categoryDto) {
-    return categoryService.updateCategory(id, categoryDto);
+    return categoryService.update(id, categoryDto);
   }
 
   @DeleteMapping(path = "/{id}")
   @ResponseStatus(HttpStatus.OK)
   public int deleteCategory(@PathVariable("id") Long id) {
-    return categoryService.deleteCategory(id);
+    return categoryService.delete(id);
   }
 }

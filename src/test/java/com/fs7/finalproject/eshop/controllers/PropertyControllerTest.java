@@ -1,7 +1,7 @@
 package com.fs7.finalproject.eshop.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fs7.finalproject.eshop.services.PropertyServiceImpl;
+import com.fs7.finalproject.eshop.services.PropertyService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(PropertyController.class)
 public class PropertyControllerTest {
   @MockBean
-  PropertyServiceImpl propertyService;
+  PropertyService propertyService;
 
   ObjectMapper mapper = new ObjectMapper();
 
