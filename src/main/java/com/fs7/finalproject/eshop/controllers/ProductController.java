@@ -20,8 +20,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
-  @Autowired
   private ProductService productService;
+
+  @Autowired
+  public ProductController(ProductService productService) {
+    this.productService = productService;
+  }
 
   @GetMapping
   public ResponseEntity<List<ProductDto>> findAll() {

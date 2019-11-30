@@ -13,11 +13,14 @@ import java.util.Optional;
 
 @Service
 public class PropertyService {
-  @Autowired
   private PropertyRepository propertyRepository;
+  private ModelMapper modelMapper;
 
   @Autowired
-  private ModelMapper modelMapper;
+  public PropertyService(PropertyRepository propertyRepository, ModelMapper modelMapper) {
+    this.propertyRepository = propertyRepository;
+    this.modelMapper = modelMapper;
+  }
 
   public List<PropertyDto> findAll() {
     List<PropertyDto> result = new ArrayList<>();

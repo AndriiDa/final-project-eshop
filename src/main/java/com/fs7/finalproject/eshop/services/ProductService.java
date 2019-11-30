@@ -15,14 +15,16 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-  @Autowired
   private ProductRepository productRepository;
-
-  @Autowired
   private UserRepository userRepository;
+  private ModelMapper modelMapper;
 
   @Autowired
-  private ModelMapper modelMapper;
+  public ProductService(ProductRepository productRepository, UserRepository userRepository, ModelMapper modelMapper) {
+    this.productRepository = productRepository;
+    this.userRepository = userRepository;
+    this.modelMapper = modelMapper;
+  }
 
   public List<ProductDto> findAll() {
     List<ProductDto> result = new ArrayList<>();

@@ -20,8 +20,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/properties")
 public class PropertyController {
-  @Autowired
   private PropertyService propertyService;
+
+  @Autowired
+  public PropertyController(PropertyService propertyService) {
+    this.propertyService = propertyService;
+  }
 
   @GetMapping
   public ResponseEntity<List<PropertyDto>> findAll() {

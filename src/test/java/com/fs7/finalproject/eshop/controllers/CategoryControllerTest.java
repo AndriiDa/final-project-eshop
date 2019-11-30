@@ -146,4 +146,23 @@ public class CategoryControllerTest {
         ));
   }
 
+  @Test
+  public void findAll() {
+  }
+
+  @Test
+  public void findCategoryById() {
+  }
+
+  @Test
+  public void createCategory() {
+  }
+
+  @Test
+  public void updateCategory() {
+  }
+
+  @Test
+  public void deleteCategory() {
+  }
 }

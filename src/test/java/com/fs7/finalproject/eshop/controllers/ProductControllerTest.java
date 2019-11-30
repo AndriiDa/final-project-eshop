@@ -60,4 +60,24 @@ public class ProductControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().json("[{'id':1,'category': {'id':2, 'code':'Product Code','name':'Product Category'},'title':'Product Title','description':'Product Description'}]"));
   }
+
+  @Test
+  public void findAll1() {
+  }
+
+  @Test
+  public void findById() {
+  }
+
+  @Test
+  public void create() {
+  }
+
+  @Test
+  public void update() {
+  }
+
+  @Test
+  public void delete() {
+  }
 }

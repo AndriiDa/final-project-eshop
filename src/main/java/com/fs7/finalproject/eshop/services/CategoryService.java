@@ -19,14 +19,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
-  @Autowired
   private CategoryRepository categoryRepository;
-
-  @Autowired
   private UserRepository userRepository;
+  private ModelMapper modelMapper;
 
   @Autowired
-  private ModelMapper modelMapper;
+  public CategoryService(CategoryRepository categoryRepository, UserRepository userRepository, ModelMapper modelMapper) {
+    this.categoryRepository = categoryRepository;
+    this.userRepository = userRepository;
+    this.modelMapper = modelMapper;
+  }
 
   public List<CategoryDto> findAll(Map<String, String> allParams) {
     List<CategoryDto> result = new ArrayList<>();
