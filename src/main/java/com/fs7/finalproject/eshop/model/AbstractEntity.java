@@ -20,23 +20,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class AbstractEntity implements Serializable {
-    @Id
-    @GeneratedValue
-    public Long id;
+  @Id
+  @GeneratedValue
+  public Long id;
 
-    @Column(name = "CR_TIME", updatable = false)
-    public LocalDateTime crTime;
+  @Column(name = "CR_TIME", updatable = false)
+  public LocalDateTime crTime;
 
-    @Column(name = "LM_TIME", insertable = false)
-    public LocalDateTime lmTime;
+  @Column(name = "LM_TIME", insertable = false)
+  public LocalDateTime lmTime;
 
-    @PrePersist
-    public void toCreate() {
-        setCrTime(LocalDateTime.now());
-    }
+  @PrePersist
+  public void toCreate() {
+    setCrTime(LocalDateTime.now());
+  }
 
-    @PreUpdate
-    public void toUpdate() {
-        setLmTime(LocalDateTime.now());
-    }
+  @PreUpdate
+  public void toUpdate() {
+    setLmTime(LocalDateTime.now());
+  }
 }

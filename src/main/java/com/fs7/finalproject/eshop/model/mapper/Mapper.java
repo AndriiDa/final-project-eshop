@@ -5,7 +5,7 @@ import com.fs7.finalproject.eshop.model.dto.AbstractDto;
 
 public interface Mapper<E extends AbstractEntity, D extends AbstractDto> {
 
-    E toEntity(D dto);
+  E toEntity(D dto);
 
-    D toDto(E entity);
+  D toDto(E entity);
 }
