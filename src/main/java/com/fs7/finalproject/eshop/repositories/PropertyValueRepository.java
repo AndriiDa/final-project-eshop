@@ -10,7 +10,11 @@ import java.util.Optional;
 
 @Repository
 public interface PropertyValueRepository extends JpaRepository<PropertyValue, Long> {
+
   Optional<PropertyValue> findByName(String name);
+
   Page<PropertyValue> findByPropertyId(Long propertyId, Pageable pageable);
+
   Optional<PropertyValue> findByIdAndPropertyId(Long id, Long propertyId);
+
 }

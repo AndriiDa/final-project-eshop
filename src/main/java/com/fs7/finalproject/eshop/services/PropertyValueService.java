@@ -62,7 +62,7 @@ public class PropertyValueService {
       propertyValueRepository.delete(propertyValue);
       return ResponseEntity.ok().build();
     }).orElseThrow(() ->
-        new ResourceNotFoundException("propertyValue not found with id " +
-            propertyValueId + " and propertyId " + propertyId));
+        new ResourceNotFoundException("propertyValue not found with id "
+            + propertyValueId + " and propertyId " + propertyId));
   }
 }
