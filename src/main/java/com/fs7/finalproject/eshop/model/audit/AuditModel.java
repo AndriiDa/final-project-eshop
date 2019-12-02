@@ -17,10 +17,7 @@ import java.util.Date;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(
-    value = {"crTime", "lmTime"},
-    allowGetters = true
-)
+@JsonIgnoreProperties(value = {"crTime", "lmTime"}, allowGetters = true)
 public abstract class AuditModel implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "CR_TIME", nullable = false, updatable = false)
@@ -31,5 +28,4 @@ public abstract class AuditModel implements Serializable {
   @Column(name = "LM_TIME", nullable = false)
   @LastModifiedDate
   private Date lmTime;
-
 }

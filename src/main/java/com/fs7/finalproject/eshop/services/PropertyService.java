@@ -12,8 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PropertyService {
@@ -41,8 +41,8 @@ public class PropertyService {
     return propertyRepository.findById(id).map(item1 -> {
       item1.setName(itemToUpdate.getName());
       item1.setDescription(itemToUpdate.getDescription());
-      Set<PropertyValue> values = new HashSet<>(itemToUpdate.getPropertyValues());
-//      item1.setPropertyValues(values);
+      List<PropertyValue> values = new ArrayList<>(itemToUpdate.getPropertyValues());
+      item1.setPropertyValues(values);
       return mapper.toDto(propertyRepository.save(item1));
     }).orElseThrow(() -> new ResourceNotFoundException("PropertyId " + id + " not found"));
   }
@@ -59,5 +59,4 @@ public class PropertyService {
         .map(item -> mapper.toDto(item))
         .orElseThrow(() -> new ResourceNotFoundException("PropertyId " + id + " not found"));
   }
-
 }

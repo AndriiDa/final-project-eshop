@@ -23,6 +23,10 @@ public class PropertyValueMapper extends AbstractMapper<PropertyValue, PropertyV
     this.propertyRepository = propertyRepository;
   }
 
+  private Long getId(PropertyValue source) {
+    return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getProperty().getId();
+  }
+
   @PostConstruct
   public void setupMapper() {
     mapper.createTypeMap(PropertyValue.class, PropertyValueDto.class)
@@ -34,10 +38,6 @@ public class PropertyValueMapper extends AbstractMapper<PropertyValue, PropertyV
   @Override
   public void mapSpecificFields(PropertyValue source, PropertyValueDto destination) {
     destination.setPropertyId(getId(source));
-  }
-
-  private Long getId(PropertyValue source) {
-    return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getProperty().getId();
   }
 
   @Override

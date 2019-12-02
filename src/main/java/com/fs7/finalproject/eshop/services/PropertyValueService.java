@@ -51,7 +51,7 @@ public class PropertyValueService {
     return propertyValueRepository.findById(propertyValueId).map(propertyValue -> {
       propertyValue.setName(mapper.toEntity(propertyValueDto).getName());
       propertyValue.setDescription(mapper.toEntity(propertyValueDto).getDescription());
-//      propertyValue.setProperty(mapper.map(propertyValueDto, PropertyValue.class).getProperty());
+      propertyValue.setProperty(mapper.toEntity(propertyValueDto).getProperty());
       return mapper.toDto(propertyValueRepository.save(propertyValue));
     }).orElseThrow(() -> new ResourceNotFoundException("propertyValueId " + propertyValueId + "not found"));
   }
@@ -62,6 +62,7 @@ public class PropertyValueService {
       propertyValueRepository.delete(propertyValue);
       return ResponseEntity.ok().build();
     }).orElseThrow(() ->
-        new ResourceNotFoundException("propertyValue not found with id " + propertyValueId + " and propertyId " + propertyId));
+        new ResourceNotFoundException("propertyValue not found with id " +
+            propertyValueId + " and propertyId " + propertyId));
   }
 }
