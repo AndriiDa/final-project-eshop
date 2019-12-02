@@ -1,18 +1,17 @@
 package com.fs7.finalproject.eshop.model.dto;
 
 import lombok.Data;
-
 import javax.persistence.Id;
-import java.util.List;
+import java.util.Set;
 
 @Data
-public class PropertyDto extends AbstractDto {
+public class PropertyValueDto extends AbstractDto {
   @Id
   private Long id;
+
+  private Long propertyId;
 
   private String name;
 
   private String description;
-
-  private List<PropertyValueDto> propertyValues;
 }

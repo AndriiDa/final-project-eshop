@@ -1,64 +1,63 @@
 package com.fs7.finalproject.eshop.services;
 
+import com.fs7.finalproject.eshop.exceptions.ResourceNotFoundException;
 import com.fs7.finalproject.eshop.model.Property;
+import com.fs7.finalproject.eshop.model.PropertyValue;
 import com.fs7.finalproject.eshop.model.dto.PropertyDto;
+import com.fs7.finalproject.eshop.model.mapper.PropertyMapper;
 import com.fs7.finalproject.eshop.repositories.PropertyRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class PropertyService {
   private PropertyRepository propertyRepository;
-  private ModelMapper modelMapper;
+  private PropertyMapper mapper;
 
   @Autowired
-  public PropertyService(PropertyRepository propertyRepository, ModelMapper modelMapper) {
+  public PropertyService(PropertyRepository propertyRepository, PropertyMapper mapper) {
     this.propertyRepository = propertyRepository;
-    this.modelMapper = modelMapper;
+    this.mapper = mapper;
   }
 
-  public List<PropertyDto> findAll() {
-    List<PropertyDto> result = new ArrayList<>();
-
-    propertyRepository.findAll().forEach(property -> {
-      result.add(modelMapper.map(property, PropertyDto.class));
-    });
-
-    return result;
+  public Page<PropertyDto> findAll(Pageable pageable) {
+    return propertyRepository.findAll(pageable).map(item -> (mapper.toDto(item)));
   }
 
-  public PropertyDto findById(long id) {
-    Optional<Property> property = propertyRepository.findById(id);
-    return property.map(property1 -> modelMapper.map(property1, PropertyDto.class)).orElse(null);
+  public PropertyDto save(PropertyDto item) {
+    return mapper.toDto(
+        propertyRepository.save(mapper.toEntity(item))
+    );
   }
 
-  public Long create(PropertyDto propertyDto) {
-    Property property = modelMapper.map(propertyDto, Property.class);
-    return modelMapper.map(propertyRepository.save(property), PropertyDto.class).getId();
+  public PropertyDto update(Long id, PropertyDto item) {
+    Property itemToUpdate = mapper.toEntity(item);
+    return propertyRepository.findById(id).map(item1 -> {
+      item1.setName(itemToUpdate.getName());
+      item1.setDescription(itemToUpdate.getDescription());
+      Set<PropertyValue> values = new HashSet<>(itemToUpdate.getPropertyValues());
+//      item1.setPropertyValues(values);
+      return mapper.toDto(propertyRepository.save(item1));
+    }).orElseThrow(() -> new ResourceNotFoundException("PropertyId " + id + " not found"));
   }
 
-  public int update(Long id, PropertyDto propertyDto) {
-    if (findById(id) != null) {
-      Property property = modelMapper.map(propertyDto, Property.class);
-      property.setId(id);
-      propertyRepository.save(property);
-      return 1;
-    } else {
-      return 0;
-    }
+  public ResponseEntity<?> deleteById(Long id) {
+    return propertyRepository.findById(id).map(item -> {
+      propertyRepository.delete(item);
+      return ResponseEntity.ok().build();
+    }).orElseThrow(() -> new ResourceNotFoundException("PropertyId " + id + " not found"));
   }
 
-  public int deleteById(long id) {
-    if (findById(id) != null) {
-      propertyRepository.deleteById(id);
-      return 1;
-    } else {
-      return 0;
-    }
+  public PropertyDto findById(Long id) {
+    return propertyRepository.findById(id)
+        .map(item -> mapper.toDto(item))
+        .orElseThrow(() -> new ResourceNotFoundException("PropertyId " + id + " not found"));
   }
+
 }
