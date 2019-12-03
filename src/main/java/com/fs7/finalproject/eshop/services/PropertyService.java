@@ -41,8 +41,8 @@ public class PropertyService {
     return propertyRepository.findById(id).map(item1 -> {
       item1.setName(itemToUpdate.getName());
       item1.setDescription(itemToUpdate.getDescription());
-      List<PropertyValue> values = new ArrayList<>(itemToUpdate.getPropertyValues());
-      item1.setPropertyValues(values);
+//      List<PropertyValue> values = new ArrayList<>(itemToUpdate.getPropertyValues());
+//      item1.setPropertyValues(values);
       return mapper.toDto(propertyRepository.save(item1));
     }).orElseThrow(() -> new ResourceNotFoundException("PropertyId " + id + " not found"));
   }

@@ -1,7 +1,9 @@
 package com.fs7.finalproject.eshop.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +24,8 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "CATEGORY_PROPERTY_VALUES", uniqueConstraints = {
         @UniqueConstraint(name = "IX_CATEGORY_CATEGORY_ID_PROPERTY_VALUE_ID",
                 columnNames = {"CATEGORY_ID", "PROPERTY_VALUE_ID"})})
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategoryPropertyValue {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

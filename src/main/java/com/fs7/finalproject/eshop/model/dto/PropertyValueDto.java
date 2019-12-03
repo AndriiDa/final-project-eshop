@@ -1,10 +1,12 @@
 package com.fs7.finalproject.eshop.model.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.Id;
-import java.util.Set;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class PropertyValueDto extends AbstractDto {
   @Id
   private Long id;

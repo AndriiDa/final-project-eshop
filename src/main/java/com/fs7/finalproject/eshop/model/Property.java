@@ -40,8 +40,8 @@ public class Property extends AbstractEntity {
   @Column(name = "DESCRIPTION", length = 1000)
   private String description;
 
-  //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-  //@JsonManagedReference
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+  @JsonManagedReference
   @OneToMany(mappedBy = "property", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<PropertyValue> propertyValues;
 
