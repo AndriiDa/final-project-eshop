@@ -19,7 +19,7 @@ public class PropertyDto extends AbstractDto {
 
   private String description;
 
-//  private List<PropertyValueDto> propertyValues;
+  //private List<PropertyValueDto> propertyValues;
 
   @JsonIgnore
   LocalDateTime crTime;
