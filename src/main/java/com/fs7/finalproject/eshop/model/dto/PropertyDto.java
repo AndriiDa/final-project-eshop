@@ -1,14 +1,17 @@
 package com.fs7.finalproject.eshop.model.dto;
 
-import com.fs7.finalproject.eshop.model.PropertyValue;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Id;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-public class PropertyDto {
+@EqualsAndHashCode(callSuper = false)
+public class PropertyDto extends AbstractDto {
   @Id
   private Long id;
 
@@ -16,5 +19,12 @@ public class PropertyDto {
 
   private String description;
 
-  private Set<PropertyValue> values = new HashSet<>();
+  //private List<PropertyValueDto> propertyValues;
+
+  @JsonIgnore
+  LocalDateTime crTime;
+
+  @JsonIgnore
+  LocalDateTime lmTime;
+
 }

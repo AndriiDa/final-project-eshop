@@ -1,0 +1,10 @@
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (1, 'Size1', 'Simply size');
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (2, 'Diagonal', 'Diagonal size');
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (3, 'Origin', 'Country of origin');
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (4, 'Processor', 'Processor family');
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (5, 'Refresh rate', 'Screen efresh rate');
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (6, 'Drive type', 'Hard drive type');
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (7, 'Video adapter serie', 'Video adaptor type serie');
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (8, 'Operation system', 'Running operation system');
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (9, 'Power consumption', 'Electrical power consumption');
+INSERT INTO PROPERTIES (ID, NAME, DESCRIPTION) VALUES (10, 'Weight', 'Weight');

@@ -3,7 +3,7 @@ package com.fs7.finalproject.eshop.controllers;
 import com.fs7.finalproject.eshop.model.dto.PropertyDto;
 import com.fs7.finalproject.eshop.services.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/properties")
@@ -28,36 +27,27 @@ public class PropertyController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PropertyDto>> findAll() {
-    return ResponseEntity.ok(propertyService.findAll());
-  }
-
-  @GetMapping(path = "/{id}")
-  public ResponseEntity<PropertyDto> findById(@PathVariable("id") Long id) {
-    PropertyDto productDto = propertyService.findById(id);
-    if (productDto == null) {
-      return ResponseEntity.notFound().build();
-    } else {
-      return ResponseEntity.ok(productDto);
-    }
+  public ResponseEntity<?> findAll(Pageable pageable) {
+    return ResponseEntity.ok(propertyService.findAll(pageable));
   }
 
   @PostMapping
-  public ResponseEntity<Long> create(@RequestBody PropertyDto productDto) {
-    return ResponseEntity.ok(propertyService.create(productDto));
+  public PropertyDto create(@Valid @RequestBody PropertyDto item) {
+    return propertyService.save(item);
   }
 
-  @PutMapping(path = "/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public int update(@PathVariable("id") Long id, @RequestBody PropertyDto productDto) {
-    return propertyService.update(id, productDto);
+  @PutMapping("/{id}")
+  public PropertyDto update(@PathVariable Long id, @Valid @RequestBody PropertyDto item) {
+    return propertyService.update(id, item);
   }
 
-  @DeleteMapping(path = "/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public int delete(@PathVariable("id") Long id) {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deleteById(@PathVariable Long id) {
     return propertyService.deleteById(id);
   }
 
-
+  @GetMapping(path = "/{id}")
+  public PropertyDto findById(@PathVariable Long id) {
+    return propertyService.findById(id);
+  }
 }

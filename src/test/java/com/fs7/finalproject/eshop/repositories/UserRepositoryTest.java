@@ -94,8 +94,7 @@ public class UserRepositoryTest {
     entityManager.persistAndFlush(userTwo);
     entityManager.persistAndFlush(userThree);
     // when
-    List<User> users = new ArrayList<>();
-    userRepository.findAll().forEach(users::add);
+    List<User> users = new ArrayList<>(userRepository.findAll());
     // then
     assertThat(users).hasSize(8);
   }
