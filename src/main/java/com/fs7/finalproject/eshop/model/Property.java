@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,7 +31,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Property extends AbstractEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+
   @Column(name = "ID", updatable = false)
   private Long id;
 
@@ -43,6 +44,6 @@ public class Property extends AbstractEntity {
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @JsonManagedReference
   @OneToMany(mappedBy = "property", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private List<PropertyValue> propertyValues;
+  private List<PropertyValue> propertyValues = new ArrayList<>();
 
 }

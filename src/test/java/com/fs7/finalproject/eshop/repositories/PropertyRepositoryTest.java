@@ -10,8 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,26 +54,22 @@ public class PropertyRepositoryTest {
 
   @Test
   public void checkSaveProperty() {
-//    // given
-//
-//    // when
-//    Property property2 = entityManager.persistAndFlush(property1);
-//    //then
-//    assertThat(propertyRepository.findById(property2.getId()).get()).isEqualTo(property1);
+    // given
+    // when
+    Property property = entityManager.persistAndFlush(property1);
+    //then
+    assertThat(propertyRepository.findPropertyByName(property.getName()).get()).isEqualTo(property);
   }
 
   @Test
   public void whenFindByName_thenReturnProperty() {
-//    // given
-//    entityManager.persistAndFlush(property2);
-//    entityManager.persistAndFlush(property3);
-//    // when
-//    Optional<Property> findExOptional = propertyRepository.findPropertyByName("property2");
-//    Optional<Property> findNoneExOptional = propertyRepository.findPropertyByName("property3");
-//    Property findProperty = findExOptional.get();
-//    // then
-//    assertThat(findExOptional.isPresent()).isEqualTo(true);
-//    assertThat(findNoneExOptional.isPresent()).isEqualTo(false);
-//    assertThat(findProperty.getName()).isEqualTo("property2");
+    // given
+    entityManager.persistAndFlush(property1);
+    // when
+    Optional<Property> result1 = propertyRepository.findPropertyByName("property1");
+    // then
+    assertThat(result1.isPresent()).isEqualTo(true);
+    assertThat(result1.get().getName()).isEqualTo("property1");
+    assertThat(result1.get().getName()).isNotEqualTo("property2");
   }
 }
