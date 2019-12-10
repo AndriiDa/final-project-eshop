@@ -36,6 +36,7 @@ GET http://localhost:9000/api/v1/brands/{id}
 GET http://localhost:9000/api/v1/properties/  
 POST http://localhost:9000/api/v1/properties/  
 GET http://localhost:9000/api/v1/properties/{propertyId}  
+GET http://localhost:9000/api/v1/properties/?name=Some_string  
 PUT http://localhost:9000/api/v1/properties/{propertyId}  
 DELETE http://localhost:9000/api/v1/properties/{propertyId}  
 
