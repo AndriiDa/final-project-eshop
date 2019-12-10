@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,7 +20,7 @@ public class PropertyDto extends AbstractDto {
 
   private String description;
 
-  //private List<PropertyValueDto> propertyValues;
+  private List<Long> propertyValuesIds = new ArrayList<>();
 
   @JsonIgnore
   LocalDateTime crTime;

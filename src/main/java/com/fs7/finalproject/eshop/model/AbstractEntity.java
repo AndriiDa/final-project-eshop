@@ -6,13 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.GenerationType;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Data
@@ -21,7 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public abstract class AbstractEntity implements Serializable {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   public Long id;
 
   //@Column(name = "CR_TIME", updatable = false)

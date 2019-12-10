@@ -30,9 +30,11 @@ public class PropertyValueMapper extends AbstractMapper<PropertyValue, PropertyV
   @PostConstruct
   public void setupMapper() {
     mapper.createTypeMap(PropertyValue.class, PropertyValueDto.class)
-        .addMappings(m -> m.skip(PropertyValueDto::setPropertyId)).setPostConverter(toDtoConverter());
+        .addMappings(m -> m.skip(PropertyValueDto::setPropertyId))
+        .setPostConverter(toDtoConverter());
     mapper.createTypeMap(PropertyValueDto.class, PropertyValue.class)
-        .addMappings(m -> m.skip(PropertyValue::setProperty)).setPostConverter(toEntityConverter());
+        .addMappings(m -> m.skip(PropertyValue::setProperty))
+        .setPostConverter(toEntityConverter());
   }
 
   @Override

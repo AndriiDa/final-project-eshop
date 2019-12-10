@@ -33,8 +33,10 @@ GET http://localhost:9000/api/v1/brands
 GET http://localhost:9000/api/v1/brands/{id}  
 
 ##### PROPERTIES  
-GET http://localhost:9000/api/v1/properties/
+GET http://localhost:9000/api/v1/properties/  
+POST http://localhost:9000/api/v1/properties/  
 GET http://localhost:9000/api/v1/properties/{propertyId}  
+PUT http://localhost:9000/api/v1/properties/{propertyId}  
 DELETE http://localhost:9000/api/v1/properties/{propertyId}  
 
 ##### PROPERTY_VALUES  
