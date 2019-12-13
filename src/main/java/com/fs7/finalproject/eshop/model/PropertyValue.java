@@ -17,25 +17,28 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.JoinColumn;
 import javax.persistence.ForeignKey;
+import javax.persistence.CascadeType;
 
 @Entity
 @Table(name = "PROPERTY_VALUES",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "IX_PROPERTY_VALUES_PROPERTY_ID_NAME", columnNames = {"PROPERTY_ID", "NAME"})})
+    uniqueConstraints = {
+        @UniqueConstraint(name = "IX_PROPERTY_VALUES_PROPERTY_ID_NAME", columnNames = {"PROPERTY_ID", "NAME"})})
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class PropertyValue extends AbstractEntity{
+public class PropertyValue extends AbstractEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(updatable = false)
   private Long id;
 
-  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH
+      })
   @JoinColumn(name = "PROPERTY_ID", referencedColumnName = "ID", nullable = false,
-          foreignKey = @ForeignKey(name = "FK_PROPERTY_VALUES_PROPERTIES_PROPERTY_ID"))
+      foreignKey = @ForeignKey(name = "FK_PROPERTY_VALUES_PROPERTIES_PROPERTY_ID"))
   private Property property;
 
   @Column(name = "NAME", nullable = false, length = 100)

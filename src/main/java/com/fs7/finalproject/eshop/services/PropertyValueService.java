@@ -35,7 +35,6 @@ public class PropertyValueService {
   public PropertyValueDto createPropertyValue(Long propertyId, PropertyValueDto propertyValueDto) {
     PropertyValue propertyValue = mapper.toEntity(propertyValueDto);
     return propertyRepository.findById(propertyId).map(property -> {
-
       propertyValue.setProperty(property);
       return mapper.toDto(propertyValueRepository.save(propertyValue));
     }).orElseThrow(() -> new ResourceNotFoundException("propertyId " + propertyId + " not found"));
