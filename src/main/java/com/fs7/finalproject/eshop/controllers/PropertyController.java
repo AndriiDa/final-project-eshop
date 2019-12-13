@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/properties")
@@ -27,8 +29,11 @@ public class PropertyController {
   }
 
   @GetMapping
-  public ResponseEntity<?> findAll(Pageable pageable) {
-    return ResponseEntity.ok(propertyService.findAll(pageable));
+  public ResponseEntity<?> findAll(@RequestParam(required = false) Map<String, String> allParams, Pageable pageable) {
+    String param = "name";
+    return allParams.containsKey(param)
+        ? ResponseEntity.ok(propertyService.findByName(String.valueOf(allParams.get(param))))
+        : ResponseEntity.ok(propertyService.findAll(pageable));
   }
 
   @PostMapping
