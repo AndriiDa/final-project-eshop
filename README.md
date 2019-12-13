@@ -40,7 +40,10 @@ PUT http://localhost:9000/api/v1/properties/{propertyId}
 DELETE http://localhost:9000/api/v1/properties/{propertyId}  
 
 ##### PROPERTY_VALUES  
-http://localhost:9000/api/v1/properties/{propertyId}/propertyvalues/  
+GET http://localhost:9000/api/v1/properties/{propertyId}/propertyvalues/  
+POST http://localhost:9000/api/v1/properties/{propertyId}/propertyvalues/  
+PUT http://localhost:9000/api/v1/properties/{propertyId}/propertyvalues/{propertyValueId}  
+DELETE http://localhost:9000/api/v1/properties/{propertyId}/propertyvalues/{propertyValueId}  
 
 ##### USERS  
 http://localhost:9000/api/v1/users  

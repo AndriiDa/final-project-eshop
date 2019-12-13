@@ -31,7 +31,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Property extends AbstractEntity {
   @Id
-
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "ID", updatable = false)
   private Long id;
 
@@ -43,7 +43,7 @@ public class Property extends AbstractEntity {
 
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @JsonManagedReference
-  @OneToMany(mappedBy = "property", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<PropertyValue> propertyValues = new ArrayList<>();
 
 }
