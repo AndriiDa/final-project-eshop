@@ -18,6 +18,9 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.JoinColumn;
 import javax.persistence.ForeignKey;
 import javax.persistence.CascadeType;
+import javax.persistence.Transient;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "PROPERTY_VALUES",
@@ -46,5 +49,9 @@ public class PropertyValue extends AbstractEntity {
 
   @Column(name = "DESCRIPTION", length = 1000)
   private String description;
+
+  transient Date crTime;
+
+  transient Date lmTime;
 
 }

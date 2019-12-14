@@ -24,13 +24,23 @@ POST http://localhost:9000/api/v1/categories - add a new category
 PUT http://localhost:9000/api/v1/categories/{id} - update category with id={id}  
 DELETE http://localhost:9000/api/v1/categories/{id} - delete category with id={id}  
 
-##### PRODUCTS, VENDORS, BRANDS  
+##### PRODUCTS  
 GET http://localhost:9000/api/v1/products  
 GET http://localhost:9000/api/v1/products/{id}  
-GET http://localhost:9000/api/v1/vendors  
-GET http://localhost:9000/api/v1/vendors/{id}  
+
+##### BRANDS  
 GET http://localhost:9000/api/v1/brands  
 GET http://localhost:9000/api/v1/brands/{id}  
+
+##### VENDORS    
+GET http://localhost:9000/api/v1/vendors/  
+POST http://localhost:9000/api/v1/vendors/  
+GET http://localhost:9000/api/v1/vendors/{id}  
+GET http://localhost:9000/api/v1/vendors/{id}/products  
+GET http://localhost:9000/api/v1/vendors/{id}/?name=Some_string&isactive=true    
+PUT http://localhost:9000/api/v1/vendors/{id}  
+PUT http://localhost:9000/api/v1/vendors/{id}/inactivate  
+DELETE http://localhost:9000/api/v1/vendors/{id}  
 
 ##### PROPERTIES  
 GET http://localhost:9000/api/v1/properties/  

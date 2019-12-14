@@ -18,8 +18,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Transient;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 @Entity
 @Table(name = "PROPERTIES", uniqueConstraints = {
@@ -45,5 +48,9 @@ public class Property extends AbstractEntity {
   @JsonManagedReference
   @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<PropertyValue> propertyValues = new ArrayList<>();
+
+  transient Date crTime;
+
+  transient Date lmTime;
 
 }

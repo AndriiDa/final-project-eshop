@@ -37,13 +37,13 @@ public class PropertyController {
   }
 
   @PostMapping
-  public PropertyDto create(@Valid @RequestBody PropertyDto item) {
-    return propertyService.save(item);
+  public PropertyDto create(@Valid @RequestBody PropertyDto source) {
+    return propertyService.save(source);
   }
 
   @PutMapping("/{id}")
-  public PropertyDto update(@PathVariable Long id, @Valid @RequestBody PropertyDto item) {
-    return propertyService.update(id, item);
+  public PropertyDto update(@PathVariable Long id, @Valid @RequestBody PropertyDto source) {
+    return propertyService.update(id, source);
   }
 
   @DeleteMapping("/{id}")
@@ -51,7 +51,7 @@ public class PropertyController {
     return propertyService.deleteById(id);
   }
 
-  @GetMapping(path = "/{id}")
+  @GetMapping("/{id}")
   public PropertyDto findById(@PathVariable Long id) {
     return propertyService.findById(id);
   }
