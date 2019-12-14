@@ -1,12 +1,13 @@
 package com.fs7.finalproject.eshop.model.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Id;
-import java.util.Date;
 
 @Data
-public class VendorDto {
+@EqualsAndHashCode(callSuper = false)
+public class VendorDto extends AbstractDtoWithAudit{
   @Id
   private Long id;
 
@@ -16,11 +17,7 @@ public class VendorDto {
 
   private Boolean isActive;
 
-  private Date crTime;
-
   private Long crUserId;
-
-  private Date lmTime;
 
   private Long lmUserId;
 }
