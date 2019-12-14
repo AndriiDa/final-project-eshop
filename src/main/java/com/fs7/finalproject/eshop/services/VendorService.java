@@ -66,9 +66,11 @@ public class VendorService {
           Long crUserId = source.getCrUserId();
           Long lmUserId = source.getLmUserId();
           User crUser = userRepository.findById(crUserId)
-              .orElseThrow(() -> new ResourceNotFoundException("crUserId " + crUserId + ", specified in the request body json, - not found"));;
+              .orElseThrow(() -> new ResourceNotFoundException("crUserId " + crUserId
+                  + ", specified in the request body json, - not found"));
           User lmUser = userRepository.findById(lmUserId)
-              .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + lmUserId + ", specified in the request body json, - not found"));;
+              .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + lmUserId
+                  + ", specified in the request body json, - not found"));
           item.setCrUser(crUser);
           item.setLmUser(lmUser);
           item.setId(id);
