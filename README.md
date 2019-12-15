@@ -29,8 +29,14 @@ GET http://localhost:9000/api/v1/products
 GET http://localhost:9000/api/v1/products/{id}  
 
 ##### BRANDS  
-GET http://localhost:9000/api/v1/brands  
+GET http://localhost:9000/api/v1/brands/  
+POST http://localhost:9000/api/v1/brands/  
 GET http://localhost:9000/api/v1/brands/{id}  
+GET http://localhost:9000/api/v1/brands/{id}/products  
+GET http://localhost:9000/api/v1/brands/{id}/?name=Some_string&isactive=true  
+PUT http://localhost:9000/api/v1/brands/{id}  
+PUT http://localhost:9000/api/v1/brands/{id}/inactivate  
+DELETE http://localhost:9000/api/v1/brands/{id}  
 
 ##### VENDORS    
 GET http://localhost:9000/api/v1/vendors/  
