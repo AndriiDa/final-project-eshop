@@ -1,6 +1,5 @@
 package com.fs7.finalproject.eshop.controllers;
 
-import com.fs7.finalproject.eshop.model.Vendor;
 import com.fs7.finalproject.eshop.model.dto.VendorDto;
 import com.fs7.finalproject.eshop.services.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
