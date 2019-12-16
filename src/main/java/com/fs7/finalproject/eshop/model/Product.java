@@ -7,24 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
@@ -33,23 +25,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "PRODUCTS")
 @EqualsAndHashCode(callSuper = false)
-public class Product extends AbstractEntity{
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Product extends AbstractEntityWithAudit{
   @Column(name = "ID", updatable = false)
   private Long id;
-
-  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID", nullable = false,
-          foreignKey = @ForeignKey(name = "FK_PRODUCTS_CATEGORIES_CATEGORY_ID"))
-  private Category category;
-
-  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "VENDOR_ID", referencedColumnName = "ID", nullable = false,
-          foreignKey = @ForeignKey(name = "FK_PRODUCTS_VENDORS_VENDOR_ID"))
-  private Vendor vendor;
 
   @Column(name = "SKU_CODE", length = 50)
   private String skuCode;
@@ -58,7 +36,25 @@ public class Product extends AbstractEntity{
   private String title;
 
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+      })
+  @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID", nullable = false,
+          foreignKey = @ForeignKey(name = "FK_PRODUCTS_CATEGORIES_CATEGORY_ID"))
+  private Category category;
+
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+      })
+  @JoinColumn(name = "VENDOR_ID", referencedColumnName = "ID", nullable = false,
+          foreignKey = @ForeignKey(name = "FK_PRODUCTS_VENDORS_VENDOR_ID"))
+  private Vendor vendor;
+
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+      })
   @JoinColumn(name = "BRAND_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_PRODUCTS_BRANDS_BRAND_ID"))
   private Brand brand;
@@ -99,33 +95,28 @@ public class Product extends AbstractEntity{
   @ColumnDefault("false")
   private boolean isOffer;
 
-  @Column(name = "IS_RECOMMEND", nullable = false)
+  @Column(name = "IS_RECOMMENDED", nullable = false)
   @ColumnDefault("false")
-  private boolean isRecommend;
+  private boolean isRecommended;
 
   @Column(name = "IS_ACTIVE", nullable = false)
   @ColumnDefault("true")
   private Boolean isActive;
 
-  @Column(name = "CR_TIME", nullable = false)
-  @ColumnDefault("CURRENT_TIMESTAMP")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date crTime;
-
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+      })
   @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_CR_USER_ID"))
   private User crUser;
 
-  @LastModifiedDate
-  @Column(name = "LM_TIME")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date lmTime;
-
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+      })
   @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
           foreignKey = @ForeignKey(name = "FK_PRODUCTS_USERS_LM_USER_ID"))
   private User lmUser;
+
 }

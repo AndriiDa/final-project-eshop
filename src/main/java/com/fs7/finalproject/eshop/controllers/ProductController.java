@@ -3,19 +3,21 @@ package com.fs7.finalproject.eshop.controllers;
 import com.fs7.finalproject.eshop.model.dto.ProductDto;
 import com.fs7.finalproject.eshop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.validation.Valid;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -28,34 +30,38 @@ public class ProductController {
   }
 
   @GetMapping
-  public ResponseEntity<List<ProductDto>> findAll() {
-    return ResponseEntity.ok(productService.findAll());
-  }
-
-  @GetMapping(path = "/{id}")
-  public ResponseEntity<ProductDto> findById(@PathVariable("id") Long id) {
-    ProductDto productDto = productService.findById(id);
-    if (productDto == null) {
-      return ResponseEntity.notFound().build();
-    } else {
-      return ResponseEntity.ok(productDto);
-    }
+  public ResponseEntity<?> findAll(@RequestParam(required = false) Map<String, String> allParams, Pageable pageable) {
+    return allParams.isEmpty()
+        ? ResponseEntity.ok(productService.findAll(pageable))
+        : ResponseEntity.ok(productService.findAllByParams(allParams, pageable));
   }
 
   @PostMapping
-  public ResponseEntity<Long> create(@RequestBody ProductDto productDto) {
-    return ResponseEntity.ok(productService.create(productDto));
+  public ResponseEntity<?> create(@Valid @RequestBody ProductDto source) {
+    return ResponseEntity.ok(productService.save(source));
   }
 
-  @PutMapping(path = "/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public int update(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
-    return productService.update(id, productDto);
+  @GetMapping("/{id}")
+  public ResponseEntity<?> findById(@Valid @PathVariable Long id) {
+    return Objects.nonNull(productService.findById(id))
+        ? ResponseEntity.ok(productService.findById(id))
+        : ResponseEntity.notFound().build();
   }
 
-  @DeleteMapping(path = "/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public int delete(@PathVariable("id") Long id) {
-    return productService.deleteById(id);
+  @PutMapping("/{id}")
+  public ResponseEntity<?> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody ProductDto source) {
+    return ResponseEntity.ok(productService.update(id, source));
+  }
+
+  @PutMapping("/{id}/inactivate")
+  public ResponseEntity<?> setInactive(@Valid @PathVariable("id") Long id) {
+    ProductDto destination = (ProductDto) productService.findById(id);
+    destination.setIsActive(false);
+    return ResponseEntity.ok(productService.save(destination));
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deleteById(@PathVariable Long id) {
+    return ResponseEntity.ok(productService.deleteById(id));
   }
 }

@@ -78,13 +78,6 @@ public class VendorService {
         }).orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
   }
 
-  public ResponseEntity<?> deleteById(Long id) {
-    return vendorRepository.findById(id).map(item -> {
-      vendorRepository.delete(item);
-      return ResponseEntity.ok().build();
-    }).orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
-  }
-
   public VendorDto save(VendorDto source) {
     return vendorMapper.toDto(vendorRepository.save(vendorMapper.toEntity(source)));
   }
@@ -98,5 +91,12 @@ public class VendorService {
   public Page<ProductDto> findAllProductsByVendorId(Long id, Pageable pageable) {
     return productRepository.findAllByVendor(vendorMapper.toEntity((VendorDto) findById(id)), pageable)
         .map(item -> productMapper.toDto(item));
+  }
+
+  public ResponseEntity<?> deleteById(Long id) {
+    return vendorRepository.findById(id).map(item -> {
+      vendorRepository.delete(item);
+      return ResponseEntity.ok().build();
+    }).orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
   }
 }
