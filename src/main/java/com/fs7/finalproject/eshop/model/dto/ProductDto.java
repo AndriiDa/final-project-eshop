@@ -5,25 +5,24 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ProductDto extends AbstractDto {
+public class ProductDto extends AbstractDtoWithAudit {
   @Id
   private Long id;
 
   private Long categoryId;
 
-  private Long vendorId;
-
   private String skuCode;
 
   private String title;
 
+  private String description;
+
   private Long brandId;
 
-  private String description;
+  private Long vendorId;
 
   private String cartDescription;
 
@@ -43,9 +42,9 @@ public class ProductDto extends AbstractDto {
 
   private BigDecimal discountPrice;
 
-  private boolean isOffer;
+  private Boolean isOffer;
 
-  private boolean isRecommend;
+  private Boolean isRecommended;
 
   private Boolean isActive;
 

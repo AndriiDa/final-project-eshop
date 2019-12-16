@@ -26,7 +26,11 @@ DELETE http://localhost:9000/api/v1/categories/{id} - delete category with id={i
 
 ##### PRODUCTS  
 GET http://localhost:9000/api/v1/products  
+POST http://localhost:9000/api/v1/products  
 GET http://localhost:9000/api/v1/products/{id}  
+PUT http://localhost:9000/api/v1/products/{id}  
+PUT http://localhost:9000/api/v1/products/{id}/inactivate  
+DELETE http://localhost:9000/api/v1/products/{id}  
 
 ##### BRANDS  
 GET http://localhost:9000/api/v1/brands/  
