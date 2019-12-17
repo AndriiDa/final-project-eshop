@@ -21,7 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -55,35 +54,35 @@ public class ProductService {
   public Page<ProductDto> findAllByParams(Map<String, String> allParams, Pageable pageable) {
     // {categoryid}{vendorid}{brandid}{sku}{isoffer}{isrecommend}{isactive}
     Product template = new Product();
-    template.setCategory(null);
-    template.setBrand(null);
-    template.setVendor(null);
-    template.setSkuCode("");
-    template.setOffer(false);
-    template.setRecommended(false);
-    template.setIsActive(false);
+
     allParams.keySet().forEach(item -> {
-      switch (item) {
+      switch (item.toLowerCase()) {
         case "categoryid":
-          template.setCategory(categoryRepository
-              .getOne(Long.valueOf(allParams.get(item))));
+          Category category = new Category();
+          category.setId(categoryRepository
+              .getOne(Long.valueOf(allParams.get(item))).getId());
+          template.setCategory(category);
           break;
         case "brandid":
-          template.setBrand(brandRepository
-              .getOne(Long.valueOf(allParams.get(item))));
+          Brand brand = new Brand();
+          brand.setId(brandRepository
+              .getOne(Long.valueOf(allParams.get(item))).getId());
+          template.setBrand(brand);
           break;
         case "vendorid":
-          template.setVendor(vendorRepository
-              .getOne(Long.valueOf(allParams.get(item))));
+          Vendor vendor = new Vendor();
+          vendor.setId(vendorRepository
+              .getOne(Long.valueOf(allParams.get(item))).getId());
+          template.setVendor(vendor);
           break;
         case "sku":
           template.setSkuCode(allParams.get(item));
           break;
         case "isoffer":
-          template.setOffer(Boolean.valueOf(allParams.get(item)));
+          template.setIsOffer(Boolean.valueOf(allParams.get(item)));
           break;
         case "isrecommended":
-          template.setRecommended(Boolean.valueOf(allParams.get(item)));
+          template.setIsRecommended(Boolean.valueOf(allParams.get(item)));
           break;
         case "isactive":
           template.setIsActive(Boolean.valueOf(allParams.get(item)));
@@ -93,16 +92,9 @@ public class ProductService {
       }
     });
 
-    ExampleMatcher matcher = ExampleMatcher.matchingAll()
-        .withIgnorePaths("quantity")
-        .withMatcher("skuCode", ExampleMatcher.GenericPropertyMatchers.exact())
-        .withMatcher("isOffer", ExampleMatcher.GenericPropertyMatchers.exact())
-        .withMatcher("isRecommended", ExampleMatcher.GenericPropertyMatchers.exact())
-        .withMatcher("isActive", ExampleMatcher.GenericPropertyMatchers.exact())
-        .withMatcher("categoryId", ExampleMatcher.GenericPropertyMatchers.exact())
-        .withMatcher("brandId", ExampleMatcher.GenericPropertyMatchers.exact())
-        .withMatcher("vendorId", ExampleMatcher.GenericPropertyMatchers.exact())
-        .withIgnoreNullValues();
+    ExampleMatcher matcher = ExampleMatcher.matching()
+        .withIgnoreNullValues()
+        .withIgnoreCase();
 
     Example<Product> example = Example.of(template, matcher);
 
@@ -125,6 +117,8 @@ public class ProductService {
           item.setQuantity(destination.getQuantity());
           item.setBasePrice(destination.getBasePrice());
           item.setDiscountPrice(destination.getDiscountPrice());
+          item.setIsOffer(destination.getIsOffer());
+          item.setIsRecommended(destination.getIsRecommended());
           item.setIsActive(destination.getIsActive());
           Long categoryId = source.getCategoryId();
           Category category = categoryRepository.findById(categoryId)
