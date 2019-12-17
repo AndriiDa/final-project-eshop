@@ -36,13 +36,9 @@ public class PropertyMapper extends AbstractMapper<Property, PropertyDto> {
   @PostConstruct
   public void setupMapper() {
     mapper.createTypeMap(Property.class, PropertyDto.class)
-        //.addMappings(m -> m.skip(PropertyDto::setCrTime))
-        //.addMappings(m -> m.skip(PropertyDto::setLmTime))
         .addMappings(m -> m.skip(PropertyDto::setPropertyValuesIds))
         .setPostConverter(toDtoConverter());
     mapper.createTypeMap(PropertyDto.class, Property.class)
-        //.addMappings(m -> m.skip(Property::setCrTime))
-        //.addMappings(m -> m.skip(Property::setLmTime))
         .addMappings(m -> m.skip(Property::setPropertyValues))
         .setPostConverter(toEntityConverter());
   }
