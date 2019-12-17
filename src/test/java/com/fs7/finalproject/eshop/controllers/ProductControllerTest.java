@@ -2,31 +2,22 @@ package com.fs7.finalproject.eshop.controllers;
 
 import com.fs7.finalproject.eshop.model.Category;
 import com.fs7.finalproject.eshop.model.Product;
-import com.fs7.finalproject.eshop.model.mapper.ProductMapper;
+import com.fs7.finalproject.eshop.services.ProductPropertyValueService;
 import com.fs7.finalproject.eshop.services.ProductService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.*;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -40,6 +31,9 @@ public class ProductControllerTest {
 
   @MockBean
   ProductService productService;
+
+  @MockBean
+  ProductPropertyValueService productPropertyValueService;
 
   //ObjectMapper mapper = new ObjectMapper();
 

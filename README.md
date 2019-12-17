@@ -34,9 +34,18 @@ GET http://localhost:9000/api/v1/products/?isoffer=true
 GET http://localhost:9000/api/v1/products/?isrecommended=true  
 GET http://localhost:9000/api/v1/products/?isactive=true  
 GET http://localhost:9000/api/v1/products/{id}  
+GET http://localhost:9000/api/v1/products/{id}/properties
 PUT http://localhost:9000/api/v1/products/{id}  
 PUT http://localhost:9000/api/v1/products/{id}/inactivate  
 DELETE http://localhost:9000/api/v1/products/{id}  
+
+##### PRODUCT PROPERTY VALUES  
+GET http://localhost:9000/api/v1/productpropertyvalues  
+GET http://localhost:9000/api/v1/productpropertyvalues/?productid=1  
+GET http://localhost:9000/api/v1/productpropertyvalues/?valueid=1  
+POST http://localhost:9000/api/v1/productpropertyvalues  
+PUT http://localhost:9000/api/v1/productpropertyvalues/{id}  
+DELETE http://localhost:9000/api/v1/productpropertyvalues/{id}  
 
 ##### BRANDS  
 GET http://localhost:9000/api/v1/brands/  

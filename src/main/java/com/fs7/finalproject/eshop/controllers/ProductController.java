@@ -1,6 +1,7 @@
 package com.fs7.finalproject.eshop.controllers;
 
 import com.fs7.finalproject.eshop.model.dto.ProductDto;
+import com.fs7.finalproject.eshop.services.ProductPropertyValueService;
 import com.fs7.finalproject.eshop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -23,10 +24,13 @@ import java.util.Objects;
 @RequestMapping("/api/v1/products")
 public class ProductController {
   private ProductService productService;
+  private ProductPropertyValueService productPropertyValueService;
 
   @Autowired
-  public ProductController(ProductService productService) {
+  public ProductController(ProductService productService,
+                           ProductPropertyValueService productPropertyValueService) {
     this.productService = productService;
+    this.productPropertyValueService = productPropertyValueService;
   }
 
   @GetMapping
@@ -45,6 +49,14 @@ public class ProductController {
   public ResponseEntity<?> findById(@Valid @PathVariable Long id) {
     return Objects.nonNull(productService.findById(id))
         ? ResponseEntity.ok(productService.findById(id))
+        : ResponseEntity.notFound().build();
+  }
+
+  @GetMapping("/{id}/properties")
+  public ResponseEntity<?> findAllPropertiesByProductId(@Valid @PathVariable Long id,
+                                                        Pageable pageable) {
+    return Objects.nonNull(productPropertyValueService.findAllByProductId(id, pageable))
+        ? ResponseEntity.ok(productPropertyValueService.findAllByProductId(id, pageable))
         : ResponseEntity.notFound().build();
   }
 
