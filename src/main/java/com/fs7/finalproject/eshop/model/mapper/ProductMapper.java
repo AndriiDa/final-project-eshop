@@ -1,6 +1,5 @@
 package com.fs7.finalproject.eshop.model.mapper;
 
-import com.fs7.finalproject.eshop.exceptions.ResourceNotFoundException;
 import com.fs7.finalproject.eshop.model.Product;
 import com.fs7.finalproject.eshop.model.dto.ProductDto;
 import com.fs7.finalproject.eshop.repositories.BrandRepository;

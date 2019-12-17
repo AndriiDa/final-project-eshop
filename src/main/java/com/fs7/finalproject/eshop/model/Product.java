@@ -81,7 +81,7 @@ public class Product extends AbstractEntityWithAudit{
   private Double weight;
 
   @Column(name = "QUANTITY", nullable = false)
-  private int quantity;
+  private Integer quantity;
 
   @Column(name = "BASE_PRICE", nullable = false)
   @ColumnDefault("0.00")
@@ -93,11 +93,11 @@ public class Product extends AbstractEntityWithAudit{
 
   @Column(name = "IS_OFFER", nullable = false)
   @ColumnDefault("false")
-  private boolean isOffer;
+  private Boolean isOffer;
 
   @Column(name = "IS_RECOMMENDED", nullable = false)
   @ColumnDefault("false")
-  private boolean isRecommended;
+  private Boolean isRecommended;
 
   @Column(name = "IS_ACTIVE", nullable = false)
   @ColumnDefault("true")

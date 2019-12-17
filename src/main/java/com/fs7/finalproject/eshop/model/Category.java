@@ -47,7 +47,7 @@ public class Category {
   private Category parentCategory;
 
   @Column(name = "IS_GROUP", nullable = false)
-  private boolean isGroup;
+  private Boolean isGroup;
 
   @Column(name = "CODE", length = 50)
   private String code;
@@ -63,7 +63,7 @@ public class Category {
 
   @Column(name = "IS_ACTIVE", nullable = false)
   @ColumnDefault("true")
-  private boolean isActive;
+  private Boolean isActive;
 
   @CreatedDate
   @Column(name = "CR_TIME", nullable = false)

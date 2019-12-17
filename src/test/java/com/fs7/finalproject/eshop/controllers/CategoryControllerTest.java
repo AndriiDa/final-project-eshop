@@ -37,7 +37,7 @@ public class CategoryControllerTest {
   @MockBean
   CategoryService categoryService;
 
-  ModelMapper modelMapper = new ModelMapper();
+  private ModelMapper modelMapper = new ModelMapper();
 
   @Test
   public void returnsAllCategories() throws Exception {
@@ -48,6 +48,8 @@ public class CategoryControllerTest {
         .name("Category1")
         .description("Category1 Description")
         .isActive(true)
+        .isGroup(true)
+        .imgUrl("Image URL 1")
         .crUser(
             User.builder()
                 .id(101L)
@@ -66,6 +68,8 @@ public class CategoryControllerTest {
         .name("Category2")
         .description("Category2 Description")
         .isActive(true)
+        .isGroup(true)
+        .imgUrl("Image URL 2")
         .crUser(
             User.builder()
                 .id(102L)
@@ -92,9 +96,8 @@ public class CategoryControllerTest {
             "{'id':25," +
             "'code':'code1'," +
             "'name':'Category1'," +
-            "'imgUrl':null," +
+            "'imgUrl':'Image URL 1'," +
             "'description':'Category1 Description'," +
-            "'crTime':null," +
             "'crUser':" +
             "{'id':101," +
             "'firstName':null," +
@@ -115,12 +118,12 @@ public class CategoryControllerTest {
             "'active':false}," +
             "'lmTime':null," +
             "'lmUser':null," +
-            "'active':true," +
-            "'group':false}," +
+            "'isActive':true," +
+            "'isGroup':true}," +
             "{'id':26," +
             "'code':'code2'," +
             "'name':'Category2'," +
-            "'imgUrl':null," +
+            "'imgUrl':'Image URL 2'," +
             "'description':'Category2 Description'," +
             "'crTime':null," +
             "'crUser':" +
@@ -143,8 +146,8 @@ public class CategoryControllerTest {
             "'active':false}," +
             "'lmTime':null," +
             "'lmUser':null," +
-            "'active':true," +
-            "'group':false}]"
+            "'isActive':true," +
+            "'isGroup':true}]"
         ));
   }
 
