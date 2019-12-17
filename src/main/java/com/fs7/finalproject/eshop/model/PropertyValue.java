@@ -9,18 +9,12 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.JoinColumn;
 import javax.persistence.ForeignKey;
 import javax.persistence.CascadeType;
-import javax.persistence.Transient;
-
-import java.util.Date;
 
 @Entity
 @Table(name = "PROPERTY_VALUES",
@@ -32,8 +26,6 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class PropertyValue extends AbstractEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(updatable = false)
   private Long id;
 
@@ -49,9 +41,5 @@ public class PropertyValue extends AbstractEntity {
 
   @Column(name = "DESCRIPTION", length = 1000)
   private String description;
-
-  transient Date crTime;
-
-  transient Date lmTime;
 
 }
