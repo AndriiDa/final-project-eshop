@@ -1,168 +1,145 @@
 package com.fs7.finalproject.eshop.services;
 
-import com.fs7.finalproject.eshop.model.dto.CategoryDto;
+import com.fs7.finalproject.eshop.exceptions.ResourceNotFoundException;
 import com.fs7.finalproject.eshop.model.Category;
 import com.fs7.finalproject.eshop.model.User;
-import com.fs7.finalproject.eshop.model.dto.PropertyDto;
+import com.fs7.finalproject.eshop.model.dto.CategoryDto;
+import com.fs7.finalproject.eshop.model.mapper.CategoryMapper;
 import com.fs7.finalproject.eshop.repositories.CategoryRepository;
 import com.fs7.finalproject.eshop.repositories.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
   private CategoryRepository categoryRepository;
   private UserRepository userRepository;
-  private ModelMapper modelMapper;
+  private CategoryMapper mapper;
 
   @Autowired
-  public CategoryService(CategoryRepository categoryRepository, UserRepository userRepository, ModelMapper modelMapper) {
+  public CategoryService(CategoryRepository categoryRepository, UserRepository userRepository, CategoryMapper mapper) {
     this.categoryRepository = categoryRepository;
     this.userRepository = userRepository;
-    this.modelMapper = modelMapper;
+    this.mapper = mapper;
   }
 
-  public List<CategoryDto> findAll(Map<String, String> allParams) {
-    List<CategoryDto> result = new ArrayList<>();
+  public Page<CategoryDto> findAll(Pageable pageable) {
+    return categoryRepository.findAll(pageable).map(item -> (mapper.toDto(item)));
+  }
 
-    categoryRepository.findAll().forEach(category -> {
-      result.add(modelMapper.map(category, CategoryDto.class));
-    });
+  public Page<CategoryDto> findAllByParams(Map<String, String> allParams, Pageable pageable) {
+    // {parentid}{code}{name}{isgroup}{isactive}
+    final String paramParentCategoryId = "parentid";
+    Category template = new Category();
 
-    List<CategoryDto> result0 = new ArrayList<>(result);
-    Map<String, List<CategoryDto>> filterResults = new HashMap<>();
-
-    for (String param : allParams.keySet()) {
-      switch (param) {
-        case ("code"):
-          String code = String.valueOf(allParams.get(param));
-          List<CategoryDto> result1 = result0
-              .stream()
-              .filter(category -> category.getCode().equalsIgnoreCase(code))
-              .collect(Collectors.toList());
-          if (!result1.isEmpty()) {
-            filterResults.put(param, result1);
+    allParams.keySet().forEach(item -> {
+      switch (item.toLowerCase()) {
+        case paramParentCategoryId:
+          if (String.valueOf(allParams.get(item)).equalsIgnoreCase("null")) {
+            break;
           }
+          Category parentCategory = new Category();
+          parentCategory.setId(categoryRepository.getOne(Long.valueOf(allParams.get(item))).getId());
+          template.setParentCategory(parentCategory);
           break;
-        case ("name"):
-          String name = String.valueOf(allParams.get(param));
-          List<CategoryDto> result2 = result0
-              .stream()
-              .filter(category -> category.getName().equalsIgnoreCase(name))
-              .collect(Collectors.toList());
-          if (!result2.isEmpty()) {
-            filterResults.put(param, result2);
-          }
+        case "code":
+          template.setCode(String.valueOf(allParams.get(item)));
           break;
-        case ("isgroup"):
-          Boolean isGroup = Boolean.valueOf(allParams.get(param));
-          List<CategoryDto> result3 = result0
-              .stream()
-              .filter(CategoryDto::isGroup)
-              .collect(Collectors.toList());
-          if (!result3.isEmpty()) {
-            filterResults.put(param, result3);
-          }
+        case "name":
+          template.setName(String.valueOf(allParams.get(item)));
           break;
-        case ("isactive"):
-          Boolean isActive = Boolean.valueOf(allParams.get(param));
-          List<CategoryDto> result4 = result0
-              .stream()
-              .filter(CategoryDto::isActive)
-              .collect(Collectors.toList());
-          if (!result4.isEmpty()) {
-            filterResults.put(param, result4);
-          }
+        case "isgroup":
+          template.setIsGroup(Boolean.valueOf(allParams.get(item)));
           break;
-        case ("parentcategoryid"):
-          List<CategoryDto> result5;
-          if (allParams.get(param).equalsIgnoreCase("null")) {
-            result5 = result0
-                .stream()
-                .filter(category -> (category.getParentCategoryId() == null))
-                .collect(Collectors.toList());
-          } else {
-            Long parentcategoryid = Long.valueOf(allParams.get(param));
-            result5 = result0
-                .stream()
-                .filter(category -> category.getParentCategoryId().equals(parentcategoryid))
-                .collect(Collectors.toList());
-          }
-          if (!result5.isEmpty()) {
-            filterResults.put(param, result5);
-          }
+        case "isactive":
+          template.setIsActive(Boolean.valueOf(allParams.get(item)));
           break;
         default:
           break;
       }
-    }
+    });
 
-    result0.clear();
-    int i = 0;
-    for (String param : filterResults.keySet()) {
-      if (i++ == 0) {
-        result0.addAll(filterResults.get(param));
-      } else {
-        result0.retainAll(filterResults.get(param));
+    ExampleMatcher matcher = ExampleMatcher.matching()
+        .withIgnoreNullValues()
+        .withIgnoreCase();
+
+    Example<Category> example = Example.of(template, matcher);
+
+    Page<Category> categoryFiltered = categoryRepository.findAll(example, pageable);
+
+    // i need to handle ExampleMatcher above when parentCategoryId is null
+    if (allParams.containsKey(paramParentCategoryId)
+        && String.valueOf(allParams.get(paramParentCategoryId)).equalsIgnoreCase("null")) {
+
+      List<Category> categoryWithParentCategoryNull = categoryRepository.findCategoriesByParentCategoryNull();
+      if (categoryWithParentCategoryNull.size() > 0) {
+        categoryWithParentCategoryNull.retainAll(categoryFiltered.getContent());
+        return new PageImpl<>(categoryWithParentCategoryNull
+            .stream()
+            .map(item1 -> (mapper.toDto(item1)))
+            .collect(Collectors.toList()), pageable, categoryWithParentCategoryNull.size());
       }
-
     }
-    return result0.size() == 0 ? result : result0;
+    return categoryFiltered.map(item -> (mapper.toDto(item)));
   }
 
-  public Long create(CategoryDto categoryDto) {
-    Category category = modelMapper.map(categoryDto, Category.class);
-    Long userId = categoryDto.getCrUserId();
-    User crUser = userRepository.findById(userId).orElse(null);
-    category.setCrUser(crUser);
-    return modelMapper.map(categoryRepository.save(category), CategoryDto.class).getId();
+  public CategoryDto update(Long id, CategoryDto source) {
+    Category destination = mapper.toEntity(source);
+    return categoryRepository.findById(id)
+        .map(item -> {
+          item.setCode(destination.getCode());
+          item.setName(destination.getName());
+          item.setDescription(destination.getDescription());
+          item.setImgUrl(destination.getImgUrl());
+          item.setIsGroup(destination.getIsGroup());
+          item.setIsActive(destination.getIsActive());
+          Long categoryId = source.getParentCategoryId();
+          Category category = Objects.isNull(categoryId)
+              ? null
+              : categoryRepository.findById(categoryId)
+              .orElseThrow(() -> new ResourceNotFoundException("ParemtCategoryId " + categoryId
+                  + ", specified in the request body json, - not found"));
+          item.setParentCategory(category);
+          Long crUserId = source.getCrUserId();
+          Long lmUserId = source.getLmUserId();
+          User crUser = userRepository.findById(crUserId)
+              .orElseThrow(() -> new ResourceNotFoundException("crUserId " + crUserId
+                  + ", specified in the request body json, - not found"));
+          User lmUser = userRepository.findById(lmUserId)
+              .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + lmUserId
+                  + ", specified in the request body json, - not found"));
+          item.setCrUser(crUser);
+          item.setLmUser(lmUser);
+          item.setId(id);
+          return mapper.toDto(categoryRepository.save(item));
+        }).orElseThrow(() -> new ResourceNotFoundException("CategoryId " + id + " not found"));
   }
 
-  public void save(Category category) {
-    categoryRepository.save(category);
+  public CategoryDto save(CategoryDto source) {
+    return mapper.toDto(categoryRepository.save(mapper.toEntity(source)));
   }
 
-  public CategoryDto findById(Long id) {
-    Optional<Category> category = categoryRepository.findById(id);
-    return category.map(category1 -> modelMapper.map(category1, CategoryDto.class)).orElse(null);
+  public Object findById(Long id) {
+    return categoryRepository.findById(id)
+        .map(item -> mapper.toDto(item))
+        .orElseThrow(() -> new ResourceNotFoundException("CategoryId " + id + " not found"));
   }
 
-  public int update(Long id, CategoryDto categoryDto) {
-    if (findById(id) != null) {
-      Category category = modelMapper.map(categoryDto, Category.class);
-      Long crUserId = categoryDto.getCrUserId();
-      Long lmUserId = categoryDto.getLmUserId();
-      User crUser = userRepository.findById(crUserId).orElse(null);
-      User lmUser = userRepository.findById(lmUserId).orElse(null);
-      category.setCrUser(crUser);
-      category.setLmUser(lmUser);
-      category.setId(id);
-      categoryRepository.save(category);
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-
-  public int delete(Long id) {
-    if (findById(id) != null) {
-      categoryRepository.deleteById(id);
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-
-  public List<PropertyDto> findPropertiesByCategoryId(Long id) {
-    List<PropertyDto> result = new ArrayList<>();
-    return result;
+  public ResponseEntity<?> deleteById(Long id) {
+    return categoryRepository.findById(id).map(item -> {
+      categoryRepository.delete(item);
+      return ResponseEntity.ok().build();
+    }).orElseThrow(() -> new ResourceNotFoundException("CategoryId " + id + " not found"));
   }
 }
