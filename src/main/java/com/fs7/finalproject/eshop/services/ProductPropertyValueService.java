@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SerializationUtils;
 
 import java.util.Map;
 
@@ -79,13 +80,12 @@ public class ProductPropertyValueService {
   }
 
   public ProductPropertyValueDto update(Long id, ProductPropertyValueDto source) {
-    ProductPropertyValue destination = mapper.toEntity(source);
     return productPropertyValueRepository.findById(id)
         .map(item -> {
-          item.setProduct(destination.getProduct());
-          item.setPropertyValue(destination.getPropertyValue());
-          item.setId(id);
-          return mapper.toDto(productPropertyValueRepository.save(item));
+          ProductPropertyValue destination = (ProductPropertyValue) SerializationUtils
+              .deserialize(SerializationUtils.serialize(mapper.toEntity(source)).clone());
+          destination.setId(id);
+          return mapper.toDto(productPropertyValueRepository.save(destination));
         }).orElseThrow(() -> new ResourceNotFoundException("ProductPropertyValueId " + id + " not found"));
   }
 
@@ -93,13 +93,13 @@ public class ProductPropertyValueService {
     return mapper.toDto(productPropertyValueRepository.save(mapper.toEntity(source)));
   }
 
-  public Object findById(Long id) {
+  public ProductPropertyValueDto findById(Long id) {
     return productPropertyValueRepository.findById(id)
         .map(item -> mapper.toDto(item))
         .orElseThrow(() -> new ResourceNotFoundException("ProductPropertyValueId " + id + " not found"));
   }
 
-  public ResponseEntity<?> deleteById(Long id) {
+  public ResponseEntity<Object> deleteById(Long id) {
     return productPropertyValueRepository.findById(id).map(item -> {
       productPropertyValueRepository.delete(item);
       return ResponseEntity.ok().build();

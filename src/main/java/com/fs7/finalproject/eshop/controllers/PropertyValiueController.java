@@ -3,6 +3,7 @@ package com.fs7.finalproject.eshop.controllers;
 import com.fs7.finalproject.eshop.model.dto.PropertyValueDto;
 import com.fs7.finalproject.eshop.services.PropertyValueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,27 +28,28 @@ public class PropertyValiueController {
   }
 
   @GetMapping("/{propertyId}/propertyvalues")
-  public ResponseEntity<?> findByPropertyId(@PathVariable(value = "propertyId") Long propertyId, Pageable pageable) {
+  public ResponseEntity<Page<PropertyValueDto>> findByPropertyId(@Valid @PathVariable(value = "propertyId") Long propertyId,
+                                                                 Pageable pageable) {
     return ResponseEntity.ok(propertyValueService.findByPropertyId(propertyId, pageable));
   }
 
   @PostMapping("/{propertyId}/propertyvalues")
-  public PropertyValueDto createPropertyValue(@PathVariable(value = "propertyId") Long propertyId,
+  public PropertyValueDto create(@Valid @PathVariable(value = "propertyId") Long propertyId,
                                               @Valid @RequestBody PropertyValueDto propertyValueDto) {
-    return propertyValueService.createPropertyValue(propertyId, propertyValueDto);
+    return propertyValueService.save(propertyId, propertyValueDto);
   }
 
   @PutMapping("/{propertyId}/propertyvalues/{propertyValueId}")
-  public PropertyValueDto updatePropertyValue(@PathVariable(value = "propertyId") Long propertyId,
+  public ResponseEntity<PropertyValueDto> save(@PathVariable(value = "propertyId") Long propertyId,
                                               @PathVariable(value = "propertyValueId") Long propertyValueId,
-                                              @Valid @RequestBody PropertyValueDto propertyValueDto) {
+                                              @Valid @RequestBody PropertyValueDto source) {
 
-    return propertyValueService.updatePropertyValue(propertyId, propertyValueId, propertyValueDto);
+    return ResponseEntity.ok(propertyValueService.update(propertyId, propertyValueId, source));
   }
 
   @DeleteMapping("/{propertyId}/propertyvalues/{propertyValueId}")
-  public ResponseEntity<?> deletePropertyValue(@PathVariable(value = "propertyId") Long propertyId,
+  public ResponseEntity<Object> deletePropertyValue(@PathVariable(value = "propertyId") Long propertyId,
                                                @PathVariable(value = "propertyValueId") Long propertyValueId) {
-    return propertyValueService.deletePropertyValue(propertyId, propertyValueId);
+    return ResponseEntity.ok(propertyValueService.deletePropertyValue(propertyId, propertyValueId));
   }
 }

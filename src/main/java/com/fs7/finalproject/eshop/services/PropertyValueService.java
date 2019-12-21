@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SerializationUtils;
 
 @Service
 public class PropertyValueService {
@@ -32,36 +33,37 @@ public class PropertyValueService {
         .map(item -> (mapper.toDto(item)));
   }
 
-  public PropertyValueDto createPropertyValue(Long propertyId, PropertyValueDto propertyValueDto) {
-    PropertyValue propertyValue = mapper.toEntity(propertyValueDto);
-    return propertyRepository.findById(propertyId).map(property -> {
-      propertyValue.setProperty(property);
-      return mapper.toDto(propertyValueRepository.save(propertyValue));
-    }).orElseThrow(() -> new ResourceNotFoundException("propertyId " + propertyId + " not found"));
+  public PropertyValueDto save(Long propertyId, PropertyValueDto source) {
+    return propertyRepository.findById(propertyId).map(item -> {
+      PropertyValue destination = mapper.toEntity(source);
+      destination.setProperty(item);
+      return mapper.toDto(propertyValueRepository.save(destination));
+    }).orElseThrow(() -> new ResourceNotFoundException("PropertyId " + propertyId + " not found"));
   }
 
-  public PropertyValueDto updatePropertyValue(Long propertyId,
+  public PropertyValueDto update(Long propertyId,
                                               Long propertyValueId,
-                                              PropertyValueDto propertyValueDto) {
+                                              PropertyValueDto source) {
     if (!propertyRepository.existsById(propertyId)) {
-      throw new ResourceNotFoundException("propertyId " + propertyId + " not found");
+      throw new ResourceNotFoundException("PropertyId " + propertyId + " not found");
     }
 
-    return propertyValueRepository.findById(propertyValueId).map(propertyValue -> {
-      propertyValue.setName(mapper.toEntity(propertyValueDto).getName());
-      propertyValue.setDescription(mapper.toEntity(propertyValueDto).getDescription());
-      propertyValue.setProperty(mapper.toEntity(propertyValueDto).getProperty());
-      return mapper.toDto(propertyValueRepository.save(propertyValue));
-    }).orElseThrow(() -> new ResourceNotFoundException("propertyValueId " + propertyValueId + "not found"));
+    return propertyValueRepository.findById(propertyValueId).map(item -> {
+      PropertyValue destination = (PropertyValue) SerializationUtils
+          .deserialize(SerializationUtils.serialize(mapper.toEntity(source)).clone());
+      destination.setId(propertyValueId);
+
+      return mapper.toDto(propertyValueRepository.save(destination));
+    }).orElseThrow(() -> new ResourceNotFoundException("PropertyValueId " + propertyValueId + "not found"));
   }
 
-  public ResponseEntity<?> deletePropertyValue(Long propertyId,
+  public ResponseEntity<Object> deletePropertyValue(Long propertyId,
                                                Long propertyValueId) {
     return propertyValueRepository.findByIdAndPropertyId(propertyValueId, propertyId).map(propertyValue -> {
       propertyValueRepository.delete(propertyValue);
       return ResponseEntity.ok().build();
     }).orElseThrow(() ->
-        new ResourceNotFoundException("propertyValue not found with id "
+        new ResourceNotFoundException("PropertyValue not found with id "
             + propertyValueId + " and propertyId " + propertyId));
   }
 }

@@ -2,7 +2,6 @@ package com.fs7.finalproject.eshop.services;
 
 import com.fs7.finalproject.eshop.exceptions.ResourceNotFoundException;
 import com.fs7.finalproject.eshop.model.Vendor;
-import com.fs7.finalproject.eshop.model.User;
 import com.fs7.finalproject.eshop.model.dto.ProductDto;
 import com.fs7.finalproject.eshop.model.dto.VendorDto;
 import com.fs7.finalproject.eshop.model.mapper.ProductMapper;
@@ -17,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SerializationUtils;
+
+import java.util.Map;
 
 @Service
 public class VendorService {
@@ -37,44 +39,55 @@ public class VendorService {
     this.productRepository = productRepository;
     this.vendorMapper = vendorMapper;
     this.productMapper = productMapper;
-
   }
 
   public Page<VendorDto> findAll(Pageable pageable) {
     return vendorRepository.findAll(pageable).map(item -> (vendorMapper.toDto(item)));
   }
 
-  public Page<VendorDto> findByNameAndActiveIsTrue(String paramNameValue, Boolean paramIsActiveValue, Pageable pageable) {
+  public Page<VendorDto> findByParams(Map<String, String> allParams, Pageable pageable) {
+    // {name}{isactive}
+    Vendor template = new Vendor();
 
-    Vendor vendor = new Vendor();
-    vendor.setName(paramNameValue);
-    vendor.setIsActive(paramIsActiveValue);
+    allParams.keySet().forEach(item -> {
+      switch (item.toLowerCase()) {
+        case "name":
+          template.setName(String.valueOf(allParams.get(item)));
+          break;
+        case "isactive":
+          template.setIsActive(Boolean.valueOf(allParams.get(item)));
+          break;
+        default:
+          break;
+      }
+    });
 
-    ExampleMatcher matcher = ExampleMatcher.matchingAll().withIgnoreNullValues().withIgnoreCase("name");
-    Example<Vendor> example = Example.of(vendor, matcher);
+    ExampleMatcher matcher = ExampleMatcher.matching()
+        .withIgnoreNullValues()
+        .withIgnoreCase();
+
+    Example<Vendor> example = Example.of(template, matcher);
 
     return vendorRepository.findAll(example, pageable).map(item -> (vendorMapper.toDto(item)));
   }
 
   public VendorDto update(Long id, VendorDto source) {
-    Vendor toUpdate = vendorMapper.toEntity(source);
     return vendorRepository.findById(id)
         .map(item -> {
-          item.setName(toUpdate.getName());
-          item.setNotes(toUpdate.getNotes());
-          item.setIsActive(toUpdate.getIsActive());
-          Long crUserId = source.getCrUserId();
-          Long lmUserId = source.getLmUserId();
-          User crUser = userRepository.findById(crUserId)
-              .orElseThrow(() -> new ResourceNotFoundException("crUserId " + crUserId
-                  + ", specified in the request body json, - not found"));
-          User lmUser = userRepository.findById(lmUserId)
-              .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + lmUserId
-                  + ", specified in the request body json, - not found"));
-          item.setCrUser(crUser);
-          item.setLmUser(lmUser);
-          item.setId(id);
-          return vendorMapper.toDto(vendorRepository.save(item));
+          Vendor destination = (Vendor) SerializationUtils
+              .deserialize(SerializationUtils.serialize(vendorMapper.toEntity(source)).clone());
+          destination.setCrUser(
+              userRepository.findById(source.getCrUserId())
+                  .orElseThrow(() -> new ResourceNotFoundException("crUserId " + source.getCrUserId()
+                      + ", specified in the request body json, - not found"))
+          );
+          destination.setLmUser(
+              userRepository.findById(source.getLmUserId())
+                  .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + source.getLmUserId()
+                      + ", specified in the request body json, - not found"))
+          );
+          destination.setId(id);
+          return vendorMapper.toDto(vendorRepository.save(destination));
         }).orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
   }
 
@@ -82,7 +95,7 @@ public class VendorService {
     return vendorMapper.toDto(vendorRepository.save(vendorMapper.toEntity(source)));
   }
 
-  public Object findById(Long id) {
+  public VendorDto findById(Long id) {
     return vendorRepository.findById(id)
         .map(item -> vendorMapper.toDto(item))
         .orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
@@ -93,10 +106,19 @@ public class VendorService {
         .map(item -> productMapper.toDto(item));
   }
 
-  public ResponseEntity<?> deleteById(Long id) {
+  public VendorDto setInactive(Long id) {
+    return vendorRepository.findById(id)
+        .map(item -> {
+          item.setIsActive(false);
+          return vendorMapper.toDto(vendorRepository.save(item));
+        }).orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
+  }
+
+  public ResponseEntity<Object> deleteById(Long id) {
     return vendorRepository.findById(id).map(item -> {
       vendorRepository.delete(item);
       return ResponseEntity.ok().build();
     }).orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
   }
+
 }

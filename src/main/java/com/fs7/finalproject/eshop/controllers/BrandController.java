@@ -1,8 +1,10 @@
 package com.fs7.finalproject.eshop.controllers;
 
 import com.fs7.finalproject.eshop.model.dto.BrandDto;
+import com.fs7.finalproject.eshop.model.dto.ProductDto;
 import com.fs7.finalproject.eshop.services.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,56 +32,42 @@ public class BrandController {
   }
 
   @GetMapping
-  public ResponseEntity<?> findAll(@RequestParam(required = false) Map<String, String> allParams, Pageable pageable) {
-    String paramName = "name";
-    String paramIsActive = "isactive";
-    String paramNameValue = null;
-    Boolean paramIsActiveValue = null;
-
-    if (allParams.keySet().contains(paramName)) {
-      paramNameValue = String.valueOf(allParams.get(paramName));
-    }
-
-    if (allParams.keySet().contains(paramIsActive)) {
-      paramIsActiveValue = Boolean.valueOf(allParams.get(paramIsActive));
-    }
-
+  public ResponseEntity<Page<BrandDto>> findAll(@RequestParam(required = false) Map<String, String> allParams,
+                                                Pageable pageable) {
     return allParams.isEmpty()
         ? ResponseEntity.ok(brandService.findAll(pageable))
-        : ResponseEntity.ok(brandService.findByNameAndActiveIsTrue(paramNameValue, paramIsActiveValue, pageable));
+        : ResponseEntity.ok(brandService.findByParams(allParams, pageable));
   }
 
   @PostMapping
-  public ResponseEntity<?> create(@Valid @RequestBody BrandDto source) {
+  public ResponseEntity<BrandDto> create(@Valid @RequestBody BrandDto source) {
     return ResponseEntity.ok(brandService.save(source));
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> findById(@Valid @PathVariable Long id) {
+  public ResponseEntity<BrandDto> findById(@Valid @PathVariable Long id) {
     return Objects.nonNull(brandService.findById(id))
         ? ResponseEntity.ok(brandService.findById(id))
         : ResponseEntity.notFound().build();
   }
 
   @GetMapping("/{id}/products")
-  public ResponseEntity<?> findAllProductsByBrandId(@Valid @PathVariable Long id, Pageable pageable) {
+  public ResponseEntity<Page<ProductDto>> findAllProductsByBrandId(@Valid @PathVariable Long id, Pageable pageable) {
     return ResponseEntity.ok(brandService.findAllProductsByBrandId(id, pageable));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<?> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody BrandDto brandDto) {
+  public ResponseEntity<BrandDto> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody BrandDto brandDto) {
     return ResponseEntity.ok(brandService.update(id, brandDto));
   }
 
   @PutMapping("/{id}/inactivate")
-  public ResponseEntity<?> setInactive(@Valid @PathVariable("id") Long id) {
-    BrandDto brand = (BrandDto) brandService.findById(id);
-    brand.setIsActive(false);
-    return ResponseEntity.ok(brandService.save(brand));
+  public ResponseEntity<BrandDto> setInactive(@Valid @PathVariable("id") Long id) {
+    return ResponseEntity.ok(brandService.setInactive(id));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteById(@PathVariable Long id) {
+  public ResponseEntity<Object> deleteById(@PathVariable Long id) {
     return ResponseEntity.ok(brandService.deleteById(id));
   }
 }

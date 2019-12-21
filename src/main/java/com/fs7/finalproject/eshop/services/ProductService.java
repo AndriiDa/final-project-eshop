@@ -4,7 +4,6 @@ import com.fs7.finalproject.eshop.exceptions.ResourceNotFoundException;
 import com.fs7.finalproject.eshop.model.Brand;
 import com.fs7.finalproject.eshop.model.Category;
 import com.fs7.finalproject.eshop.model.Product;
-import com.fs7.finalproject.eshop.model.User;
 import com.fs7.finalproject.eshop.model.Vendor;
 import com.fs7.finalproject.eshop.model.dto.ProductDto;
 import com.fs7.finalproject.eshop.model.mapper.ProductMapper;
@@ -20,8 +19,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SerializationUtils;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class ProductService {
@@ -30,7 +31,7 @@ public class ProductService {
   private CategoryRepository categoryRepository;
   private BrandRepository brandRepository;
   private VendorRepository vendorRepository;
-  private ProductMapper productMapper;
+  private ProductMapper mapper;
 
   @Autowired
   public ProductService(ProductRepository productRepository,
@@ -38,17 +39,17 @@ public class ProductService {
                         CategoryRepository categoryRepository,
                         BrandRepository brandRepository,
                         VendorRepository vendorRepository,
-                        ProductMapper productMapper) {
+                        ProductMapper mapper) {
     this.productRepository = productRepository;
     this.userRepository = userRepository;
     this.categoryRepository = categoryRepository;
     this.brandRepository = brandRepository;
     this.vendorRepository = vendorRepository;
-    this.productMapper = productMapper;
+    this.mapper = mapper;
   }
 
   public Page<ProductDto> findAll(Pageable pageable) {
-    return productRepository.findAll(pageable).map(item -> (productMapper.toDto(item)));
+    return productRepository.findAll(pageable).map(item -> (mapper.toDto(item)));
   }
 
   public Page<ProductDto> findAllByParams(Map<String, String> allParams, Pageable pageable) {
@@ -98,69 +99,69 @@ public class ProductService {
 
     Example<Product> example = Example.of(template, matcher);
 
-    return productRepository.findAll(example, pageable).map(item -> (productMapper.toDto(item)));
+    return productRepository.findAll(example, pageable).map(item -> (mapper.toDto(item)));
   }
 
   public ProductDto update(Long id, ProductDto source) {
-    Product destination = productMapper.toEntity(source);
     return productRepository.findById(id)
         .map(item -> {
-          item.setSkuCode(destination.getSkuCode());
-          item.setTitle(destination.getTitle());
-          item.setDescription(destination.getDescription());
-          item.setShortDescription(destination.getShortDescription());
-          item.setLongDescription(destination.getLongDescription());
-          item.setCartDescription(destination.getCartDescription());
-          item.setUrlThumb(destination.getUrlThumb());
-          item.setUrlImg(destination.getUrlImg());
-          item.setWeight(destination.getWeight());
-          item.setQuantity(destination.getQuantity());
-          item.setBasePrice(destination.getBasePrice());
-          item.setDiscountPrice(destination.getDiscountPrice());
-          item.setIsOffer(destination.getIsOffer());
-          item.setIsRecommended(destination.getIsRecommended());
-          item.setIsActive(destination.getIsActive());
-          Long categoryId = source.getCategoryId();
-          Category category = categoryRepository.findById(categoryId)
-              .orElseThrow(() -> new ResourceNotFoundException("CategoryId " + categoryId
-                  + ", specified in the request body json, - not found"));
-          item.setCategory(category);
-          Long brandId = source.getBrandId();
-          Brand brand = brandRepository.findById(brandId)
-              .orElseThrow(() -> new ResourceNotFoundException("BrandId " + brandId
-                  + ", specified in the request body json, - not found"));
-          item.setBrand(brand);
-          Long vendorId = source.getVendorId();
-          Vendor vendor = vendorRepository.findById(vendorId)
-              .orElseThrow(() -> new ResourceNotFoundException("VendorId " + vendorId
-                  + ", specified in the request body json, - not found"));
-          item.setVendor(vendor);
-          Long crUserId = source.getCrUserId();
-          Long lmUserId = source.getLmUserId();
-          User crUser = userRepository.findById(crUserId)
-              .orElseThrow(() -> new ResourceNotFoundException("crUserId " + crUserId
-                  + ", specified in the request body json, - not found"));
-          User lmUser = userRepository.findById(lmUserId)
-              .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + lmUserId
-                  + ", specified in the request body json, - not found"));
-          item.setCrUser(crUser);
-          item.setLmUser(lmUser);
-          item.setId(id);
-          return productMapper.toDto(productRepository.save(item));
+          Product destination = (Product) SerializationUtils
+              .deserialize(SerializationUtils.serialize(mapper.toEntity(source)).clone());
+          destination.setCategory(
+              Objects.isNull(source.getCategoryId())
+                  ? null
+                  : categoryRepository.findById(source.getCategoryId())
+                  .orElseThrow(() -> new ResourceNotFoundException("CategoryId " + source.getCategoryId()
+                      + ", specified in the request body json, - not found"))
+          );
+          destination.setBrand(
+              Objects.isNull(source.getBrandId())
+                  ? null
+                  : brandRepository.findById(source.getBrandId())
+                  .orElseThrow(() -> new ResourceNotFoundException("BrandId " + source.getBrandId()
+                      + ", specified in the request body json, - not found"))
+          );
+          destination.setVendor(
+              Objects.isNull(source.getVendorId())
+                  ? null
+                  : vendorRepository.findById(source.getVendorId())
+                  .orElseThrow(() -> new ResourceNotFoundException("VendorId " + source.getVendorId()
+                      + ", specified in the request body json, - not found"))
+          );
+          destination.setCrUser(
+              userRepository.findById(source.getCrUserId())
+                  .orElseThrow(() -> new ResourceNotFoundException("crUserId " + source.getCrUserId()
+                      + ", specified in the request body json, - not found"))
+          );
+          destination.setLmUser(
+              userRepository.findById(source.getLmUserId())
+                  .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + source.getLmUserId()
+                      + ", specified in the request body json, - not found"))
+          );
+          destination.setId(id);
+          return mapper.toDto(productRepository.save(destination));
         }).orElseThrow(() -> new ResourceNotFoundException("ProductId " + id + " not found"));
   }
 
   public ProductDto save(ProductDto source) {
-    return productMapper.toDto(productRepository.save(productMapper.toEntity(source)));
+    return mapper.toDto(productRepository.save(mapper.toEntity(source)));
   }
 
-  public Object findById(Long id) {
+  public ProductDto findById(Long id) {
     return productRepository.findById(id)
-        .map(item -> productMapper.toDto(item))
+        .map(item -> mapper.toDto(item))
         .orElseThrow(() -> new ResourceNotFoundException("ProductId " + id + " not found"));
   }
 
-  public ResponseEntity<?> deleteById(Long id) {
+  public ProductDto setInactive(Long id) {
+    return productRepository.findById(id)
+        .map(item -> {
+          item.setIsActive(false);
+          return mapper.toDto(productRepository.save(item));
+        }).orElseThrow(() -> new ResourceNotFoundException("ProductId " + id + " not found"));
+  }
+
+  public ResponseEntity<Object> deleteById(Long id) {
     return productRepository.findById(id).map(item -> {
       productRepository.delete(item);
       return ResponseEntity.ok().build();

@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "PROPERTIES", uniqueConstraints = {
-        @UniqueConstraint(name = "IX_PROPERTIES_NAME", columnNames = "NAME")})
-@EqualsAndHashCode(callSuper = false)
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "PROPERTIES", uniqueConstraints = {
+        @UniqueConstraint(name = "IX_PROPERTIES_NAME", columnNames = "NAME")})
+@EqualsAndHashCode(callSuper = false)
 public class Property extends AbstractEntity {
   @Column(name = "ID", updatable = false)
   private Long id;
@@ -40,6 +40,7 @@ public class Property extends AbstractEntity {
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @JsonManagedReference
   @OneToMany(mappedBy = "property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @Builder.Default
   private List<PropertyValue> propertyValues = new ArrayList<>();
 
 }

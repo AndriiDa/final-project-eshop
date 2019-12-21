@@ -1,31 +1,31 @@
 package com.fs7.finalproject.eshop.controllers;
 
-import com.fs7.finalproject.eshop.model.Address;
-import com.fs7.finalproject.eshop.model.Category;
-import com.fs7.finalproject.eshop.model.Role;
-import com.fs7.finalproject.eshop.model.Gender;
-import com.fs7.finalproject.eshop.model.User;
+;
+import com.fs7.finalproject.eshop.model.dto.CategoryDto;
 import com.fs7.finalproject.eshop.model.mapper.CategoryMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.fs7.finalproject.eshop.services.CategoryService;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -39,13 +39,13 @@ public class CategoryControllerTest {
   @MockBean
   CategoryService categoryService;
 
-//  @Autowired
-//  private CategoryMapper mapper;
+  @MockBean
+  private CategoryMapper mapper;
 
   @Test
   public void returnsAllCategories() throws Exception {
     // given
-    Category category1 = Category.builder()
+    CategoryDto category1 = CategoryDto.builder()
         .id(25L)
         .code("code1")
         .name("Category1")
@@ -53,19 +53,10 @@ public class CategoryControllerTest {
         .isActive(true)
         .isGroup(true)
         .imgUrl("Image URL 1")
-        .crUser(
-            User.builder()
-                .id(101L)
-                .lastName("Ivanov")
-                .loginName("p.ivanov")
-                .email("p_ivanov@gmail.com")
-                .gender(Gender.MALE)
-                .role(Role.ADMIN)
-                .address(Address.builder().id(1001L).addressLine("Ivanov address").build())
-                .build())
+        .crUserId(1L)
         .build();
 
-    Category category2 = Category.builder()
+    CategoryDto category2 = CategoryDto.builder()
         .id(26L)
         .code("code2")
         .name("Category2")
@@ -73,29 +64,20 @@ public class CategoryControllerTest {
         .isActive(true)
         .isGroup(true)
         .imgUrl("Image URL 2")
-        .crUser(
-            User.builder()
-                .id(102L)
-                .lastName("Petrov")
-                .loginName("i.sidorov")
-                .email("p_petrov@gmail.com")
-                .gender(Gender.FEMALE)
-                .role(Role.ADMIN)
-                .address(Address.builder().id(10002L).addressLine("Petrov  address").build())
-                .build())
+        .crUserId(1L)
         .build();
 
-//    List<Category> list = Arrays.asList(category1, category2);
-//    given(categoryService.findAll(new HashMap<>())
-//        .stream()
-//        .map(item->(mapper.toEntity(item)))
-//        .collect(Collectors.toList())
-//    ).willReturn(list);
+    List<CategoryDto> list = Arrays.asList(category1, category2);
+    PageRequest pageable = PageRequest.of(0, 2);
+
+    Page<CategoryDto> page = new PageImpl<>(list, pageable, list.size());
+    given(categoryService.findAll(Mockito.any(PageRequest.class))).willReturn(page);
 
     //when + then
     this.mockMvc.perform(get("/api/v1/categories"))
-        .andExpect(status().isOk());
-//        .andExpect(content().json("[" +
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.content", hasSize(2)));
+//        .andExpect(content()..json("[" +
 //            "{'id':25," +
 //            "'code':'code1'," +
 //            "'name':'Category1'," +
