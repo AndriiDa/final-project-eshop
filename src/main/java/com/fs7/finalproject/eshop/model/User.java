@@ -6,6 +6,7 @@ import com.fs7.finalproject.eshop.model.convert.RoleConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
@@ -36,7 +37,8 @@ import java.util.Date;
 @Table(name = "USERS", uniqueConstraints = {
         @UniqueConstraint(name = "IX_USERS_LOGIN_NAME", columnNames = "LOGIN_NAME"),
         @UniqueConstraint(name = "IX_USERS_EMAIL", columnNames = "EMAIL")})
-public class User {
+@EqualsAndHashCode(callSuper = false)
+public class User extends AbstractEntity{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "ID", updatable = false)

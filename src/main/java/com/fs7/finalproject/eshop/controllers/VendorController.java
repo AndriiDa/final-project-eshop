@@ -1,8 +1,12 @@
 package com.fs7.finalproject.eshop.controllers;
 
+import com.fs7.finalproject.eshop.model.Product;
+import com.fs7.finalproject.eshop.model.Vendor;
+import com.fs7.finalproject.eshop.model.dto.ProductDto;
 import com.fs7.finalproject.eshop.model.dto.VendorDto;
 import com.fs7.finalproject.eshop.services.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,52 +34,38 @@ public class VendorController {
   }
 
   @GetMapping
-  public ResponseEntity<?> findAll(@RequestParam(required = false) Map<String, String> allParams, Pageable pageable) {
-    String paramName = "name";
-    String paramIsActive = "isactive";
-    String paramNameValue = null;
-    Boolean paramIsActiveValue = null;
-
-    if (allParams.keySet().contains(paramName)) {
-      paramNameValue = String.valueOf(allParams.get(paramName));
-    }
-
-    if (allParams.keySet().contains(paramIsActive)) {
-      paramIsActiveValue = Boolean.valueOf(allParams.get(paramIsActive));
-    }
-
+  public ResponseEntity<Page<VendorDto>> findAll(@RequestParam(required = false) Map<String, String> allParams,
+                                                 Pageable pageable) {
     return allParams.isEmpty()
         ? ResponseEntity.ok(vendorService.findAll(pageable))
-        : ResponseEntity.ok(vendorService.findByNameAndActiveIsTrue(paramNameValue, paramIsActiveValue, pageable));
+        : ResponseEntity.ok(vendorService.findByParams(allParams, pageable));
   }
 
   @PostMapping
-  public ResponseEntity<?> create(@Valid @RequestBody VendorDto source) {
+  public ResponseEntity<VendorDto> create(@Valid @RequestBody VendorDto source) {
     return ResponseEntity.ok(vendorService.save(source));
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> findById(@Valid @PathVariable Long id) {
+  public ResponseEntity<VendorDto> findById(@Valid @PathVariable Long id) {
     return Objects.nonNull(vendorService.findById(id))
         ? ResponseEntity.ok(vendorService.findById(id))
         : ResponseEntity.notFound().build();
   }
 
   @GetMapping("/{id}/products")
-  public ResponseEntity<?> findAllProductsByVendorId(@Valid @PathVariable Long id, Pageable pageable) {
+  public ResponseEntity<Page<ProductDto>> findAllProductsByVendorId(@Valid @PathVariable Long id, Pageable pageable) {
     return ResponseEntity.ok(vendorService.findAllProductsByVendorId(id, pageable));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<?> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody VendorDto vendorDto) {
+  public ResponseEntity<VendorDto> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody VendorDto vendorDto) {
     return ResponseEntity.ok(vendorService.update(id, vendorDto));
   }
 
   @PutMapping("/{id}/inactivate")
-  public ResponseEntity<?> setInactive(@Valid @PathVariable("id") Long id) {
-    VendorDto vendor = (VendorDto) vendorService.findById(id);
-    vendor.setIsActive(false);
-    return ResponseEntity.ok(vendorService.save(vendor));
+  public ResponseEntity<VendorDto> setInactive(@Valid @PathVariable("id") Long id) {
+    return ResponseEntity.ok(vendorService.setInactive(id));
   }
 
   @DeleteMapping("/{id}")
@@ -83,3 +73,4 @@ public class VendorController {
     return ResponseEntity.ok(vendorService.deleteById(id));
   }
 }
+

@@ -3,6 +3,7 @@ package com.fs7.finalproject.eshop.controllers;
 import com.fs7.finalproject.eshop.model.dto.PropertyDto;
 import com.fs7.finalproject.eshop.services.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/properties")
@@ -29,30 +31,33 @@ public class PropertyController {
   }
 
   @GetMapping
-  public ResponseEntity<?> findAll(@RequestParam(required = false) Map<String, String> allParams, Pageable pageable) {
-    String param = "name";
-    return allParams.containsKey(param)
-        ? ResponseEntity.ok(propertyService.findByName(String.valueOf(allParams.get(param))))
-        : ResponseEntity.ok(propertyService.findAll(pageable));
+  public ResponseEntity<Page<PropertyDto>> findAll(@RequestParam(required = false) Map<String, String> allParams,
+                                                   Pageable pageable) {
+    return allParams.isEmpty()
+        ? ResponseEntity.ok(propertyService.findAll(pageable))
+        : ResponseEntity.ok(propertyService.findAllByParams(allParams, pageable));
   }
 
   @PostMapping
-  public PropertyDto create(@Valid @RequestBody PropertyDto source) {
-    return propertyService.save(source);
-  }
-
-  @PutMapping("/{id}")
-  public PropertyDto update(@PathVariable Long id, @Valid @RequestBody PropertyDto source) {
-    return propertyService.update(id, source);
-  }
-
-  @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteById(@PathVariable Long id) {
-    return propertyService.deleteById(id);
+  public ResponseEntity<PropertyDto> create(@Valid @RequestBody PropertyDto source) {
+    return ResponseEntity.ok(propertyService.save(source));
   }
 
   @GetMapping("/{id}")
-  public PropertyDto findById(@PathVariable Long id) {
-    return propertyService.findById(id);
+  public ResponseEntity<PropertyDto> findById(@Valid @PathVariable Long id) {
+    return Objects.nonNull(propertyService.findById(id))
+        ? ResponseEntity.ok(propertyService.findById(id))
+        : ResponseEntity.notFound().build();
   }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<PropertyDto> update(@Valid @PathVariable Long id, @Valid @RequestBody PropertyDto source) {
+    return ResponseEntity.ok(propertyService.update(id, source));
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Object> deleteById(@PathVariable Long id) {
+    return ResponseEntity.ok(propertyService.deleteById(id));
+  }
+
 }

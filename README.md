@@ -9,87 +9,17 @@ git clone https://github.com/AndriiDa/final-project-eshop.git
 cd final-project-eshop  
 mvn spring-boot:run  
 
-#### mapped endpoints:  
-##### CATEGORY  
-GET http://localhost:9000/api/v1/categories - retrieve all categories including sub-categories  
-(sub-categories have parentid set tu null)  
-GET http://localhost:9000/api/v1/categories/?parentid=15 - retrieve all categories that sub-categories of category with id={parentid}  
-GET http://localhost:9000/api/v1/categories/?parentid=null - retrieve all top-level categories  
-GET http://localhost:9000/api/v1/categories/?isgroup=true  
-GET http://localhost:9000/api/v1/categories/?isactive=true  
-GET http://localhost:9000/api/v1/categories/?name=lighting  
-GET http://localhost:9000/api/v1/categories/?code=1002000001  
-GET http://localhost:9000/api/v1/categories/?isgroup=true&isactive=true&name=Photography   
-GET http://localhost:9000/api/v1/categories/{id} - retrieve category with id={id}  
-POST http://localhost:9000/api/v1/categories - add a new category  
-PUT http://localhost:9000/api/v1/categories/{id} - update category with id={id}  
-PUT http://localhost:9000/api/v1/categories/{id}/inactivate - set isActive to false  
-DELETE http://localhost:9000/api/v1/categories/{id} - delete category with id={id}  
+## API Documentation 
+Start the application  
+Visit  
+### http://localhost:9000/swagger-ui.html  
 
-##### PRODUCTS  
-GET http://localhost:9000/api/v1/products  
-POST http://localhost:9000/api/v1/products  
-GET http://localhost:9000/api/v1/products/?categoryid=6  
-GET http://localhost:9000/api/v1/products/?brandid=1  
-GET http://localhost:9000/api/v1/products/?vendorid=1  
-GET http://localhost:9000/api/v1/products/?isoffer=true  
-GET http://localhost:9000/api/v1/products/?isrecommended=true  
-GET http://localhost:9000/api/v1/products/?isactive=true  
-GET http://localhost:9000/api/v1/products/{id}  
-GET http://localhost:9000/api/v1/products/{id}/properties  
-PUT http://localhost:9000/api/v1/products/{id}  
-PUT http://localhost:9000/api/v1/products/{id}/inactivate  
-DELETE http://localhost:9000/api/v1/products/{id}  
+Or  
+Visit  
+### https://fs7-eshop.herokuapp.com/swagger-ui.html  
 
-##### PRODUCT PROPERTY VALUES  
-GET http://localhost:9000/api/v1/productpropertyvalues  
-GET http://localhost:9000/api/v1/productpropertyvalues/?productid=1  
-GET http://localhost:9000/api/v1/productpropertyvalues/?valueid=1  
-POST http://localhost:9000/api/v1/productpropertyvalues  
-PUT http://localhost:9000/api/v1/productpropertyvalues/{id}  
-DELETE http://localhost:9000/api/v1/productpropertyvalues/{id}  
 
-##### BRANDS  
-GET http://localhost:9000/api/v1/brands/  
-POST http://localhost:9000/api/v1/brands/  
-GET http://localhost:9000/api/v1/brands/{id}  
-GET http://localhost:9000/api/v1/brands/{id}/products  
-GET http://localhost:9000/api/v1/brands/{id}/?name=Some_string&isactive=true  
-PUT http://localhost:9000/api/v1/brands/{id}  
-PUT http://localhost:9000/api/v1/brands/{id}/inactivate  
-DELETE http://localhost:9000/api/v1/brands/{id}  
-
-##### VENDORS    
-GET http://localhost:9000/api/v1/vendors/  
-POST http://localhost:9000/api/v1/vendors/  
-GET http://localhost:9000/api/v1/vendors/{id}  
-GET http://localhost:9000/api/v1/vendors/{id}/products  
-GET http://localhost:9000/api/v1/vendors/{id}/?name=Some_string&isactive=true    
-PUT http://localhost:9000/api/v1/vendors/{id}  
-PUT http://localhost:9000/api/v1/vendors/{id}/inactivate  
-DELETE http://localhost:9000/api/v1/vendors/{id}  
-
-##### PROPERTIES  
-GET http://localhost:9000/api/v1/properties/  
-POST http://localhost:9000/api/v1/properties/  
-GET http://localhost:9000/api/v1/properties/{propertyId}  
-GET http://localhost:9000/api/v1/properties/?name=Some_string  
-PUT http://localhost:9000/api/v1/properties/{propertyId}  
-DELETE http://localhost:9000/api/v1/properties/{propertyId}  
-
-##### PROPERTY_VALUES  
-GET http://localhost:9000/api/v1/properties/{propertyId}/propertyvalues/  
-POST http://localhost:9000/api/v1/properties/{propertyId}/propertyvalues/  
-PUT http://localhost:9000/api/v1/properties/{propertyId}/propertyvalues/{propertyValueId}  
-DELETE http://localhost:9000/api/v1/properties/{propertyId}/propertyvalues/{propertyValueId}  
-
-##### USERS  
-http://localhost:9000/api/v1/users  
-
+## HEROKU Deployment
 The backend part is deployed to heroku.  
-So the backend endpoints above can be accessed using the following links:  
-https://fs7-eshop.herokuapp.com/api/v1/categories  
-https://fs7-eshop.herokuapp.com/api/v1/products  
-https://fs7-eshop.herokuapp.com/api/v1/users  
-
-To be continued soon ...  
+### https://fs7-eshop.herokuapp.com  
+ 

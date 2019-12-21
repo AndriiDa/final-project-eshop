@@ -2,7 +2,6 @@ package com.fs7.finalproject.eshop.services;
 
 import com.fs7.finalproject.eshop.exceptions.ResourceNotFoundException;
 import com.fs7.finalproject.eshop.model.Category;
-import com.fs7.finalproject.eshop.model.User;
 import com.fs7.finalproject.eshop.model.dto.CategoryDto;
 import com.fs7.finalproject.eshop.model.mapper.CategoryMapper;
 import com.fs7.finalproject.eshop.repositories.CategoryRepository;
@@ -15,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SerializationUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -95,34 +95,30 @@ public class CategoryService {
   }
 
   public CategoryDto update(Long id, CategoryDto source) {
-    Category destination = mapper.toEntity(source);
     return categoryRepository.findById(id)
         .map(item -> {
-          item.setCode(destination.getCode());
-          item.setName(destination.getName());
-          item.setDescription(destination.getDescription());
-          item.setImgUrl(destination.getImgUrl());
-          item.setIsGroup(destination.getIsGroup());
-          item.setIsActive(destination.getIsActive());
-          Long categoryId = source.getParentCategoryId();
-          Category category = Objects.isNull(categoryId)
-              ? null
-              : categoryRepository.findById(categoryId)
-              .orElseThrow(() -> new ResourceNotFoundException("ParemtCategoryId " + categoryId
-                  + ", specified in the request body json, - not found"));
-          item.setParentCategory(category);
-          Long crUserId = source.getCrUserId();
-          Long lmUserId = source.getLmUserId();
-          User crUser = userRepository.findById(crUserId)
-              .orElseThrow(() -> new ResourceNotFoundException("crUserId " + crUserId
-                  + ", specified in the request body json, - not found"));
-          User lmUser = userRepository.findById(lmUserId)
-              .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + lmUserId
-                  + ", specified in the request body json, - not found"));
-          item.setCrUser(crUser);
-          item.setLmUser(lmUser);
-          item.setId(id);
-          return mapper.toDto(categoryRepository.save(item));
+          Category destination = (Category) SerializationUtils
+              .deserialize(SerializationUtils.serialize(mapper.toEntity(source)).clone());
+
+          destination.setParentCategory(
+              Objects.isNull(source.getParentCategoryId())
+                  ? null
+                  : categoryRepository.findById(source.getParentCategoryId())
+                  .orElseThrow(() -> new ResourceNotFoundException("ParemtCategoryId " + source.getParentCategoryId()
+                      + ", specified in the request body json, - not found"))
+          );
+          destination.setCrUser(
+              userRepository.findById(source.getCrUserId())
+                  .orElseThrow(() -> new ResourceNotFoundException("crUserId " + source.getCrUserId()
+                      + ", specified in the request body json, - not found"))
+          );
+          destination.setLmUser(
+              userRepository.findById(source.getLmUserId())
+                  .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + source.getLmUserId()
+                      + ", specified in the request body json, - not found"))
+          );
+          destination.setId(id);
+          return mapper.toDto(categoryRepository.save(destination));
         }).orElseThrow(() -> new ResourceNotFoundException("CategoryId " + id + " not found"));
   }
 
@@ -130,13 +126,21 @@ public class CategoryService {
     return mapper.toDto(categoryRepository.save(mapper.toEntity(source)));
   }
 
-  public Object findById(Long id) {
+  public CategoryDto findById(Long id) {
     return categoryRepository.findById(id)
         .map(item -> mapper.toDto(item))
         .orElseThrow(() -> new ResourceNotFoundException("CategoryId " + id + " not found"));
   }
 
-  public ResponseEntity<?> deleteById(Long id) {
+  public CategoryDto setInactive(Long id) {
+    return categoryRepository.findById(id)
+        .map(item -> {
+          item.setIsActive(false);
+          return mapper.toDto(categoryRepository.save(item));
+        }).orElseThrow(() -> new ResourceNotFoundException("CategoryId " + id + " not found"));
+  }
+
+  public ResponseEntity<Object> deleteById(Long id) {
     return categoryRepository.findById(id).map(item -> {
       categoryRepository.delete(item);
       return ResponseEntity.ok().build();

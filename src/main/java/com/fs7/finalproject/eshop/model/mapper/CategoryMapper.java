@@ -17,16 +17,12 @@ public class CategoryMapper extends AbstractMapper<Category, CategoryDto> {
   private UserRepository userRepository;
   private CategoryRepository categoryRepository;
 
-  private ModelMapper mapper;
-
   @Autowired
-  public CategoryMapper(ModelMapper mapper,
-                        UserRepository userRepository,
+  public CategoryMapper(UserRepository userRepository,
                         CategoryRepository categoryRepository) {
     super(Category.class, CategoryDto.class);
     this.userRepository = userRepository;
     this.categoryRepository = categoryRepository;
-    this.mapper = mapper;
   }
 
   private Long getCrUserId(Category source) {
