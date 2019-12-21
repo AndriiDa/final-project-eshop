@@ -9,17 +9,13 @@ git clone https://github.com/AndriiDa/final-project-eshop.git
 cd final-project-eshop  
 mvn spring-boot:run  
 
-## API Documentation 
-Start the application  
-Visit  
-### http://localhost:9000/swagger-ui.html  
+### API Documentation 
+Start the application and visit  
+#### http://localhost:9000/swagger-ui.html  
+or just visit  
+#### https://fs7-eshop.herokuapp.com/swagger-ui.html  
 
-Or  
-Visit  
-### https://fs7-eshop.herokuapp.com/swagger-ui.html  
-
-
-## HEROKU Deployment
+### HEROKU Deployment
 The backend part is deployed to heroku.  
-### https://fs7-eshop.herokuapp.com  
+#### https://fs7-eshop.herokuapp.com  
  
