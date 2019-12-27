@@ -5,7 +5,7 @@ import CategoryActionTypes from './category.types';
 
 export function* fetchCategoryItemsAsync() {
   try {
-    const res = yield categoryService.getCategories('/categories').toPromise();
+    const res = yield categoryService.getCategories('/api/v1/categories').toPromise();
     yield put(fetchCategorySuccess(res.data));
   } catch (error) {
     yield put(fetchCategoryFailure(error));

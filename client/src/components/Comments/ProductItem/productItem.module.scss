@@ -1,0 +1,16 @@
+.product {
+
+  & a {
+    color: black;
+    text-decoration: none;
+  }
+
+  & a.active {
+    color: red;
+  }
+
+  & a.hoover {
+    color: blue;
+  }
+
+}

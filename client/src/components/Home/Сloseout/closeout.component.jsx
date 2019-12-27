@@ -1,6 +1,7 @@
 import React from "react";
-import Carousel from "../../../../modules/Carousel/carousel.component";
+import Carousel from "../../../modules/Carousel/carousel.component";
 import ItemCloseoutComponent from "./temlate.component";
+import s from './closeout.module.scss';
 
 const CloseoutComponent = () => {
   const hardcodeData = [
@@ -24,12 +25,12 @@ const CloseoutComponent = () => {
     }
   ];
   return (
-    <>
+    <div className={s.closeout}>
       <Carousel
         carouselItems={hardcodeData}
         innerComponent={ItemCloseoutComponent}
       />
-    </>
+    </div>
   );
 };
 
