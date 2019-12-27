@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AccordionWrapperComponent from "../../../../modules/Accordion/accordion-wrapper.component";
+import AccordionWrapperComponent from "../../modules/Accordion/accordion-wrapper.component";
 import { InnerContent, MenuItem } from "./sidebar.styles";
-import "./sidebar.styles.scss";
+import s from "./sidebar.module.scss";
 
 const SidebarComponent = ({ categoryItems }) => {
   const handleClickInChild = item => {
@@ -10,8 +10,8 @@ const SidebarComponent = ({ categoryItems }) => {
   };
 
   return (
-    <div className="nav-side-menu">
-      <h2>Portal menu</h2>
+    <div className={s.menu}>
+      <h2>Side Menu</h2>
       <AccordionWrapperComponent
         elements={categoryItems}
         defaultIndex={0}

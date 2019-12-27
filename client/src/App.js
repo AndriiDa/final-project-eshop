@@ -1,25 +1,37 @@
-// React components
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// Redux
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
-// React
-import HomeComponent from "./pages/Home/home.component";
-// styles
+import {Route, Switch} from "react-router-dom";
+
+import HomeComponent from "./components/Home/home.component";
+import Header from "./components/Header/header";
+import Footer from "./components/Footer/footer";
+import CategoriesComponent from "./components/Categories/categories.component";
+import BrandsComponent from "./components/Brands/brands.component";
+import VendorsComponent from "./components/Vendors/vendors.component";
+import ProductsContainer from "./components/ProductsContainer/productsContainer";
+import ProductContainer from "./components/ProductContainer/productContainer";
+import CommentsContainer from "./components/CommentsContainer/commentsContainer";
+import Sidebar1 from "./components/Sidebar1/sidebar1";
+
 import "./App.scss";
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={HomeComponent} />
-          <Route render={() => <div>Home</div>} />
-        </Switch>
-      </Router>
-    </Provider>
-  );
+    return (
+        <div className="app-wrapper">
+            <Header/>
+            <Sidebar1/>
+            <div className="app-wrapper-content">
+                <Route exact path="/" render={() => <ProductsContainer/>}/>
+                <Route path="/categories" render={() => <CategoriesComponent/>}/>
+                <Route path="/brands" render={() => <BrandsComponent/>}/>
+                <Route path="/vendors" render={() => <VendorsComponent/>}/>
+                <Route path="/products" exact render={() => <ProductsContainer/>}/>
+                <Route path="/products/:productId?" render={() => <ProductContainer/>}/>
+                <Route path="/comments" render={() => <CommentsContainer/>}/>
+                <Route path="/oldhomeexample" render={() => <HomeComponent/>}/>
+            </div>
+            <Footer/>
+        </div>
+    );
 };
 
 export default App;
