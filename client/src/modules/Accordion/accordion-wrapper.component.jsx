@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import PropTypes from "prop-types";
-import AccordionItemComponent from "./accordion-item.component";
+import AccordionItem from "./accordion-item";
 
 const AccordionWrapperComponent = props => {
   const {
@@ -27,7 +27,7 @@ const AccordionWrapperComponent = props => {
     <ul className="wrapper">
       {elements.length &&
         elements.map((item, index) => (
-          <AccordionItemComponent
+          <AccordionItem
             key={item.id}
             name={item.name}
             imgUrl={item.imgUrl}
@@ -38,7 +38,7 @@ const AccordionWrapperComponent = props => {
             handleChild={handleChild}
           >
             {item[childContentKey]}
-          </AccordionItemComponent>
+          </AccordionItem>
         ))}
     </ul>
   );
