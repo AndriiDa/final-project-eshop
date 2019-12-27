@@ -8,7 +8,7 @@ cd final-project-eshop
 ### Run the backend  
 mvn spring-boot:run  
 ### Run the frontend  
-in the final-project-eshop folder (you would need to use another terminal windows):  
+in the final-project-eshop folder (you would need to use another terminal window):  
 cd client  
 npm start dev  
 visit http://localhost:3000/  
