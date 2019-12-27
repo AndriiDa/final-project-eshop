@@ -1,7 +1,7 @@
 import React from "react";
 import s from './comment.module.scss';
 
-const CommentComponent = (props) => {
+const Comment = (props) => {
     return (
         <div className={s.item}>
             <img src={props.comment.imgUrl}
@@ -15,4 +15,4 @@ const CommentComponent = (props) => {
     );
 };
 
-export default CommentComponent;
+export default Comment;

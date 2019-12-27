@@ -1,9 +1,7 @@
-import React from "react";
-
-import CommentItem from "./CommentItem/commentItem";
+import React from 'react'
+import styles from './comments.module.scss';
 import ProductItem from "./ProductItem/productItem";
-
-import s from "./comments.module.scss";
+import CommentItem from "./CommentItem/commentItem";
 
 const Comments = (props) => {
 
@@ -28,16 +26,16 @@ const Comments = (props) => {
     };
 
     return (
-        <div className={s.products}>
-            <div className={s.productItems}>
+        <div className={styles.products}>
+            <div className={styles.productItems}>
                 {productItems}
             </div>
-            <div className={s.commentItems}>
+            <div className={styles.commentItems}>
                 {commentItems}
             </div>
-            <div className={s.commentarea}>
+            <div className={styles.commentarea}>
                 <textarea onChange={onCommentChange} value={newBody}></textarea>
-                <button onClick={addComment} className={s.button}>Add</button>
+                <button onClick={addComment} className={styles.button}>Add</button>
             </div>
         </div>
     );

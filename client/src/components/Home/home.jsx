@@ -1,15 +1,15 @@
 import React, {useEffect} from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
-import {connect} from "react-redux";
-import {fetchCategoryStart} from "../../pages/Home/state/category/category.actions";
-import CloseoutComponent from "./Сloseout/closeout.component";
+// import {connect} from "react-redux";
+// import {fetchCategoryStart} from "../../pages/Home/state/category/category.actions";
+import Closeout from "./Сloseout/closeout";
 import CommentsContainer from "./CommentsContainer/commentsContainer";
 
 import s from './home.module.scss';
 
-// const HomeComponent = ({comments, newCommentText, dispatch, categoryItems, fetchCategoryStarted}) => {
-const HomeComponent = (props) => {
+// const Home = ({comments, newCommentText, dispatch, categoryItems, fetchCategoryStarted}) => {
+const Home = (props) => {
     useEffect(() => {
         //fetchCategoryStarted();
         // eslint-disable-next-line
@@ -17,7 +17,7 @@ const HomeComponent = (props) => {
     return (
         //<div className="d-flex">
         <div className={s.home}>
-            <CloseoutComponent/>
+            <Closeout/>
             <CommentsContainer/>
             {/*<SidebarComponent categoryItems={categoryItems.length && categoryItems}/>*/}
             {/*<div className="flex-grow-1">*/}
@@ -27,13 +27,13 @@ const HomeComponent = (props) => {
     );
 };
 
-export default HomeComponent;
+export default Home;
 
-// HomeComponent.defaultProps = {
+// Home.defaultProps = {
 //     categoryItems: []
 // };
 //
-// HomeComponent.propTypes = {
+// Home.propTypes = {
 //     fetchCategoryStarted: PropTypes.func.isRequired,
 //     categoryItems: PropTypes.instanceOf(Array)
 // };
@@ -46,4 +46,4 @@ export default HomeComponent;
 //     fetchCategoryStarted: () => dispatch(fetchCategoryStart())
 // });
 //
-// export default connect(mapStateToProps, mapDispatchToProps)(HomeComponent);
+// export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,12 +1,12 @@
 import React from "react";
-import {Route, Switch} from "react-router-dom";
+import {Route} from "react-router-dom";
 
-import HomeComponent from "./components/Home/home.component";
+import Home from "./components/Home/home";
 import Header from "./components/Header/header";
 import Footer from "./components/Footer/footer";
-import CategoriesComponent from "./components/Categories/categories.component";
-import BrandsComponent from "./components/Brands/brands.component";
-import VendorsComponent from "./components/Vendors/vendors.component";
+import Categories from "./components/Categories/categories";
+import Brands from "./components/Brands/brands";
+import Vendors from "./components/Vendors/vendors";
 import ProductsContainer from "./components/ProductsContainer/productsContainer";
 import ProductContainer from "./components/ProductContainer/productContainer";
 import CommentsContainer from "./components/CommentsContainer/commentsContainer";
@@ -21,13 +21,13 @@ const App = () => {
             <Sidebar1/>
             <div className="app-wrapper-content">
                 <Route exact path="/" render={() => <ProductsContainer/>}/>
-                <Route path="/categories" render={() => <CategoriesComponent/>}/>
-                <Route path="/brands" render={() => <BrandsComponent/>}/>
-                <Route path="/vendors" render={() => <VendorsComponent/>}/>
+                <Route path="/categories" render={() => <Categories/>}/>
+                <Route path="/brands" render={() => <Brands/>}/>
+                <Route path="/vendors" render={() => <Vendors/>}/>
                 <Route path="/products" exact render={() => <ProductsContainer/>}/>
                 <Route path="/products/:productId?" render={() => <ProductContainer/>}/>
                 <Route path="/comments" render={() => <CommentsContainer/>}/>
-                <Route path="/oldhomeexample" render={() => <HomeComponent/>}/>
+                <Route path="/oldhomeexample" render={() => <Home/>}/>
             </div>
             <Footer/>
         </div>

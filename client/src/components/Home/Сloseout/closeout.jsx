@@ -3,7 +3,7 @@ import Carousel from "../../../modules/Carousel/carousel.component";
 import ItemCloseoutComponent from "./temlate.component";
 import s from './closeout.module.scss';
 
-const CloseoutComponent = () => {
+const Closeout = () => {
   const hardcodeData = [
     {
       id: 1,
@@ -34,4 +34,4 @@ const CloseoutComponent = () => {
   );
 };
 
-export default CloseoutComponent;
+export default Closeout;
