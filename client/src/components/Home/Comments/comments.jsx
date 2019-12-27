@@ -1,12 +1,12 @@
 import React from "react";
-import CommentComponent from "./Comment/comment.component"
+import Comment from "./Comment/comment"
 import s from './comments.module.scss';
 
-const CommentsComponent = (props) => {
+const Comments = (props) => {
 
     let comments = props.comments;
     let commentItems = comments.map(comment => {
-        return <CommentComponent comment={comment}/>
+        return <Comment comment={comment}/>
     });
 
     let addNewComment = () => {
@@ -35,4 +35,4 @@ const CommentsComponent = (props) => {
     );
 };
 
-export default CommentsComponent;
+export default Comments;

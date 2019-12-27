@@ -1,8 +1,7 @@
-import React from 'react';
 import {connect} from 'react-redux';
 import {
-    addNewProductCommentActionCreator, addNewProductCommentOnCommentsPageActionCreator,
-    updateProductCommentBodyActionCreate, updateProductCommentBodyOnCommentsPageActionCreate
+    addNewProductCommentOnCommentsPageActionCreator,
+    updateProductCommentBodyOnCommentsPageActionCreate
 } from "../../redux/reducers/commentsPageReducer";
 import Comments from "../Comments/comments";
 

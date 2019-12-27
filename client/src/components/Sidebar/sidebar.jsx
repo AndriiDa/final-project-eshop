@@ -4,7 +4,7 @@ import AccordionWrapperComponent from "../../modules/Accordion/accordion-wrapper
 import { InnerContent, MenuItem } from "./sidebar.styles";
 import s from "./sidebar.module.scss";
 
-const SidebarComponent = ({ categoryItems }) => {
+const Sidebar = ({ categoryItems }) => {
   const handleClickInChild = item => {
     window.console.log(item);
   };
@@ -24,12 +24,12 @@ const SidebarComponent = ({ categoryItems }) => {
   );
 };
 
-SidebarComponent.defaultProps = {
+Sidebar.defaultProps = {
   categoryItems: []
 };
 
-SidebarComponent.propTypes = {
+Sidebar.propTypes = {
   categoryItems: PropTypes.instanceOf(Array)
 };
 
-export default SidebarComponent;
+export default Sidebar;

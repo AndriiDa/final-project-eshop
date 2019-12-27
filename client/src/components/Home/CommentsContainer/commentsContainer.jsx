@@ -1,8 +1,7 @@
-import React from 'react';
 import {connect} from 'react-redux';
 import {addNewCommentActionCreator, updateCommentTextActionCreator}
     from "../../../redux/reducers/homePageReducer";
-import CommentsComponent from "../Comments/comments.component";
+import Comments from "../Comments/comments";
 
 let mapStateToProps = (state) => {
     return {
@@ -22,6 +21,6 @@ let mapDispatchToProps = (dispatch) => {
     }
 };
 
-let CommentsContainer = connect(mapStateToProps, mapDispatchToProps)(CommentsComponent);
+let CommentsContainer = connect(mapStateToProps, mapDispatchToProps)(Comments);
 
 export default CommentsContainer;

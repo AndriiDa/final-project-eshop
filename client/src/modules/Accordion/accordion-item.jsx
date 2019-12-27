@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { ReactComponent as ArrowIcon } from "../../assets/images/icons/arrow.svg";
 import "./accordion-item.style.scss";
 
-const AccordionItemComponent = props => {
+const AccordionItem = props => {
   const {
     name,
     imgUrl,
@@ -59,7 +59,7 @@ const AccordionItemComponent = props => {
   );
 };
 
-AccordionItemComponent.defaultProps = {
+AccordionItem.defaultProps = {
   name: "",
   imgUrl: "",
   children: "",
@@ -67,7 +67,7 @@ AccordionItemComponent.defaultProps = {
   menuItem: null
 };
 
-AccordionItemComponent.propTypes = {
+AccordionItem.propTypes = {
   name: PropTypes.string,
   imgUrl: PropTypes.string,
   children: PropTypes.string,
@@ -80,4 +80,4 @@ AccordionItemComponent.propTypes = {
   menuItem: PropTypes.any
 };
 
-export default AccordionItemComponent;
+export default AccordionItem;
