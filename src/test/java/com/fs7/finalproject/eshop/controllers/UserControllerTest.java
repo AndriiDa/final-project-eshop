@@ -54,7 +54,7 @@ public class UserControllerTest {
             .email("p_ivanov@gmail.com")
             .gender(Gender.MALE)
             .role(Role.ADMIN)
-            .address(Address.builder().id(1L).addressLine("Ivanov address").build())
+            .addressId(1L)
             .build();
 
     List<UserDto> list = Arrays.asList(user);

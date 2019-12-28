@@ -3,13 +3,11 @@ package com.fs7.finalproject.eshop.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -18,9 +16,8 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "ADDRESSES")
-public class Address {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+@EqualsAndHashCode(callSuper = false)
+public class Address extends AbstractEntity{
   @Column(name = "ID", updatable = false)
   private Long id;
 

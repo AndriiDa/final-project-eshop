@@ -7,9 +7,11 @@ import com.fs7.finalproject.eshop.model.Gender;
 import com.fs7.finalproject.eshop.model.Role;
 import com.fs7.finalproject.eshop.model.convert.GenderConverter;
 import com.fs7.finalproject.eshop.model.convert.RoleConverter;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Convert;
 import javax.persistence.Id;
@@ -17,6 +19,8 @@ import java.util.Date;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class UserDto extends AbstractDto{
   @Id
@@ -42,7 +46,7 @@ public class UserDto extends AbstractDto{
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   private Date birthDate;
 
-  private Address address;
+  private Long addressId;
 
   private Boolean emailVerified;
 
