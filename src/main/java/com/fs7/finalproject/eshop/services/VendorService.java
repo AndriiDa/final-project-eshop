@@ -78,17 +78,15 @@ public class VendorService {
               .deserialize(SerializationUtils.serialize(vendorMapper.toEntity(source)).clone());
           destination.setCrUser(
               userRepository.findById(source.getCrUserId())
-                  .orElseThrow(() -> new ResourceNotFoundException("crUserId " + source.getCrUserId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("User", "crUserId", source.getCrUserId()))
           );
           destination.setLmUser(
               userRepository.findById(source.getLmUserId())
-                  .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + source.getLmUserId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("User", "lmUserId", source.getLmUserId()))
           );
           destination.setId(id);
           return vendorMapper.toDto(vendorRepository.save(destination));
-        }).orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Vendor", "VendorId", id));
   }
 
   public VendorDto save(VendorDto source) {
@@ -98,7 +96,7 @@ public class VendorService {
   public VendorDto findById(Long id) {
     return vendorRepository.findById(id)
         .map(item -> vendorMapper.toDto(item))
-        .orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Vendor", "VendorId", id));
   }
 
   public Page<ProductDto> findAllProductsByVendorId(Long id, Pageable pageable) {
@@ -111,14 +109,14 @@ public class VendorService {
         .map(item -> {
           item.setIsActive(false);
           return vendorMapper.toDto(vendorRepository.save(item));
-        }).orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Vendor", "VendorId", id));
   }
 
   public ResponseEntity<Object> deleteById(Long id) {
     return vendorRepository.findById(id).map(item -> {
       vendorRepository.delete(item);
       return ResponseEntity.ok().build();
-    }).orElseThrow(() -> new ResourceNotFoundException("VendorId " + id + " not found"));
+    }).orElseThrow(() -> new ResourceNotFoundException("Vendor", "VendorId", id));
   }
 
 }

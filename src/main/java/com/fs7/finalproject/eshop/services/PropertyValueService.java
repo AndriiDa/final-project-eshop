@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.SerializationUtils;
 
+import java.util.Arrays;
+
 @Service
 public class PropertyValueService {
   private PropertyValueRepository propertyValueRepository;
@@ -38,14 +40,14 @@ public class PropertyValueService {
       PropertyValue destination = mapper.toEntity(source);
       destination.setProperty(item);
       return mapper.toDto(propertyValueRepository.save(destination));
-    }).orElseThrow(() -> new ResourceNotFoundException("PropertyId " + propertyId + " not found"));
+    }).orElseThrow(() -> new ResourceNotFoundException("Property", "PropertyId", propertyId));
   }
 
   public PropertyValueDto update(Long propertyId,
                                               Long propertyValueId,
                                               PropertyValueDto source) {
     if (!propertyRepository.existsById(propertyId)) {
-      throw new ResourceNotFoundException("PropertyId " + propertyId + " not found");
+      throw new ResourceNotFoundException("Property", "PropertyId", propertyId);
     }
 
     return propertyValueRepository.findById(propertyValueId).map(item -> {
@@ -54,7 +56,7 @@ public class PropertyValueService {
       destination.setId(propertyValueId);
 
       return mapper.toDto(propertyValueRepository.save(destination));
-    }).orElseThrow(() -> new ResourceNotFoundException("PropertyValueId " + propertyValueId + "not found"));
+    }).orElseThrow(() -> new ResourceNotFoundException("PropertyValue", "PropertyValueId", propertyValueId));
   }
 
   public ResponseEntity<Object> deletePropertyValue(Long propertyId,
@@ -63,7 +65,6 @@ public class PropertyValueService {
       propertyValueRepository.delete(propertyValue);
       return ResponseEntity.ok().build();
     }).orElseThrow(() ->
-        new ResourceNotFoundException("PropertyValue not found with id "
-            + propertyValueId + " and propertyId " + propertyId));
+        new ResourceNotFoundException("Property and PropertyValue", "PropertyId and PropertyValueId", Arrays.asList(propertyId, propertyValueId)));
   }
 }

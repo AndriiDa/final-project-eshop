@@ -1,6 +1,5 @@
 package com.fs7.finalproject.eshop.controllers;
 
-;
 import com.fs7.finalproject.eshop.model.dto.CategoryDto;
 import com.fs7.finalproject.eshop.model.mapper.CategoryMapper;
 import org.junit.Test;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -43,6 +43,7 @@ public class CategoryControllerTest {
   private CategoryMapper mapper;
 
   @Test
+  @WithMockUser(username = "ivanov", password = "ivanov123", roles = "A")
   public void returnsAllCategories() throws Exception {
     // given
     CategoryDto category1 = CategoryDto.builder()

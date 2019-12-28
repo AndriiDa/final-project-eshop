@@ -86,7 +86,7 @@ public class ProductPropertyValueService {
               .deserialize(SerializationUtils.serialize(mapper.toEntity(source)).clone());
           destination.setId(id);
           return mapper.toDto(productPropertyValueRepository.save(destination));
-        }).orElseThrow(() -> new ResourceNotFoundException("ProductPropertyValueId " + id + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("ProductPropertyValue", "ProductPropertyValueId", id));
   }
 
   public ProductPropertyValueDto save(ProductPropertyValueDto source) {
@@ -96,14 +96,14 @@ public class ProductPropertyValueService {
   public ProductPropertyValueDto findById(Long id) {
     return productPropertyValueRepository.findById(id)
         .map(item -> mapper.toDto(item))
-        .orElseThrow(() -> new ResourceNotFoundException("ProductPropertyValueId " + id + " not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("ProductPropertyValue", "ProductPropertyValueId", id));
   }
 
   public ResponseEntity<Object> deleteById(Long id) {
     return productPropertyValueRepository.findById(id).map(item -> {
       productPropertyValueRepository.delete(item);
       return ResponseEntity.ok().build();
-    }).orElseThrow(() -> new ResourceNotFoundException("ProductPropertyValueId " + id + " not found"));
+    }).orElseThrow(() -> new ResourceNotFoundException("ProductPropertyValue", "ProductPropertyValueId", id));
   }
 
   public Page<ProductPropertyValueByProductDto> findAllByProductId(Long id, Pageable pageable) {

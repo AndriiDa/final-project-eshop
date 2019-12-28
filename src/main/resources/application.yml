@@ -1,6 +1,10 @@
 server:
   port: 9000
 
+app:
+  jwtSecret: JWTSuperSecretKey
+  jwtExpirationInMs: 604800000
+
 spring:
   profiles:
     active: local

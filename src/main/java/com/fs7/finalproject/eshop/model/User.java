@@ -3,6 +3,7 @@ package com.fs7.finalproject.eshop.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fs7.finalproject.eshop.model.convert.GenderConverter;
 import com.fs7.finalproject.eshop.model.convert.RoleConverter;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +18,6 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -39,14 +37,8 @@ import java.util.Date;
         @UniqueConstraint(name = "IX_USERS_EMAIL", columnNames = "EMAIL")})
 @EqualsAndHashCode(callSuper = false)
 public class User extends AbstractEntity{
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "ID", updatable = false)
   private Long id;
-
-  //  @Version
-  //  @Column(name = "version")
-  //  private int version = 0;
 
   @Column(name = "FIRST_NAME", nullable = false, length = 100)
   private String firstName;
@@ -82,7 +74,7 @@ public class User extends AbstractEntity{
           foreignKey = @ForeignKey(name = "FK_USERS_ADDRESSES_ADDRESS_ID"))
   private Address address;
 
-  private boolean emailVerified;
+  private Boolean emailVerified;
 
   @Column(name = "VERIFICATION_CODE", length = 20)
   private String verificationCode;
@@ -93,10 +85,10 @@ public class User extends AbstractEntity{
 
   @Column(name = "IS_ACTIVE", nullable = false)
   @ColumnDefault("false")
-  private boolean isActive;
+  private Boolean isActive;
 
   @CreatedDate
-  @Column(name = "CR_TIME", nullable = false)
+  @Column(name = "CR_TIME", updatable = false, nullable = false)
   @ColumnDefault("CURRENT_TIMESTAMP")
   @Temporal(TemporalType.TIMESTAMP)
   private Date crTime;

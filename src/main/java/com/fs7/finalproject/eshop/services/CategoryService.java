@@ -104,22 +104,19 @@ public class CategoryService {
               Objects.isNull(source.getParentCategoryId())
                   ? null
                   : categoryRepository.findById(source.getParentCategoryId())
-                  .orElseThrow(() -> new ResourceNotFoundException("ParemtCategoryId " + source.getParentCategoryId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("Parent Category", "CategoryId", source.getParentCategoryId()))
           );
           destination.setCrUser(
               userRepository.findById(source.getCrUserId())
-                  .orElseThrow(() -> new ResourceNotFoundException("crUserId " + source.getCrUserId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("User", "crUserId", source.getCrUserId()))
           );
           destination.setLmUser(
               userRepository.findById(source.getLmUserId())
-                  .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + source.getLmUserId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("User", "lmUserId", source.getLmUserId()))
           );
           destination.setId(id);
           return mapper.toDto(categoryRepository.save(destination));
-        }).orElseThrow(() -> new ResourceNotFoundException("CategoryId " + id + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Category", "CategoryId", id));
   }
 
   public CategoryDto save(CategoryDto source) {
@@ -129,7 +126,7 @@ public class CategoryService {
   public CategoryDto findById(Long id) {
     return categoryRepository.findById(id)
         .map(item -> mapper.toDto(item))
-        .orElseThrow(() -> new ResourceNotFoundException("CategoryId " + id + " not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Category", "CategoryId", id));
   }
 
   public CategoryDto setInactive(Long id) {
@@ -137,13 +134,13 @@ public class CategoryService {
         .map(item -> {
           item.setIsActive(false);
           return mapper.toDto(categoryRepository.save(item));
-        }).orElseThrow(() -> new ResourceNotFoundException("CategoryId " + id + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Category", "CategoryId", id));
   }
 
   public ResponseEntity<Object> deleteById(Long id) {
     return categoryRepository.findById(id).map(item -> {
       categoryRepository.delete(item);
       return ResponseEntity.ok().build();
-    }).orElseThrow(() -> new ResourceNotFoundException("CategoryId " + id + " not found"));
+    }).orElseThrow(() -> new ResourceNotFoundException("Category", "CategoryId", id));
   }
 }
