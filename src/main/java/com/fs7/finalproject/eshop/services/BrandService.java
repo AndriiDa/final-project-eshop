@@ -4,7 +4,6 @@ import com.fs7.finalproject.eshop.exceptions.ResourceNotFoundException;
 import com.fs7.finalproject.eshop.model.Brand;
 import com.fs7.finalproject.eshop.model.dto.BrandDto;
 import com.fs7.finalproject.eshop.model.dto.ProductDto;
-import com.fs7.finalproject.eshop.model.dto.VendorDto;
 import com.fs7.finalproject.eshop.model.mapper.BrandMapper;
 import com.fs7.finalproject.eshop.model.mapper.ProductMapper;
 import com.fs7.finalproject.eshop.repositories.BrandRepository;
@@ -79,17 +78,15 @@ public class BrandService {
               .deserialize(SerializationUtils.serialize(brandMapper.toEntity(source)).clone());
           destination.setCrUser(
               userRepository.findById(source.getCrUserId())
-                  .orElseThrow(() -> new ResourceNotFoundException("crUserId " + source.getCrUserId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("User", "crUserId", source.getCrUserId()))
           );
           destination.setLmUser(
               userRepository.findById(source.getLmUserId())
-                  .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + source.getLmUserId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("User", "lmUserId ", source.getLmUserId()))
           );
           destination.setId(id);
           return brandMapper.toDto(brandRepository.save(destination));
-        }).orElseThrow(() -> new ResourceNotFoundException("BrandId " + id + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Brand", "BrandId", id));
   }
 
   public BrandDto save(BrandDto source) {
@@ -99,7 +96,7 @@ public class BrandService {
   public BrandDto findById(Long id) {
     return brandRepository.findById(id)
         .map(item -> brandMapper.toDto(item))
-        .orElseThrow(() -> new ResourceNotFoundException("BrandId " + id + " not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Brand", "BrandId", id));
   }
 
   public Page<ProductDto> findAllProductsByBrandId(Long id, Pageable pageable) {
@@ -112,13 +109,13 @@ public class BrandService {
         .map(item -> {
           item.setIsActive(false);
           return brandMapper.toDto(brandRepository.save(item));
-        }).orElseThrow(() -> new ResourceNotFoundException("BrandId " + id + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Brand", "BrandId", id));
   }
 
   public ResponseEntity<Object> deleteById(Long id) {
     return brandRepository.findById(id).map(item -> {
       brandRepository.delete(item);
       return ResponseEntity.ok().build();
-    }).orElseThrow(() -> new ResourceNotFoundException("BrandId " + id + " not found"));
+    }).orElseThrow(() -> new ResourceNotFoundException("Brand", "BrandId", id));
   }
 }

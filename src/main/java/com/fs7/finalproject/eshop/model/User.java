@@ -17,9 +17,6 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -35,18 +32,25 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "USERS", uniqueConstraints = {
-        @UniqueConstraint(name = "IX_USERS_LOGIN_NAME", columnNames = "LOGIN_NAME"),
-        @UniqueConstraint(name = "IX_USERS_EMAIL", columnNames = "EMAIL")})
+    @UniqueConstraint(name = "IX_USERS_LOGIN_NAME", columnNames = "LOGIN_NAME"),
+    @UniqueConstraint(name = "IX_USERS_EMAIL", columnNames = "EMAIL")})
 @EqualsAndHashCode(callSuper = false)
-public class User extends AbstractEntity{
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class User extends AbstractEntity {
+
+  public User(String firstName, String lastName,
+              String email, Boolean emailVerified,
+              String loginName, String loginPassword) {
+    super();
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.emailVerified = emailVerified;
+    this.loginName = loginName;
+    this.loginPassword = loginPassword;
+  }
+
   @Column(name = "ID", updatable = false)
   private Long id;
-
-  //  @Version
-  //  @Column(name = "version")
-  //  private int version = 0;
 
   @Column(name = "FIRST_NAME", nullable = false, length = 100)
   private String firstName;
@@ -64,7 +68,7 @@ public class User extends AbstractEntity{
   @Column(name = "LOGIN_NAME", unique = true, nullable = false, length = 50)
   private String loginName;
 
-  @Column(name = "LOGIN_PASSWORD", length = 50)
+  @Column(name = "LOGIN_PASSWORD", length = 100)
   private String loginPassword;
 
   @Column(name = "PHONE_NUMBER", length = 50)
@@ -79,10 +83,11 @@ public class User extends AbstractEntity{
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID",
-          foreignKey = @ForeignKey(name = "FK_USERS_ADDRESSES_ADDRESS_ID"))
+      foreignKey = @ForeignKey(name = "FK_USERS_ADDRESSES_ADDRESS_ID"))
   private Address address;
 
-  private boolean emailVerified;
+  @Column(columnDefinition = "boolean default false")
+  private Boolean emailVerified;
 
   @Column(name = "VERIFICATION_CODE", length = 20)
   private String verificationCode;
@@ -91,12 +96,12 @@ public class User extends AbstractEntity{
   @Column(nullable = false)
   private Role role;
 
-  @Column(name = "IS_ACTIVE", nullable = false)
+  @Column(name = "IS_ACTIVE", nullable = false, columnDefinition = "boolean default false")
   @ColumnDefault("false")
-  private boolean isActive;
+  private Boolean isActive;
 
   @CreatedDate
-  @Column(name = "CR_TIME", nullable = false)
+  @Column(name = "CR_TIME", updatable = false, nullable = false)
   @ColumnDefault("CURRENT_TIMESTAMP")
   @Temporal(TemporalType.TIMESTAMP)
   private Date crTime;

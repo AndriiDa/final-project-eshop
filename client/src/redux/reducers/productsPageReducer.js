@@ -4,6 +4,8 @@ const INITIALIZE_PRODUCTS = 'INITIALIZE-PRODUCTS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
 const IS_LOADING_IN_PROGRESS = 'IS-LOADING-IN-PROGRESS';
+const ADD_PRODUCT_TO_CART = 'ADD-PRODUCT-TO-CART';
+const DELETE_PRODUCT_FROM_CART = 'DELETE-PRODUCT-FROM-CART';
 
 let initialState = {
     products: [
@@ -17,7 +19,8 @@ let initialState = {
     pageSize: 3,
     totalUsersCount: 1,
     currentPage: 1,
-    isLoadingInProgress: false
+    isLoadingInProgress: false,
+    isProductInCart: false
 };
 
 const productsPageReducer = (state = initialState, action) => {
@@ -75,6 +78,18 @@ const productsPageReducer = (state = initialState, action) => {
                     isLoadingInProgress: action.isLoadingInProgress
                 };
         }
+        case ADD_PRODUCT_TO_CART: {
+            return {
+                ...state,
+                isProductInCart: true
+            };
+        }
+        case DELETE_PRODUCT_FROM_CART: {
+            return {
+                ...state,
+                isProductInCart: false
+            };
+        }
         default:
             return state;
     }
@@ -119,6 +134,18 @@ export const setIsLoadingInProgress = (isLoadingInProgress) => {
     return {
         type: IS_LOADING_IN_PROGRESS,
         isLoadingInProgress: isLoadingInProgress
+    }
+};
+
+export const addProductToCart = () => {
+    return {
+        type: ADD_PRODUCT_TO_CART,
+    }
+};
+
+export const deleteProductFromCart = () => {
+    return {
+        type: DELETE_PRODUCT_FROM_CART,
     }
 };
 

@@ -111,36 +111,31 @@ public class ProductService {
               Objects.isNull(source.getCategoryId())
                   ? null
                   : categoryRepository.findById(source.getCategoryId())
-                  .orElseThrow(() -> new ResourceNotFoundException("CategoryId " + source.getCategoryId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("Category", "CategoryId", source.getCategoryId()))
           );
           destination.setBrand(
               Objects.isNull(source.getBrandId())
                   ? null
                   : brandRepository.findById(source.getBrandId())
-                  .orElseThrow(() -> new ResourceNotFoundException("BrandId " + source.getBrandId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("Brand", "BrandId", source.getBrandId()))
           );
           destination.setVendor(
               Objects.isNull(source.getVendorId())
                   ? null
                   : vendorRepository.findById(source.getVendorId())
-                  .orElseThrow(() -> new ResourceNotFoundException("VendorId " + source.getVendorId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("Vendor", "VendorId", source.getVendorId()))
           );
           destination.setCrUser(
               userRepository.findById(source.getCrUserId())
-                  .orElseThrow(() -> new ResourceNotFoundException("crUserId " + source.getCrUserId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("User", "crUserId", source.getCrUserId()))
           );
           destination.setLmUser(
               userRepository.findById(source.getLmUserId())
-                  .orElseThrow(() -> new ResourceNotFoundException("lmUserId " + source.getLmUserId()
-                      + ", specified in the request body json, - not found"))
+                  .orElseThrow(() -> new ResourceNotFoundException("User", "lmUserId", source.getLmUserId()))
           );
           destination.setId(id);
           return mapper.toDto(productRepository.save(destination));
-        }).orElseThrow(() -> new ResourceNotFoundException("ProductId " + id + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Product", "ProductId", id));
   }
 
   public ProductDto save(ProductDto source) {
@@ -150,7 +145,7 @@ public class ProductService {
   public ProductDto findById(Long id) {
     return productRepository.findById(id)
         .map(item -> mapper.toDto(item))
-        .orElseThrow(() -> new ResourceNotFoundException("ProductId " + id + " not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Product", "ProductId", id));
   }
 
   public ProductDto setInactive(Long id) {
@@ -158,14 +153,14 @@ public class ProductService {
         .map(item -> {
           item.setIsActive(false);
           return mapper.toDto(productRepository.save(item));
-        }).orElseThrow(() -> new ResourceNotFoundException("ProductId " + id + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Product", "ProductId", id));
   }
 
   public ResponseEntity<Object> deleteById(Long id) {
     return productRepository.findById(id).map(item -> {
       productRepository.delete(item);
       return ResponseEntity.ok().build();
-    }).orElseThrow(() -> new ResourceNotFoundException("ProductId " + id + " not found"));
+    }).orElseThrow(() -> new ResourceNotFoundException("Product", "ProductId", id));
   }
 }
 

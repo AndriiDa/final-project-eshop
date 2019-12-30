@@ -1,18 +1,14 @@
 package com.fs7.finalproject.eshop.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -24,14 +20,15 @@ import java.util.Date;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "ORDERS")
-public class Order{
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Order extends AbstractEntityWithAudit{
   @Column(name = "ID", updatable = false)
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+      })
   @JoinColumn(name = "USER_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_ORDERS_USERS_USER_ID"))
   private User user;
@@ -57,7 +54,9 @@ public class Order{
   @Column(name = "RECEIPT_PHONE", length = 20)
   private String receiptPhone;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.LAZY, cascade = {
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+      })
   @JoinColumn(name = "RECEIPT_ADDRESS_ID", referencedColumnName = "ID",
           foreignKey = @ForeignKey(name = "FK_ORDERS_ADDRESSES_RECEIPT_ADDRESS_ID"))
   private Address receiptAddress;
@@ -77,23 +76,16 @@ public class Order{
   @Column(name = "STATUS", columnDefinition = "CHAR", nullable = false)
   private String status;
 
-  @CreatedDate
-  @Column(name = "CR_TIME", nullable = false)
-  @ColumnDefault("CURRENT_TIMESTAMP")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date crTime;
-
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+      })
   @JoinColumn(name = "CR_USER_ID", referencedColumnName = "ID", nullable = false,
           foreignKey = @ForeignKey(name = "FK_ORDERS_USERS_CR_USER_ID"))
   private User crUser;
 
-  @LastModifiedDate
-  @Column(name = "LM_TIME")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date lmTime;
-
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+      })
   @JoinColumn(name = "LM_USER_ID", referencedColumnName = "ID",
           foreignKey = @ForeignKey(name = "FK_ORDERS_USERS_LM_USER_ID"))
   private User lmUser;

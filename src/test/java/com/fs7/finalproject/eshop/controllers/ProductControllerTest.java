@@ -2,6 +2,9 @@ package com.fs7.finalproject.eshop.controllers;
 
 import com.fs7.finalproject.eshop.model.Category;
 import com.fs7.finalproject.eshop.model.Product;
+import com.fs7.finalproject.eshop.security.CustomUserDetailsService;
+import com.fs7.finalproject.eshop.security.JwtAuthenticationEntryPoint;
+import com.fs7.finalproject.eshop.security.JwtTokenProvider;
 import com.fs7.finalproject.eshop.services.ProductPropertyValueService;
 import com.fs7.finalproject.eshop.services.ProductService;
 import org.junit.Test;
@@ -11,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -35,9 +39,19 @@ public class ProductControllerTest {
   @MockBean
   ProductPropertyValueService productPropertyValueService;
 
+  @MockBean
+  CustomUserDetailsService customUserDetailsService;
+
+  @MockBean
+  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+  @MockBean
+  JwtTokenProvider jwtTokenProvider;
+
   //ObjectMapper mapper = new ObjectMapper();
 
   @Test
+  @WithMockUser(username = "ivanov", password = "ivanov123", roles = "A")
   public void findAll() throws Exception {
     // given
     Product product = Product.builder()

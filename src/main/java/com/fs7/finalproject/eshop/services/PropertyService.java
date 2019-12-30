@@ -60,7 +60,7 @@ public class PropertyService {
           .deserialize(SerializationUtils.serialize(mapper.toEntity(source)).clone());
       destination.setId(id);
       return mapper.toDto(propertyRepository.save(destination));
-    }).orElseThrow(() -> new ResourceNotFoundException("PropertyId " + id + " not found"));
+    }).orElseThrow(() -> new ResourceNotFoundException("Property", "PropertyId", id));
   }
 
   public PropertyDto save(PropertyDto item) {
@@ -72,13 +72,13 @@ public class PropertyService {
   public PropertyDto findById(Long id) {
     return propertyRepository.findById(id)
         .map(item -> mapper.toDto(item))
-        .orElseThrow(() -> new ResourceNotFoundException("PropertyId " + id + " not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Property", "PropertyId", id));
   }
 
   public ResponseEntity<Object> deleteById(Long id) {
     return propertyRepository.findById(id).map(item -> {
       propertyRepository.delete(item);
       return ResponseEntity.ok().build();
-    }).orElseThrow(() -> new ResourceNotFoundException("PropertyId " + id + " not found"));
+    }).orElseThrow(() -> new ResourceNotFoundException("Property", "PropertyId", id));
   }
 }
