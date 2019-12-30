@@ -44,8 +44,8 @@ public class PropertyValueService {
   }
 
   public PropertyValueDto update(Long propertyId,
-                                              Long propertyValueId,
-                                              PropertyValueDto source) {
+                                 Long propertyValueId,
+                                 PropertyValueDto source) {
     if (!propertyRepository.existsById(propertyId)) {
       throw new ResourceNotFoundException("Property", "PropertyId", propertyId);
     }
@@ -60,11 +60,12 @@ public class PropertyValueService {
   }
 
   public ResponseEntity<Object> deletePropertyValue(Long propertyId,
-                                               Long propertyValueId) {
+                                                    Long propertyValueId) {
     return propertyValueRepository.findByIdAndPropertyId(propertyValueId, propertyId).map(propertyValue -> {
       propertyValueRepository.delete(propertyValue);
       return ResponseEntity.ok().build();
     }).orElseThrow(() ->
-        new ResourceNotFoundException("Property and PropertyValue", "PropertyId and PropertyValueId", Arrays.asList(propertyId, propertyValueId)));
+        new ResourceNotFoundException("Property and PropertyValue", "PropertyId and PropertyValueId",
+            Arrays.asList(propertyId, propertyValueId)));
   }
 }

@@ -83,7 +83,7 @@ public class UserRepositoryTest {
   public void whenFindByEMail_thenReturnUser() {
     entityManager.persist(userOne);
     // when
-    User user = userRepository.findByEmail("p_ivanov@gmail.com");
+    User user = userRepository.findByEmail("p_ivanov@gmail.com").get();
     // then
     assertThat(user.getLastName()).isEqualTo("Ivanov");
   }

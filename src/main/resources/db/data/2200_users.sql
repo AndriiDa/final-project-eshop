@@ -1,7 +1,7 @@
 INSERT INTO USERS (ID, ADDRESS_ID, BIRTH_DATE, EMAIL, EMAIL_VERIFIED, FIRST_NAME
            ,GENDER, IS_ACTIVE, LAST_NAME, LOGIN_NAME, LOGIN_PASSWORD, MIDDLE_NAME, PHONE_NUMBER
            ,ROLE, VERIFICATION_CODE)
-VALUES (1, 1, '1987-10-23', 'ivanov@gmail.com', 1, 'Іван', 'M', 1, 'Іванов', 'ivanov', 'ivanov123',
+VALUES (1, 1, '1987-10-23', 'ivanov@gmail.com', 1, 'Іван', 'M', 1, 'Іванов', 'ivanov', '$2a$10$eAB26MH5xiiskBAuaE.UG.AJuJWUD3EECyJYjWTqKBgvYdXiWUJxO',
         'Семенович', '+380502346578', 'A', '2345');
 
 INSERT INTO USERS (ID, ADDRESS_ID, BIRTH_DATE, EMAIL, EMAIL_VERIFIED, FIRST_NAME

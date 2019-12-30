@@ -4,17 +4,20 @@ import com.fs7.finalproject.eshop.exceptions.ResourceNotFoundException;
 import com.fs7.finalproject.eshop.model.User;
 import com.fs7.finalproject.eshop.model.dto.UserDto;
 import com.fs7.finalproject.eshop.model.mapper.UserMapper;
+import com.fs7.finalproject.eshop.payloads.UserIdentityAvailability;
+import com.fs7.finalproject.eshop.payloads.UserProfile;
+import com.fs7.finalproject.eshop.payloads.UserSummary;
 import com.fs7.finalproject.eshop.repositories.UserRepository;
+import com.fs7.finalproject.eshop.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.SerializationUtils;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -28,7 +31,7 @@ public class UserService {
   @Autowired
   public UserService(UserRepository userRepository,
                      UserMapper mapper
-                     ) {
+  ) {
     this.userRepository = userRepository;
     this.mapper = mapper;
     //this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -112,4 +115,27 @@ public class UserService {
   //        .map(item -> mapper.toDto(item))
   //        .orElseThrow(() -> new ResourceNotFoundException("User", "UserLoginName", source.getLoginName()));
   //  }
+
+  public UserSummary getCurrentUser(UserPrincipal currentUser) {
+    return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getEmail());
+  }
+
+  public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "loginname") String loginName) {
+    Boolean isAvailable = !userRepository.existsByLoginName(loginName);
+    return new UserIdentityAvailability(isAvailable);
+  }
+
+  public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
+    Boolean isAvailable = !userRepository.existsByEmail(email);
+    return new UserIdentityAvailability(isAvailable);
+  }
+
+  public UserProfile getUserProfile(String loginName) {
+    User user = userRepository.findByLoginName(loginName)
+        .orElseThrow(() -> new ResourceNotFoundException("User", "loginName", loginName));
+
+    return new UserProfile(user.getId(), user.getLoginName(), user.getFirstName(), user.getLastName(),
+        user.getCrTime().toInstant());
+  }
+
 }

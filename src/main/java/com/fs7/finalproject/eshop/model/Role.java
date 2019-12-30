@@ -19,6 +19,8 @@ public enum Role {
         return Role.ADMIN;
       case "C":
         return Role.CUSTOMER;
+      case "U":
+        return Role.USER;
       case "G":
         return Role.GUEST;
       default:

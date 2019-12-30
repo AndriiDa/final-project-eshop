@@ -104,7 +104,8 @@ public class CategoryService {
               Objects.isNull(source.getParentCategoryId())
                   ? null
                   : categoryRepository.findById(source.getParentCategoryId())
-                  .orElseThrow(() -> new ResourceNotFoundException("Parent Category", "CategoryId", source.getParentCategoryId()))
+                  .orElseThrow(() -> new ResourceNotFoundException("Parent Category", "CategoryId",
+                      source.getParentCategoryId()))
           );
           destination.setCrUser(
               userRepository.findById(source.getCrUserId())

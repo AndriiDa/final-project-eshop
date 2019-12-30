@@ -104,10 +104,14 @@ public class UserPrincipal implements UserDetails {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    UserPrincipal that = (UserPrincipal) o;
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    UserPrincipal that = (UserPrincipal) obj;
     return Objects.equals(id, that.id);
   }
 

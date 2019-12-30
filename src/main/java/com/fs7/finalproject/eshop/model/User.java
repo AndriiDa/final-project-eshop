@@ -3,7 +3,6 @@ package com.fs7.finalproject.eshop.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fs7.finalproject.eshop.model.convert.GenderConverter;
 import com.fs7.finalproject.eshop.model.convert.RoleConverter;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,10 +32,23 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "USERS", uniqueConstraints = {
-        @UniqueConstraint(name = "IX_USERS_LOGIN_NAME", columnNames = "LOGIN_NAME"),
-        @UniqueConstraint(name = "IX_USERS_EMAIL", columnNames = "EMAIL")})
+    @UniqueConstraint(name = "IX_USERS_LOGIN_NAME", columnNames = "LOGIN_NAME"),
+    @UniqueConstraint(name = "IX_USERS_EMAIL", columnNames = "EMAIL")})
 @EqualsAndHashCode(callSuper = false)
-public class User extends AbstractEntity{
+public class User extends AbstractEntity {
+
+  public User(String firstName, String lastName,
+              String email, Boolean emailVerified,
+              String loginName, String loginPassword) {
+    super();
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.emailVerified = emailVerified;
+    this.loginName = loginName;
+    this.loginPassword = loginPassword;
+  }
+
   @Column(name = "ID", updatable = false)
   private Long id;
 
@@ -56,7 +68,7 @@ public class User extends AbstractEntity{
   @Column(name = "LOGIN_NAME", unique = true, nullable = false, length = 50)
   private String loginName;
 
-  @Column(name = "LOGIN_PASSWORD", length = 50)
+  @Column(name = "LOGIN_PASSWORD", length = 100)
   private String loginPassword;
 
   @Column(name = "PHONE_NUMBER", length = 50)
@@ -71,9 +83,10 @@ public class User extends AbstractEntity{
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID",
-          foreignKey = @ForeignKey(name = "FK_USERS_ADDRESSES_ADDRESS_ID"))
+      foreignKey = @ForeignKey(name = "FK_USERS_ADDRESSES_ADDRESS_ID"))
   private Address address;
 
+  @Column(columnDefinition = "boolean default false")
   private Boolean emailVerified;
 
   @Column(name = "VERIFICATION_CODE", length = 20)
@@ -83,7 +96,7 @@ public class User extends AbstractEntity{
   @Column(nullable = false)
   private Role role;
 
-  @Column(name = "IS_ACTIVE", nullable = false)
+  @Column(name = "IS_ACTIVE", nullable = false, columnDefinition = "boolean default false")
   @ColumnDefault("false")
   private Boolean isActive;
 
