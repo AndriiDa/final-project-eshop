@@ -1,0 +1,50 @@
+.products {
+
+}
+
+.header {
+  margin-top: 10px;
+  margin-left: 50px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.productItems {
+  padding: 5px;
+
+}
+
+.commentItems {
+  padding: 5px;
+
+}
+
+.selected {
+  display: inline-block;
+  margin: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  background: darkslateblue;
+  color: white;
+}
+
+.pageNumber {
+  display: inline-block;
+  margin: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  font-weight: normal;
+  background: white;
+}
+

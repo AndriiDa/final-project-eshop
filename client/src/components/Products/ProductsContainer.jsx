@@ -11,31 +11,33 @@ import {
     deleteProductFromCart
 } from "../../redux/reducers/productsPageReducer";
 import Products from "./Products";
-import * as axios from "axios";
 import Preloader from "../common/Preloader/Preloader";
+import {productsApi} from "../../api/Api";
 
 class ProductsContainer extends React.Component {
     componentDidMount() {
         this.props.setIsLoadingInProgress(true);
-        axios.get(`http://localhost:9000/api/v1/products/?page=${this.props.currentPage - 1}&size=${this.props.pageSize}`).then(
-            response => {
-                this.props.setIsLoadingInProgress(false);
-                this.props.initializeProducts(response.data.content);
-                this.props.setTotalUsersCount(response.data.totalElements);
-            }
-        );
+        productsApi.getProducts(this.props.currentPage - 1, this.props.pageSize)
+            .then(
+                data => {
+                    this.props.setIsLoadingInProgress(false);
+                    this.props.initializeProducts(data.content);
+                    this.props.setTotalUsersCount(data.totalElements);
+                }
+            );
     };
 
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
         this.props.setIsLoadingInProgress(true);
-        axios.get(`http://localhost:9000/api/v1/products/?page=${pageNumber - 1}&size=${this.props.pageSize}`).then(
-            response => {
-                this.props.setIsLoadingInProgress(false);
-                this.props.initializeProducts(response.data.content);
-                this.props.setTotalUsersCount(response.data.totalElements);
-            }
-        );
+        productsApi.getProducts(pageNumber - 1, this.props.pageSize)
+            .then(
+                data => {
+                    this.props.setIsLoadingInProgress(false);
+                    this.props.initializeProducts(data.content);
+                    this.props.setTotalUsersCount(data.totalElements);
+                }
+            );
     };
 
     render() {
