@@ -2,10 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {setProduct} from "../../redux/reducers/singleProductPageReducer";
 import {setIsFetchingInProgress} from "../../redux/reducers/commonTasksReducer";
-import * as axios from "axios/index";
 import Product from "../Product/Product";
 import {withRouter} from "react-router-dom";
 import Preloader from "../common/Preloader/Preloader";
+import {cartApi} from "../../api/Api";
 
 class CartContainer extends React.Component {
     componentDidMount() {
@@ -14,16 +14,16 @@ class CartContainer extends React.Component {
             id = 1;
         }
         this.props.setIsFetchingInProgress(true);
-        axios.get(`http://localhost:9000/api/v1/products/${id}`).then(
-            response => {
+        cartApi.getCartByLoginName('ivanov')
+            .then(data => {
                 this.props.setIsFetchingInProgress(false);
-                this.props.setProduct(response.data);
+                this.props.setProduct(data);
             }
         );
     };
     render() {
         return <>
-            { (this.props.setIsFetchingInProgress && !this.props.product) ? <Preloader/> : <Product product={this.props.product}
+            { (this.props.setIsFetchingInProgress && !this.props.product) ? <Preloader/> : <Cart product={this.props.product}
                 />}
 
         </>;
