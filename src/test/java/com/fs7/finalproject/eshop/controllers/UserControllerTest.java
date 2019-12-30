@@ -1,10 +1,12 @@
 package com.fs7.finalproject.eshop.controllers;
 
-import com.fs7.finalproject.eshop.model.Address;
 import com.fs7.finalproject.eshop.model.Gender;
 import com.fs7.finalproject.eshop.model.Role;
-import com.fs7.finalproject.eshop.model.User;
 import com.fs7.finalproject.eshop.model.dto.UserDto;
+import com.fs7.finalproject.eshop.security.CustomUserDetailsService;
+import com.fs7.finalproject.eshop.security.JwtAuthenticationEntryPoint;
+import com.fs7.finalproject.eshop.security.JwtTokenProvider;
+import com.fs7.finalproject.eshop.services.CartService;
 import com.fs7.finalproject.eshop.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +42,18 @@ public class UserControllerTest {
   @MockBean
   UserService userService;
 
+  @MockBean
+  CartService cartService;
+
+  @MockBean
+  CustomUserDetailsService customUserDetailsService;
+
+  @MockBean
+  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+  @MockBean
+  JwtTokenProvider jwtTokenProvider;
+
   //ObjectMapper mapper = new ObjectMapper();
 
   @Test
@@ -70,6 +84,6 @@ public class UserControllerTest {
 
     this.mockMvc.perform(get("/api/v1/users"))
             .andExpect(status().isOk())
-            .andExpect(content().json("{\"content\":[{\"id\":1,\"firstName\":\"Petya\",\"lastName\":\"Ivanov\",\"middleName\":null,\"email\":\"p_ivanov@gmail.com\",\"loginName\":\"p.ivanov\",\"loginPassword\":null,\"phoneNumber\":null,\"gender\":\"MALE\",\"birthDate\":null,\"address\":{\"id\":1,\"country\":null,\"state\":null,\"city\":null,\"street\":null,\"zipCode\":null,\"addressLine\":\"Ivanov address\"},\"emailVerified\":null,\"verificationCode\":null,\"role\":\"ADMIN\",\"isActive\":null,\"crTime\":null}],\"pageable\":{\"sort\":{\"unsorted\":true,\"sorted\":false,\"empty\":true},\"pageSize\":1,\"pageNumber\":0,\"offset\":0,\"unpaged\":false,\"paged\":true},\"totalPages\":1,\"totalElements\":1,\"last\":true,\"first\":true,\"sort\":{\"unsorted\":true,\"sorted\":false,\"empty\":true},\"numberOfElements\":1,\"size\":1,\"number\":0,\"empty\":false}"));
+            .andExpect(content().json("{\"content\":[{\"id\":1,\"firstName\":\"Petya\",\"lastName\":\"Ivanov\",\"middleName\":null,\"email\":\"p_ivanov@gmail.com\",\"loginName\":\"p.ivanov\",\"loginPassword\":null,\"phoneNumber\":null,\"gender\":\"MALE\",\"birthDate\":null,\"addressId\":1,\"emailVerified\":null,\"verificationCode\":null,\"role\":\"ADMIN\",\"isActive\":null,\"crTime\":null}],\"pageable\":{\"sort\":{\"unsorted\":true,\"sorted\":false,\"empty\":true},\"pageSize\":1,\"pageNumber\":0,\"offset\":0,\"unpaged\":false,\"paged\":true},\"totalPages\":1,\"totalElements\":1,\"last\":true,\"first\":true,\"sort\":{\"unsorted\":true,\"sorted\":false,\"empty\":true},\"numberOfElements\":1,\"size\":1,\"number\":0,\"empty\":false}"));
   }
 }

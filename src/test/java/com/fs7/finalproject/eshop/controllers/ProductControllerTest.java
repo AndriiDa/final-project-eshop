@@ -2,6 +2,9 @@ package com.fs7.finalproject.eshop.controllers;
 
 import com.fs7.finalproject.eshop.model.Category;
 import com.fs7.finalproject.eshop.model.Product;
+import com.fs7.finalproject.eshop.security.CustomUserDetailsService;
+import com.fs7.finalproject.eshop.security.JwtAuthenticationEntryPoint;
+import com.fs7.finalproject.eshop.security.JwtTokenProvider;
 import com.fs7.finalproject.eshop.services.ProductPropertyValueService;
 import com.fs7.finalproject.eshop.services.ProductService;
 import org.junit.Test;
@@ -35,6 +38,15 @@ public class ProductControllerTest {
 
   @MockBean
   ProductPropertyValueService productPropertyValueService;
+
+  @MockBean
+  CustomUserDetailsService customUserDetailsService;
+
+  @MockBean
+  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+  @MockBean
+  JwtTokenProvider jwtTokenProvider;
 
   //ObjectMapper mapper = new ObjectMapper();
 

@@ -2,6 +2,9 @@ package com.fs7.finalproject.eshop.controllers;
 
 import com.fs7.finalproject.eshop.model.dto.CategoryDto;
 import com.fs7.finalproject.eshop.model.mapper.CategoryMapper;
+import com.fs7.finalproject.eshop.security.CustomUserDetailsService;
+import com.fs7.finalproject.eshop.security.JwtAuthenticationEntryPoint;
+import com.fs7.finalproject.eshop.security.JwtTokenProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -18,6 +21,7 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +42,15 @@ public class CategoryControllerTest {
 
   @MockBean
   CategoryService categoryService;
+
+  @MockBean
+  CustomUserDetailsService customUserDetailsService;
+
+  @MockBean
+  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+  @MockBean
+  JwtTokenProvider jwtTokenProvider;
 
   @MockBean
   private CategoryMapper mapper;

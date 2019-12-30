@@ -1,6 +1,9 @@
 package com.fs7.finalproject.eshop.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fs7.finalproject.eshop.security.CustomUserDetailsService;
+import com.fs7.finalproject.eshop.security.JwtAuthenticationEntryPoint;
+import com.fs7.finalproject.eshop.security.JwtTokenProvider;
 import com.fs7.finalproject.eshop.services.PropertyService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,6 +22,15 @@ import org.springframework.test.web.servlet.MockMvc;
 public class PropertyControllerTest {
   @MockBean
   PropertyService propertyService;
+
+  @MockBean
+  CustomUserDetailsService customUserDetailsService;
+
+  @MockBean
+  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+  @MockBean
+  JwtTokenProvider jwtTokenProvider;
 
   ObjectMapper mapper = new ObjectMapper();
 
