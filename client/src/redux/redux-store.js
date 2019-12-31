@@ -6,6 +6,7 @@ import commentsPageReducer from "./reducers/commentsPageReducer";
 import sidebarReducer from "./reducers/sidebarReducer";
 import commonTasksReducer from "./reducers/commonTasksReducer";
 import authReducer from "./reducers/authReducer";
+import cartPageReducer from "./reducers/cartPageReducer";
 
 let reducers = combineReducers({
     homePage: homePageReducer,
@@ -14,7 +15,9 @@ let reducers = combineReducers({
     sidebar: sidebarReducer,
     singleProductPage: singleProductPageReducer,
     commonTasks: commonTasksReducer,
-    auth: authReducer
+    auth: authReducer,
+    cartPage: cartPageReducer,
+
 });
 
 let store = createStore(reducers);

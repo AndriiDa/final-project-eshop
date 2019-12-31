@@ -2,7 +2,7 @@ const SET_PRODUCT_ACTIVE = 'SET-PRODUCT-ACTIVE';
 const SET_PRODUCT_INACTIVE = 'SET-PRODUCT-INACTIVE';
 const INITIALIZE_PRODUCTS = 'INITIALIZE-PRODUCTS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
-const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
+const SET_TOTAL_ITEMS_COUNT = 'SET-TOTAL-ITEMS-COUNT';
 const IS_LOADING_IN_PROGRESS = 'IS-LOADING-IN-PROGRESS';
 const ADD_PRODUCT_TO_CART = 'ADD-PRODUCT-TO-CART';
 const DELETE_PRODUCT_FROM_CART = 'DELETE-PRODUCT-FROM-CART';
@@ -17,10 +17,9 @@ let initialState = {
     ],
     product: null,
     pageSize: 3,
-    totalUsersCount: 1,
+    totalItemsCount: 1,
     currentPage: 1,
     isLoadingInProgress: false,
-    isProductInCart: false
 };
 
 const productsPageReducer = (state = initialState, action) => {
@@ -66,28 +65,44 @@ const productsPageReducer = (state = initialState, action) => {
                 currentPage: action.currentPage
             };
         }
-        case SET_TOTAL_USERS_COUNT: {
+        case SET_TOTAL_ITEMS_COUNT: {
             return {
                 ...state,
-                totalUsersCount: action.totalUsersCount
+                totalItemsCount: action.totalItemsCount
             };
         }
         case IS_LOADING_IN_PROGRESS: {
-                return {
-                    ...state,
-                    isLoadingInProgress: action.isLoadingInProgress
-                };
+            return {
+                ...state,
+                isLoadingInProgress: action.isLoadingInProgress
+            };
         }
         case ADD_PRODUCT_TO_CART: {
             return {
                 ...state,
-                isProductInCart: true
+                products: state.products.map(item => {
+                    if (item.id === action.productId) {
+                        return {
+                            ...item,
+                            isProductInCart: true
+                        }
+                    }
+                    return item;
+                })
             };
         }
         case DELETE_PRODUCT_FROM_CART: {
             return {
                 ...state,
-                isProductInCart: false
+                products: state.products.map(item => {
+                    if (item.id === action.productId) {
+                        return {
+                            ...item,
+                            isProductInCart: false
+                        }
+                    }
+                    return item;
+                })
             };
         }
         default:
@@ -123,10 +138,10 @@ export const setCurrentPage = (currentPage) => {
     }
 };
 
-export const setTotalUsersCount = (totalUsersCount) => {
+export const setTotalItemsCount = (totalItemsCount) => {
     return {
-        type: SET_TOTAL_USERS_COUNT,
-        totalUsersCount: totalUsersCount
+        type: SET_TOTAL_ITEMS_COUNT,
+        totalItemsCount: totalItemsCount
     }
 };
 
@@ -137,15 +152,17 @@ export const setIsLoadingInProgress = (isLoadingInProgress) => {
     }
 };
 
-export const addProductToCart = () => {
+export const addProductToCart = (id) => {
     return {
         type: ADD_PRODUCT_TO_CART,
+        productId: id
     }
 };
 
-export const deleteProductFromCart = () => {
+export const deleteProductFromCart = (id) => {
     return {
         type: DELETE_PRODUCT_FROM_CART,
+        productId: id
     }
 };
 

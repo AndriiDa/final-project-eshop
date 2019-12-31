@@ -1,30 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setProduct} from "../../redux/reducers/singleProductPageReducer";
-import {setIsFetchingInProgress} from "../../redux/reducers/commonTasksReducer";
-import Product from "../Product/Product";
+import {initializeCart} from "../../redux/reducers/cartPageReducer";
 import {withRouter} from "react-router-dom";
-import Preloader from "../common/Preloader/Preloader";
 import {cartApi} from "../../api/Api";
+import Cart from "./Cart";
 
 class CartContainer extends React.Component {
     componentDidMount() {
-        let id = this.props.match.params.productId;
-        if (!id) {
-            id = 1;
-        }
-        this.props.setIsFetchingInProgress(true);
-        cartApi.getCartByLoginName('ivanov')
-            .then(data => {
-                this.props.setIsFetchingInProgress(false);
-                this.props.setProduct(data);
-            }
-        );
+        cartApi.getCartByLoginName("ivanov")
+            .then(
+                data => {
+                    this.props.initializeCart(data.content);
+                }
+            );
     };
     render() {
         return <>
-            { (this.props.setIsFetchingInProgress && !this.props.product) ? <Preloader/> : <Cart product={this.props.product}
-                />}
+            <Cart cart={this.props.cart}
+                />
 
         </>;
     }
@@ -32,11 +25,10 @@ class CartContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        product: state.singleProductPage.product,
-        isFetchingInProgress: state.commonTasks.isFetchingInProgress
+        cart: state.cartPage.cart
     }
 };
 
 export default connect(mapStateToProps, {
-    setProduct, setIsFetchingInProgress
+    initializeCart
 })(withRouter(CartContainer));

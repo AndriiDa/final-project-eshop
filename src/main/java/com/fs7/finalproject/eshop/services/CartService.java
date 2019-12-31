@@ -18,7 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.SerializationUtils;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class CartService {
@@ -102,6 +105,36 @@ public class CartService {
     return cartRepository.findAll(example, pageable).map(item -> (mapper.toDto(item)));
   }
 
+  public ResponseEntity<Object> existsByUserIdAndProductId(Long userId, Long productId) {
+    return findByUserIdAndProductId(userId, productId).isEmpty()
+        ? ResponseEntity.ok().body(new HashMap<String,String>() {{put("resultCode", "No such cart item");}})
+        : ResponseEntity.ok().body(new HashMap<String,String>() {{put("resultCode", "OK");}});
+  }
+
+  private List<Cart> findByUserIdAndProductId(Long userId, Long productId) {
+    userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User", "UserId", userId));
+    productRepository.findById(productId)
+        .orElseThrow(() -> new ResourceNotFoundException("Product", "ProductId", productId));
+
+    Cart template = new Cart();
+    User user = new User();
+    user.setId(userId);
+    Product product = new Product();
+    product.setId(productId);
+    template.setUser(user);
+    template.setProduct(product);
+
+    ExampleMatcher matcher = ExampleMatcher.matching()
+        .withIgnorePaths("quantity")
+        .withIgnoreNullValues()
+        .withIgnoreCase();
+
+    Example<Cart> example = Example.of(template, matcher);
+
+    return cartRepository.findAll(example);
+  }
+
   public CartDto update(Long id, CartDto source) {
     return cartRepository.findById(id)
         .map(item -> {
@@ -135,5 +168,12 @@ public class CartService {
       cartRepository.delete(item);
       return ResponseEntity.ok().build();
     }).orElseThrow(() -> new ResourceNotFoundException("Cart", "CartId", id));
+  }
+
+  public ResponseEntity<Object> deleteByUserIdAndProductId(Long userid, Long productid) {
+    findByUserIdAndProductId(userid, productid).forEach(item -> {
+      cartRepository.delete(item);
+    });
+    return ResponseEntity.ok().build();
   }
 }

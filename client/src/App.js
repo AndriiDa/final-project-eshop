@@ -11,6 +11,7 @@ import ProductsContainer from "./components/Products/ProductsContainer";
 import ProductContainer from "./components/Product/ProductContainer";
 import CommentsContainer from "./components/Comments/CommentsContainer";
 import Sidebar1 from "./components/Sidebar1/Sidebar1";
+import CartContainer from "./components/Cart/CartContainer";
 
 import "./App.scss";
 
@@ -28,6 +29,7 @@ const App = () => {
                 <Route path="/products/:productId?" render={() => <ProductContainer/>}/>
                 <Route path="/comments" render={() => <CommentsContainer/>}/>
                 <Route path="/oldhomeexample" render={() => <Home/>}/>
+                <Route path="/cart" render={() => <CartContainer/>}/>
             </div>
             <Footer/>
         </div>
