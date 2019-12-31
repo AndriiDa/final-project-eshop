@@ -5,14 +5,14 @@ import {
     setProductInactive,
     initializeProducts,
     setCurrentPage,
-    setTotalUsersCount,
+    setTotalItemsCount,
     setIsLoadingInProgress,
     addProductToCart,
     deleteProductFromCart
 } from "../../redux/reducers/productsPageReducer";
 import Products from "./Products";
 import Preloader from "../common/Preloader/Preloader";
-import {productsApi} from "../../api/Api";
+import {productsApi, cartApi} from "../../api/Api";
 
 class ProductsContainer extends React.Component {
     componentDidMount() {
@@ -20,12 +20,30 @@ class ProductsContainer extends React.Component {
         productsApi.getProducts(this.props.currentPage - 1, this.props.pageSize)
             .then(
                 data => {
+                    this.props.initializeProducts(
+                        data.content.map(product => ({
+                            ...product,
+                            isProductInCart: false
+                        }))
+                    );
+                    this.props.products.forEach(product => {
+                        cartApi.existsByUserIdAndProductId(1, product.id)
+                            .then(data => {
+                                if (data.resultCode === "OK") {
+                                    this.props.addProductToCart(product.id);
+                                } else {
+                                    this.props.deleteProductFromCart(product.id);
+                                }
+                            })
+                            .catch(err => {
+                                this.props.deleteProductFromCart(product.id);
+                            });
+                    });
                     this.props.setIsLoadingInProgress(false);
-                    this.props.initializeProducts(data.content);
-                    this.props.setTotalUsersCount(data.totalElements);
+                    this.props.setTotalItemsCount(data.totalElements);
                 }
             );
-    };
+    }
 
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
@@ -33,9 +51,27 @@ class ProductsContainer extends React.Component {
         productsApi.getProducts(pageNumber - 1, this.props.pageSize)
             .then(
                 data => {
+                    this.props.initializeProducts(
+                        data.content.map(product => ({
+                            ...product,
+                            isProductInCart: false
+                        }))
+                    );
+                    this.props.products.forEach(product => {
+                        cartApi.existsByUserIdAndProductId(1, product.id)
+                            .then(data => {
+                                if (data.resultCode === "OK") {
+                                    this.props.addProductToCart(product.id);
+                                } else {
+                                    this.props.deleteProductFromCart(product.id);
+                                }
+                            })
+                            .catch(err => {
+                                this.props.deleteProductFromCart(product.id);
+                            });
+                    });
                     this.props.setIsLoadingInProgress(false);
-                    this.props.initializeProducts(data.content);
-                    this.props.setTotalUsersCount(data.totalElements);
+                    this.props.setTotalItemsCount(data.totalElements);
                 }
             );
     };
@@ -44,7 +80,7 @@ class ProductsContainer extends React.Component {
         return <>
             {this.props.isLoadingInProgress ? <Preloader/> : null}
             <Products products={this.props.products}
-                      totalUsersCount={this.props.totalUsersCount}
+                      setTotalItemsCount={this.props.setTotalItemsCount}
                       pageSize={this.props.pageSize}
                       currentPage={this.props.currentPage}
                       onPageChanged={this.onPageChanged}
@@ -52,25 +88,30 @@ class ProductsContainer extends React.Component {
                       setProductInactive={this.props.setProductInactive}
                       addProductToCart={this.props.addProductToCart}
                       deleteProductFromCart={this.props.deleteProductFromCart}
-                      isProductInCart={this.props.isProductInCart}
             />
         </>;
     }
 }
 
-let mapStateToProps = (state) => {
-    return {
-        products: state.productsPage.products,
-        pageSize: state.productsPage.pageSize,
-        totalUsersCount: state.productsPage.totalUsersCount,
-        currentPage: state.productsPage.currentPage,
-        isLoadingInProgress: state.productsPage.isLoadingInProgress,
-        isProductInCart: state.productsPage.isProductInCart
-    }
-};
+let
+    mapStateToProps = (state) => {
+        return {
+            products: state.productsPage.products,
+            pageSize: state.productsPage.pageSize,
+            totalItemsCount: state.productsPage.totalItemsCount,
+            currentPage: state.productsPage.currentPage,
+            isLoadingInProgress: state.productsPage.isLoadingInProgress,
+            isProductInCart: state.productsPage.isProductInCart
+        }
+    };
 
 export default connect(mapStateToProps, {
     setProductActive, setProductInactive, initializeProducts,
-    setCurrentPage, setTotalUsersCount, setIsLoadingInProgress,
+    setCurrentPage, setTotalItemsCount, setIsLoadingInProgress,
     addProductToCart, deleteProductFromCart
-})(ProductsContainer);
+})
+
+(
+    ProductsContainer
+)
+;

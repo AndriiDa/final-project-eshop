@@ -6,15 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -37,6 +29,11 @@ public class CartController {
         : ResponseEntity.ok(cartService.findByParams(allParams, pageable));
   }
 
+  @GetMapping("/{userId}/{productId}")
+  public ResponseEntity<Object> existsByUserIdAndProductId(@Valid @PathVariable Long userId, @Valid @PathVariable  Long productId) {
+    return cartService.existsByUserIdAndProductId(userId, productId);
+  }
+
   @GetMapping("/{loginname}")
   public ResponseEntity<Page<CartDto>> findAllByLoginName(@Valid @PathVariable String loginname,
                                                           Pageable pageable) {
@@ -54,7 +51,12 @@ public class CartController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Object> deleteById(@PathVariable Long id) {
+  public ResponseEntity<Object> deleteById(@Valid @PathVariable Long id) {
     return ResponseEntity.ok(cartService.deleteById(id));
+  }
+
+  @DeleteMapping("/{userId}/{productId}")
+  public ResponseEntity<Object> deleteById(@Valid @PathVariable Long userId, @Valid @PathVariable  Long productId) {
+    return ResponseEntity.ok(cartService.deleteByUserIdAndProductId(userId, productId));
   }
 }

@@ -5,19 +5,46 @@ const instance = axios.create({
     //withCredentials: true,
     baseURL: API_BASE_URL,
     headers: {
-        Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3NjQ0NDgyLCJleHAiOjE1NzgyNDkyODJ9.PKWADEvW6U-PlWtNuZVI2-4kO_iDLKpAAOJuXipFk5kCit5gU4z4t9FSV9oQhX6E1h4IMceFYnQtMmiZbmmiqw"
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3NjQ0NDgyLCJleHAiOjE1NzgyNDkyODJ9.PKWADEvW6U-PlWtNuZVI2-4kO_iDLKpAAOJuXipFk5kCit5gU4z4t9FSV9oQhX6E1h4IMceFYnQtMmiZbmmiqw'
+
     }
 });
 
 export const cartApi = {
     getCartByLoginName(loginName = 'ivanov') {
-        return instance.get(`carts/?oginname=${loginName}`)
+        return instance.get(`carts/${loginName}`)
             .then(
                 response => {
                     return response.data;
 
                 })
 
+    },
+    existsByUserIdAndProductId(userId, productId) {
+        return instance.get(`carts/${userId}/${productId}`)
+            .then(
+                response => {
+                    return response.data;
+                })
+    },
+    addItemToCart(userId = 1, productId = 1) {
+        return instance.post(`carts`, {
+            'userId': userId,
+            'productId': productId,
+            'quantity': 1
+        })
+            .then(
+                response => {
+                    return (response.data);
+                })
+    },
+    deleteItemFromCart(userId, productId) {
+        return instance.delete(`carts/${userId}/${productId}`)
+            .then(
+                response => {
+                    return (response.data);
+                });
     }
 };
 

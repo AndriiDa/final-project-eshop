@@ -9,10 +9,9 @@ let Products = (props) => {
                             setProductInactive={props.setProductInactive}
                             addProductToCart={props.addProductToCart}
                             deleteProductFromCart={props.deleteProductFromCart}
-                            isProductInCart={props.isProductInCart}
         />
     });
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    let pagesCount = Math.ceil(props.totalItemsCount / props.pageSize);
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
