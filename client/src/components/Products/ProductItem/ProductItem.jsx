@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./ProductItem.module.scss";
 import {NavLink} from "react-router-dom";
-import {cartApi} from "../../../api/Api";
 
 const ProductItem = (props) => {
     return (
@@ -23,50 +22,44 @@ const ProductItem = (props) => {
                     </div>
                     <div>
                         {
-                            (props.product.isProductInCart)
-                                ? <button onClick={() => {
+                            (props.cart.some(id => id === props.product.id))
+                                ? <button disabled={props.togglingAddRemoveCartButtonInProgress
+                                    .some(id => id === props.product.id)}
+                                          onClick={() => {
 
-                                    cartApi.deleteItemFromCart(1, props.product.id)
-                                        .then(response => {
-                                            if (response.statusCode.toUpperCase() === 'OK') {
-                                                props.deleteProductFromCart(props.product.id)
-                                            }
-                                        });
+                                              props.deleteProductFromCart(1, props.product.id)
 
-                                }} className={styles.buttonCart}>Delete From Cart</button>
-                                : <button onClick={() => {
+                                          }} className={styles.buttonCart}>Delete From Cart</button>
+                                : <button disabled={props.togglingAddRemoveCartButtonInProgress
+                                    .some(id => id === props.product.id)}
+                                          onClick={() => {
 
-                                    cartApi.addItemToCart(1, props.product.id, 1)
-                                        .then(response => {
-                                            if (response.id) {
-                                                props.addProductToCart(props.product.id);
-                                            }
-                                        })
+                                              props.addProductToCart(1, props.product.id)
 
-                                }} className={styles.buttonCart}>Add to Cart</button>
-                                }
-                            </div>
-                            </div>
-                            </div>
-                            <div className={styles.productDetails}>
+                                          }} className={styles.buttonCart}>Add to Cart</button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div className={styles.productDetails}>
                             <span className={styles.productQuantity}>
                             Item Qauntity: {props.product.quantity}
                             </span>
-                            <span>
+                <span>
                             Product is:
-                        {
-                            (props.product.isActive)
+                    {
+                        (props.product.isActive)
                             ? <button onClick={() => {
-                            props.setProductInactive(props.product.id)
-                        }} className={styles.button}>Active</button>
+                                props.setProductInactive(props.product.id)
+                            }} className={styles.button}>Active</button>
                             : <button onClick={() => {
-                            props.setProductActive(props.product.id)
-                        }} className={styles.button}>Inactive</button>
-                        }
+                                props.setProductActive(props.product.id)
+                            }} className={styles.button}>Inactive</button>
+                    }
                             </span>
-                            </div>
-                            </div>
-                            );
-                        };
+            </div>
+        </div>
+    );
+};
 
-                        export default ProductItem;
+export default ProductItem;

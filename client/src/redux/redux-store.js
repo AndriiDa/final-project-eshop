@@ -1,4 +1,4 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import homePageReducer from "./reducers/homePageReducer";
 import productsPageReducer from "./reducers/productsPageReducer";
 import singleProductPageReducer from "./reducers/singleProductPageReducer";
@@ -7,6 +7,7 @@ import sidebarReducer from "./reducers/sidebarReducer";
 import commonTasksReducer from "./reducers/commonTasksReducer";
 import authReducer from "./reducers/authReducer";
 import cartPageReducer from "./reducers/cartPageReducer";
+import thunkMiddleware from "redux-thunk";
 
 let reducers = combineReducers({
     homePage: homePageReducer,
@@ -20,7 +21,7 @@ let reducers = combineReducers({
 
 });
 
-let store = createStore(reducers);
+let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export default store;
 window.store = store;

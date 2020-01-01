@@ -117,8 +117,8 @@
                             <configLocation>config/checkstyle.xml</configLocation>
                             <encoding>utf-8</encoding>
                             <consoleOutput>true</consoleOutput>
-                            <failsOnError>false</failsOnError>
-                            <violationSeverity>error</violationSeverity>
+                            <failsOnError>true</failsOnError>
+                            <violationSeverity>warning</violationSeverity>
                         </configuration>
                         <goals>
                             <goal>check</goal>

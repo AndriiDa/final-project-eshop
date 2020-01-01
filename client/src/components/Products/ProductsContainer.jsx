@@ -8,79 +8,30 @@ import {
     setTotalItemsCount,
     setIsLoadingInProgress,
     addProductToCart,
-    deleteProductFromCart
+    deleteProductFromCart,
+    getProducts,
+    checkProductsInCart
 } from "../../redux/reducers/productsPageReducer";
 import Products from "./Products";
 import Preloader from "../common/Preloader/Preloader";
-import {productsApi, cartApi} from "../../api/Api";
 
 class ProductsContainer extends React.Component {
     componentDidMount() {
-        this.props.setIsLoadingInProgress(true);
-        productsApi.getProducts(this.props.currentPage - 1, this.props.pageSize)
-            .then(
-                data => {
-                    this.props.initializeProducts(
-                        data.content.map(product => ({
-                            ...product,
-                            isProductInCart: false
-                        }))
-                    );
-                    this.props.products.forEach(product => {
-                        cartApi.existsByUserIdAndProductId(1, product.id)
-                            .then(data => {
-                                if (data.resultCode === "OK") {
-                                    this.props.addProductToCart(product.id);
-                                } else {
-                                    this.props.deleteProductFromCart(product.id);
-                                }
-                            })
-                            .catch(err => {
-                                this.props.deleteProductFromCart(product.id);
-                            });
-                    });
-                    this.props.setIsLoadingInProgress(false);
-                    this.props.setTotalItemsCount(data.totalElements);
-                }
-            );
+        this.props.getProducts(this.props.currentPage, this.props.pageSize);
+        this.props.checkProductsInCart(this.props.products);
     }
 
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.setIsLoadingInProgress(true);
-        productsApi.getProducts(pageNumber - 1, this.props.pageSize)
-            .then(
-                data => {
-                    this.props.initializeProducts(
-                        data.content.map(product => ({
-                            ...product,
-                            isProductInCart: false
-                        }))
-                    );
-                    this.props.products.forEach(product => {
-                        cartApi.existsByUserIdAndProductId(1, product.id)
-                            .then(data => {
-                                if (data.resultCode === "OK") {
-                                    this.props.addProductToCart(product.id);
-                                } else {
-                                    this.props.deleteProductFromCart(product.id);
-                                }
-                            })
-                            .catch(err => {
-                                this.props.deleteProductFromCart(product.id);
-                            });
-                    });
-                    this.props.setIsLoadingInProgress(false);
-                    this.props.setTotalItemsCount(data.totalElements);
-                }
-            );
+        this.props.getProducts(pageNumber, this.props.pageSize);
+        this.props.checkProductsInCart(this.props.products);
     };
 
     render() {
         return <>
             {this.props.isLoadingInProgress ? <Preloader/> : null}
             <Products products={this.props.products}
-                      setTotalItemsCount={this.props.setTotalItemsCount}
+                      totalItemsCount={this.props.totalItemsCount}
                       pageSize={this.props.pageSize}
                       currentPage={this.props.currentPage}
                       onPageChanged={this.onPageChanged}
@@ -88,6 +39,8 @@ class ProductsContainer extends React.Component {
                       setProductInactive={this.props.setProductInactive}
                       addProductToCart={this.props.addProductToCart}
                       deleteProductFromCart={this.props.deleteProductFromCart}
+                      togglingAddRemoveCartButtonInProgress={this.props.togglingAddRemoveCartButtonInProgress}
+                      cart={this.props.cart}
             />
         </>;
     }
@@ -101,16 +54,17 @@ let
             totalItemsCount: state.productsPage.totalItemsCount,
             currentPage: state.productsPage.currentPage,
             isLoadingInProgress: state.productsPage.isLoadingInProgress,
-            isProductInCart: state.productsPage.isProductInCart
+            togglingAddRemoveCartButtonInProgress: state.productsPage.togglingAddRemoveCartButtonInProgress,
+            cart: state.productsPage.cart
         }
     };
 
 export default connect(mapStateToProps, {
-    setProductActive, setProductInactive, initializeProducts,
-    setCurrentPage, setTotalItemsCount, setIsLoadingInProgress,
-    addProductToCart, deleteProductFromCart
+    initializeProducts,
+    getProducts, checkProductsInCart, addProductToCart, deleteProductFromCart,
+    setProductActive, setProductInactive,
+    setCurrentPage, setTotalItemsCount, setIsLoadingInProgress
 })
-
 (
     ProductsContainer
 )

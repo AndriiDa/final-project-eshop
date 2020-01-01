@@ -107,8 +107,16 @@ public class CartService {
 
   public ResponseEntity<Object> existsByUserIdAndProductId(Long userId, Long productId) {
     return findByUserIdAndProductId(userId, productId).isEmpty()
-        ? ResponseEntity.ok().body(new HashMap<String,String>() {{put("resultCode", "No such cart item");}})
-        : ResponseEntity.ok().body(new HashMap<String,String>() {{put("resultCode", "OK");}});
+        ? ResponseEntity.ok().body( new HashMap<String, String>(){
+          {
+            put("resultCode", "No such cart item");
+          }
+        })
+        : ResponseEntity.ok().body( new HashMap<String, String>(){
+          {
+            put("resultCode", "OK");
+          }
+        });
   }
 
   private List<Cart> findByUserIdAndProductId(Long userId, Long productId) {
