@@ -1,25 +1,23 @@
+import {cartApi, productsApi} from "../../api/Api";
+
 const SET_PRODUCT_ACTIVE = 'SET-PRODUCT-ACTIVE';
 const SET_PRODUCT_INACTIVE = 'SET-PRODUCT-INACTIVE';
 const INITIALIZE_PRODUCTS = 'INITIALIZE-PRODUCTS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_ITEMS_COUNT = 'SET-TOTAL-ITEMS-COUNT';
 const IS_LOADING_IN_PROGRESS = 'IS-LOADING-IN-PROGRESS';
-const ADD_PRODUCT_TO_CART = 'ADD-PRODUCT-TO-CART';
-const DELETE_PRODUCT_FROM_CART = 'DELETE-PRODUCT-FROM-CART';
+const TOGGLING_ADD_REMMOVE_CART_BUTTON_IN_PROGRESS = 'TOGGLING-ADD-REMMOVE-CART-BUTTON-IN-PROGRESS';
+const IS_PRODUCT_IN_CART = 'IS_PRODUCT_IN_CART';
 
 let initialState = {
-    products: [
-        // {id: 1, name: 'Product 1'},
-        // {id: 2, name: 'Product 2'},
-        // {id: 3, name: 'Product 3'},
-        // {id: 4, name: 'Product 4'},
-        // {id: 5, name: 'Product 5'}
-    ],
+    products: [],
     product: null,
     pageSize: 3,
     totalItemsCount: 1,
     currentPage: 1,
     isLoadingInProgress: false,
+    togglingAddRemoveCartButtonInProgress: [],
+    cart: []
 };
 
 const productsPageReducer = (state = initialState, action) => {
@@ -77,32 +75,20 @@ const productsPageReducer = (state = initialState, action) => {
                 isLoadingInProgress: action.isLoadingInProgress
             };
         }
-        case ADD_PRODUCT_TO_CART: {
+        case TOGGLING_ADD_REMMOVE_CART_BUTTON_IN_PROGRESS: {
             return {
                 ...state,
-                products: state.products.map(item => {
-                    if (item.id === action.productId) {
-                        return {
-                            ...item,
-                            isProductInCart: true
-                        }
-                    }
-                    return item;
-                })
+                togglingAddRemoveCartButtonInProgress: action.togglingIsInProgress
+                    ? [...state.togglingAddRemoveCartButtonInProgress, action.productId]
+                    : state.togglingAddRemoveCartButtonInProgress.filter(id => id !== action.productId)
             };
         }
-        case DELETE_PRODUCT_FROM_CART: {
+        case IS_PRODUCT_IN_CART: {
             return {
                 ...state,
-                products: state.products.map(item => {
-                    if (item.id === action.productId) {
-                        return {
-                            ...item,
-                            isProductInCart: false
-                        }
-                    }
-                    return item;
-                })
+                cart: action.isProductInCart
+                    ? [...state.cart, action.productId]
+                    : state.cart.filter(id => id !== action.productId)
             };
         }
         default:
@@ -152,18 +138,95 @@ export const setIsLoadingInProgress = (isLoadingInProgress) => {
     }
 };
 
-export const addProductToCart = (id) => {
+export const setTogglingAddRemoveCartButtonInProgress = (togglingIsInProgress, productId) => {
     return {
-        type: ADD_PRODUCT_TO_CART,
-        productId: id
-    }
+        type: TOGGLING_ADD_REMMOVE_CART_BUTTON_IN_PROGRESS, togglingIsInProgress, productId
+    };
 };
 
-export const deleteProductFromCart = (id) => {
+export const setProductForCart = (isProductInCart, productId) => {
     return {
-        type: DELETE_PRODUCT_FROM_CART,
-        productId: id
-    }
+        type: IS_PRODUCT_IN_CART, isProductInCart, productId
+    };
+};
+
+export const getProducts = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(setIsLoadingInProgress(true));
+        productsApi.getProducts(currentPage - 1, pageSize)
+            .then(
+                data => {
+                    dispatch(initializeProducts(data.content));
+                    data.content.forEach(product => {
+                        dispatch(isProductInCart(product.id))
+                    });
+
+                    dispatch(setTotalItemsCount(data.totalElements));
+
+                    dispatch(setIsLoadingInProgress(false));
+                }
+            );
+    };
+};
+
+export const checkProductsInCart = (products) => {
+    return (dispatch) => {
+        products.forEach(product => {
+            cartApi.existsByUserIdAndProductId(1, product.id)
+                .then(data => {
+                    if (data.resultCode === "OK") {
+                        dispatch(setProductForCart(true, product.id));
+                    } else {
+                        dispatch(setProductForCart(false, product.id));
+                    }
+                })
+                .catch(err => {
+                    dispatch(setProductForCart(false, product.id));
+                });
+        });
+    };
+};
+
+export const isProductInCart = (productId) => {
+    return (dispatch) => {
+        cartApi.existsByUserIdAndProductId(1, productId)
+            .then(data => {
+                if (data.resultCode === "OK") {
+                    dispatch(setProductForCart(true, productId));
+                } else {
+                    dispatch(setProductForCart(false, productId));
+                }
+            })
+            .catch(err => {
+                dispatch(setProductForCart(false, productId));
+            });
+    };
+};
+
+export const addProductToCart = (userId, productId) => {
+    return (dispatch) => {
+        dispatch(setTogglingAddRemoveCartButtonInProgress(true, productId));
+        cartApi.addItemToCart(userId, productId, 1)
+            .then(response => {
+                if (response.id) {
+                    dispatch(setProductForCart(true, productId));
+                }
+                dispatch(setTogglingAddRemoveCartButtonInProgress(false, productId));
+            })
+    };
+};
+
+export const deleteProductFromCart = (userId, productId) => {
+    return (dispatch) => {
+        dispatch(setTogglingAddRemoveCartButtonInProgress(true, productId));
+        cartApi.deleteItemFromCart(userId, productId)
+            .then(response => {
+                if (response.statusCode.toUpperCase() === 'OK') {
+                    dispatch(setProductForCart(false, productId));
+                }
+                dispatch(setTogglingAddRemoveCartButtonInProgress(false, productId));
+            });
+    };
 };
 
 export default productsPageReducer;

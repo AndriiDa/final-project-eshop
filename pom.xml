@@ -117,8 +117,8 @@
                             <configLocation>config/checkstyle.xml</configLocation>
                             <encoding>utf-8</encoding>
                             <consoleOutput>true</consoleOutput>
-                            <failsOnError>false</failsOnError>
-                            <violationSeverity>error</violationSeverity>
+                            <failsOnError>true</failsOnError>
+                            <violationSeverity>warning</violationSeverity>
                         </configuration>
                         <goals>
                             <goal>check</goal>
@@ -166,7 +166,7 @@
                             <goal>install-node-and-npm</goal>
                         </goals>
                         <configuration>
-                            <nodeVersion>v12.4.0</nodeVersion>
+                            <nodeVersion>v12.04.0</nodeVersion>
                             <npmVersion>6.13.4</npmVersion>
                         </configuration>
                     </execution>

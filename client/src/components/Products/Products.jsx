@@ -9,6 +9,8 @@ let Products = (props) => {
                             setProductInactive={props.setProductInactive}
                             addProductToCart={props.addProductToCart}
                             deleteProductFromCart={props.deleteProductFromCart}
+                            togglingAddRemoveCartButtonInProgress={props.togglingAddRemoveCartButtonInProgress}
+                            cart={props.cart}
         />
     });
     let pagesCount = Math.ceil(props.totalItemsCount / props.pageSize);

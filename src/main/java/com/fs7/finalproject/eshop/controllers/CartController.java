@@ -38,7 +38,8 @@ public class CartController {
   }
 
   @GetMapping("/{userId}/{productId}")
-  public ResponseEntity<Object> existsByUserIdAndProductId(@Valid @PathVariable Long userId, @Valid @PathVariable  Long productId) {
+  public ResponseEntity<Object> existsByUserIdAndProductId(@Valid @PathVariable Long userId,
+                                                           @Valid @PathVariable Long productId) {
     return cartService.existsByUserIdAndProductId(userId, productId);
   }
 
@@ -64,7 +65,7 @@ public class CartController {
   }
 
   @DeleteMapping("/{userId}/{productId}")
-  public ResponseEntity<Object> deleteById(@Valid @PathVariable Long userId, @Valid @PathVariable  Long productId) {
+  public ResponseEntity<Object> deleteById(@Valid @PathVariable Long userId, @Valid @PathVariable Long productId) {
     return ResponseEntity.ok(cartService.deleteByUserIdAndProductId(userId, productId));
   }
 }
