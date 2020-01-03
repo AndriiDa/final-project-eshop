@@ -6,7 +6,7 @@ import logo from "../../assets/images/danitlogo.jpeg";
 const Header = (props) => {
     return (<div className={styles.header}>
             <div className={styles.logo}>
-                <img className={styles.logoImage} src={logo} alt=""/>
+                <img className={styles.logoImage} src={logo} alt="logo"/>
                 DAN.IT fs7 Final Project E-Shop
             </div>
             <div className={styles.loginBlock}>

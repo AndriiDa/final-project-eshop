@@ -13,14 +13,17 @@ import CommentsContainer from "./components/Comments/CommentsContainer";
 import Sidebar1 from "./components/Sidebar1/Sidebar1";
 import CartContainer from "./components/Cart/CartContainer";
 
-import "./App.scss";
+import AppClasses from "./app.module.scss";
 
 const App = () => {
     return (
-        <div className="app-wrapper">
+        <div className={[AppClasses.appWrapper,
+            // AppClasses.appWrapperPopup
+        ].join(' ')}>
             <HeaderContainer/>
             <Sidebar1/>
             <div className="app-wrapper-content">
+                {/*<Route exact path="/acount" render={() => <Auth/>}/>*/}
                 <Route exact path="/" render={() => <ProductsContainer/>}/>
                 <Route path="/categories" render={() => <Categories/>}/>
                 <Route path="/brands" render={() => <Brands/>}/>
