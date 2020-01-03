@@ -1,0 +1,34 @@
+.wrap {
+  background: rgba(128, 128, 128, 0.5);
+  display: grid;
+}
+
+.popup {
+  background: #FFFFFF;
+  box-shadow: 0 5px 20px #B3B3B3;
+  border-radius: 3px;
+  align-self: center;
+  justify-self: center;
+  position: relative;
+
+  //&-header,
+  //&-footer {
+  //  padding: 30px;
+  //}
+  //
+  //&-header {
+  //  border-bottom: 1px solid #E6E6E6;
+  //}
+  //
+  //&-footer {
+  //  display: flex;
+  //  justify-content: space-between;
+  //  align-items: center;
+  //}
+
+  &-closeIcon {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+  }
+}

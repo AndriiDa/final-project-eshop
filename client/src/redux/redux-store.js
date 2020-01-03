@@ -1,12 +1,12 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import homePageReducer from "./reducers/homePageReducer";
-import productsPageReducer from "./reducers/productsPageReducer";
-import singleProductPageReducer from "./reducers/singleProductPageReducer";
-import commentsPageReducer from "./reducers/commentsPageReducer";
-import sidebarReducer from "./reducers/sidebarReducer";
-import commonTasksReducer from "./reducers/commonTasksReducer";
-import authReducer from "./reducers/authReducer";
-import cartPageReducer from "./reducers/cartPageReducer";
+import homePageReducer from "../store/reducers/homePage.reducer";
+import productsPageReducer from "../store/reducers/productsPage.reducer";
+import singleProductPageReducer from "../store/reducers/singleProductPage.reducer";
+import commentsPageReducer from "../store/reducers/commentsPage.reducer";
+import sidebarReducer from "../store/reducers/sidebar.reducer";
+import commonTasksReducer from "../store/reducers/commonTasks.reducer";
+import authReducer from "../store/reducers/auth.reducer";
+import cartPageReducer from "../store/reducers/cartPage.reducer";
 import thunkMiddleware from "redux-thunk";
 
 let reducers = combineReducers({

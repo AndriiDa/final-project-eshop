@@ -11,7 +11,7 @@ import {
     deleteProductFromCart,
     getProducts,
     checkProductsInCart
-} from "../../redux/reducers/productsPageReducer";
+} from "../../store/reducers/productsPage.reducer";
 import Products from "./Products";
 import Preloader from "../common/Preloader/Preloader";
 

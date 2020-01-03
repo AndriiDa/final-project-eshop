@@ -1,6 +1,6 @@
-import homePageReducer from "./reducers/homePageReducer";
-import productsPageReducer from "./reducers/productsPageReducer";
-import sidebarReducer from "./reducers/sidebarReducer";
+import homePageReducer from "../store/reducers/homePage.reducer";
+import productsPageReducer from "../store/reducers/productsPage.reducer";
+import sidebarReducer from "../store/reducers/sidebar.reducer";
 
 let store = {
     _state: {

@@ -14,15 +14,19 @@ import Sidebar1 from "./components/Sidebar1/Sidebar1";
 import CartContainer from "./components/Cart/CartContainer";
 
 import AppClasses from "./app.module.scss";
+import PopUp from "./components/PopUp/PopUp";
+import {getPopUpContentByType} from "./utils/getPopUpContentByType.util";
+import {connect} from "react-redux";
 
-const App = () => {
+const App = (props) => {
     return (
-        <div className={[AppClasses.appWrapper,
-            // AppClasses.appWrapperPopup
-        ].join(' ')}>
+        <div className={[AppClasses.appWrapper].join(' ')}>
+            {props.showPopup ? <div className={AppClasses.appWrapperPopup}>
+                <PopUp content={getPopUpContentByType(props.contentType)}/>
+            </div> : null}
             <HeaderContainer/>
             <Sidebar1/>
-            <div className="app-wrapper-content">
+            <div className={AppClasses.appWrapperContent}>
                 {/*<Route exact path="/acount" render={() => <Auth/>}/>*/}
                 <Route exact path="/" render={() => <ProductsContainer/>}/>
                 <Route path="/categories" render={() => <Categories/>}/>
@@ -39,4 +43,15 @@ const App = () => {
     );
 };
 
-export default App;
+const mapStateToProps = store => {
+    return {
+        showPopup: store.popup.showPopup,
+        contentType: store.popup.contentType,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

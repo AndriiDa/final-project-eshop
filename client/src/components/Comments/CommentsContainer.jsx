@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import {
     addNewProductCommentOnCommentsPageActionCreator,
     updateProductCommentBodyOnCommentsPageActionCreate
-} from "../../redux/reducers/commentsPageReducer";
+} from "../../store/reducers/commentsPage.reducer";
 import Comments from "./Comments";
 
 let mapStateToProps = (state) => {

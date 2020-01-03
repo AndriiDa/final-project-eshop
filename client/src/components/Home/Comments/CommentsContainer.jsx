@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {addNewCommentActionCreator, updateCommentTextActionCreator}
-    from "../../../redux/reducers/homePageReducer";
+    from "../../../store/reducers/homePage.reducer";
 import Comments from "./Comments";
 
 let mapStateToProps = (state) => {

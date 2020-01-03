@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {initializeCart} from "../../redux/reducers/cartPageReducer";
+import {initializeCart} from "../../store/reducers/cartPage.reducer";
 import {withRouter} from "react-router-dom";
 import {cartApi} from "../../api/Api";
 import Cart from "./Cart";

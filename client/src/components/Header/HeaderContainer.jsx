@@ -1,19 +1,19 @@
 import React from "react";
 import Header from "./Header";
 import {connect} from 'react-redux';
-import {setAuthUserData} from "../../redux/reducers/authReducer";
+import {setAuthUserData} from "../../store/reducers/auth.reducer";
 import {usersApi} from "../../api/Api";
 
 class HeaderContainer extends React.Component {
-    componentDidMount() {
-        usersApi.authMe()
-            .then(
-                data => {
-                    let {id, loginName, email} = data;
-                    this.props.setAuthUserData(id, loginName, email);
-                }
-            );
-    }
+    // componentDidMount() {
+    //     usersApi.authMe()
+    //         .then(
+    //             data => {
+    //                 let {id, loginName, email} = data;
+    //                 this.props.setAuthUserData(id, loginName, email);
+    //             }
+    //         );
+    // }
 
     render() {
         return <Header {...this.props}/>

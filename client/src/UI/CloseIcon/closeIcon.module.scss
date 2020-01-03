@@ -1,0 +1,9 @@
+.close{
+  background-image: url("./Close.svg");
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  &:hover{
+    cursor: pointer;
+  }
+}
