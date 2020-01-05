@@ -3,6 +3,8 @@ import PopupClasses from "./popUp.module.scss";
 import {closePopup} from "../../store/actions/popup.action";
 import {connect} from "react-redux";
 import CloseIcon from "../../UI/CloseIcon/CloseIcon";
+import * as signInActions from '../../store/actions/signIn.action'
+import * as signUpActions from '../../store/actions/signUp.action'
 
 const Popup = (props) => {
     return (
@@ -20,13 +22,18 @@ const Popup = (props) => {
 
 const mapStateToProps = store => {
     return {
+        registerSuccess: store.signUp.registerSuccess,
+        loginSuccess: store.signIn.loginSuccess,
         itemValue: store.popup.value,
+
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        closePopup: () => dispatch(closePopup())
+        closePopup: () => dispatch(closePopup()),
+        userSignIn: (userLoginInfo) => dispatch(signInActions.userSignIn(userLoginInfo)),
+        userSignUp: (userRegisterInfo) => dispatch(signUpActions.userSignUp(userRegisterInfo))
     }
 };
 

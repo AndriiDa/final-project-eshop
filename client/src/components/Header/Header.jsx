@@ -17,6 +17,11 @@ const Header = (props) => {
                 {/*{ props.isLoggedIn ? props.loginName :*/}
                 {/*<NavLink to={"/login"}>Login</NavLink> }*/}
             </div>
+            <div className={styles.loginBlock} onClick={() => props.showPopup(null, CONTENT_TYPES.signUp)}>
+                {'Register'}
+                {/*{ props.isLoggedIn ? props.loginName :*/}
+                {/*<NavLink to={"/login"}>Login</NavLink> }*/}
+            </div>
         </div>
     )
 };

@@ -23,8 +23,8 @@ export const userSignIn = (userLoginInfo) => {
     return async dispatch => {
         try {
             debugger
-            const authenticate = await axiosInstance.post('auth/signin', userLoginInfo);
-            const {accessToken, tokenType} = authenticate.data;
+            const login = await axiosInstance.post('auth/signin', userLoginInfo);
+            const {accessToken, tokenType} = login.data;
             CookieService.setCookie(tokenType, accessToken);
             axiosInstance.defaults.headers.common['Authorization'] = `${tokenType} ${accessToken}`;
             dispatch(userSignInSuccess());

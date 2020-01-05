@@ -8,6 +8,7 @@ import singleProductPageReducer from "../singleProductPage.reducer";
 import commonTasksReducer from "../commonTasks.reducer";
 import cartPageReducer from "../cartPage.reducer";
 import signInReducer from "../signIn.reducer";
+import signUpReducer from "../signUp.reducer";
 import popupReducer from "../popup.reducer";
 
 const rootReducer = combineReducers({
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     cartPage: cartPageReducer,
     signIn: signInReducer,
-    popup: popupReducer
+    signUp: signUpReducer,
+    popup: popupReducer,
 });
 
 export default rootReducer

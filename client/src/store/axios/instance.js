@@ -5,9 +5,9 @@ import {isAfter} from 'date-fns';
 
 let axiosInstance = axios.create({
     baseURL: API_BASE_URL,
-    'Access-Control-Allow-Origin': '*',
+    // 'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json , multipart/form-data',
-    withCredentials: true,
+    // withCredentials: true,
 });
 
 // axiosInstance.interceptors.request.use(config => {
