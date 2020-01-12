@@ -26,31 +26,31 @@ INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTI
 VALUES (14, NULL, '1006000001', 'Laptops and PCs', 'Laptops and PCs', '', TRUE, TRUE, 1, 1);
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_USER_ID, LM_USER_ID)
-VALUES (15, 14, '1006001001', 'Ноутбуки', '', 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/69/69532.120x150.jpg', TRUE, FALSE, 1, 1);
+VALUES (15, 14, '1006001001', 'Laptops', '', 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/69/69532.120x150.jpg', TRUE, FALSE, 1, 1);
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_USER_ID, LM_USER_ID)
-VALUES (16, 15, '1006001101', 'Для несложных задач', '', 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/114/114266.120x150.jpg', TRUE, FALSE, 1, 1);
+VALUES (16, 15, '1006001101', 'For easy tasks', '', 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/114/114266.120x150.jpg', TRUE, FALSE, 1, 1);
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_USER_ID, LM_USER_ID)
-VALUES (17, 15, '1006001201', 'Универсальные', '', 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/114/114278.120x150.jpg', TRUE, FALSE, 1, 1);
+VALUES (17, 15, '1006001201', 'Universal', '', 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/114/114278.120x150.jpg', TRUE, FALSE, 1, 1);
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_USER_ID, LM_USER_ID)
-VALUES (18, 15, '1006001301', 'Для бизнеса', '', 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/114/114290.120x150.jpg', TRUE, FALSE, 1, 1);
+VALUES (18, 15, '1006001301', 'For business', '', 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/114/114290.120x150.jpg', TRUE, FALSE, 1, 1);
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_USER_ID, LM_USER_ID)
-VALUES (19, 15, '00000019', 'Геймерские ноутбуки', '', 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/113/113920.120x150.jpg', TRUE, FALSE,1, 1);
+VALUES (19, 15, '00000019', 'Gamers'' laptops', '', 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/113/113920.120x150.jpg', TRUE, FALSE,1, 1);
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_USER_ID, LM_USER_ID)
-VALUES (20, 15, '00000020', 'Ноутбуки с SSD', '', 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/114/114314.120x150.jpg', TRUE, FALSE, 1, 1);
+VALUES (20, 15, '00000020', 'Laptops with SSD', '', 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/114/114314.120x150.jpg', TRUE, FALSE, 1, 1);
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_USER_ID, LM_USER_ID)
-VALUES (21, 15, '00000021', 'Ноутбуки с Windows', '', 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/115/115013.120x150.jp', TRUE, FALSE, 1, 1);
+VALUES (21, 15, '00000021', 'Laptops with Windows', '', 'https://i1.rozetka.ua/goods/portal/constructors/units/groups/115/115013.120x150.jp', TRUE, FALSE, 1, 1);
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_USER_ID, LM_USER_ID)
-VALUES (22, 14, '1006000201', 'Планшеты', '', 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/69/69546.120x150.jpg', TRUE, FALSE, 1, 1);
+VALUES (22, 14, '1006000201', 'Tablets', '', 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/69/69546.120x150.jpg', TRUE, FALSE, 1, 1);
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_USER_ID, LM_USER_ID)
-VALUES (23, 22, '00000023', 'Бюджетные', '', 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/95/95085.120x150.jpg', TRUE, FALSE, 1, 1);
+VALUES (23, 22, '00000023', 'Budget', '', 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/95/95085.120x150.jpg', TRUE, FALSE, 1, 1);
 
 INSERT INTO CATEGORIES (ID, PARENT_ID, CODE, NAME, DESCRIPTION, IMG_URL, IS_ACTIVE, IS_GROUP, CR_USER_ID, LM_USER_ID)
-VALUES (24, 22, '00000024', 'Трансформеры', '', 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/95/95099.120x150.jpg', TRUE, FALSE, 1, 1);
+VALUES (24, 22, '00000024', 'Transformers', '', 'https://i2.rozetka.ua/goods/portal/constructors/units/groups/95/95099.120x150.jpg', TRUE, FALSE, 1, 1);

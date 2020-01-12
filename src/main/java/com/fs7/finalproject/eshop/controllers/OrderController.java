@@ -1,7 +1,9 @@
 package com.fs7.finalproject.eshop.controllers;
 
-import com.fs7.finalproject.eshop.model.dto.ProductDto;
-import com.fs7.finalproject.eshop.services.ProductService;
+import com.fs7.finalproject.eshop.model.dto.OrderDto;
+import com.fs7.finalproject.eshop.model.dto.OrderItemDto;
+import com.fs7.finalproject.eshop.services.OrderItemService;
+import com.fs7.finalproject.eshop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,35 +25,59 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrderController {
-  private ProductService orderService;
+  private OrderService orderService;
+  private OrderItemService orderItemService;
 
   @Autowired
-  public OrderController(ProductService orderService) {
+  public OrderController(OrderService orderService,
+                         OrderItemService orderItemService) {
     this.orderService = orderService;
+    this.orderItemService = orderItemService;
   }
 
   @GetMapping
-  public ResponseEntity<Page<ProductDto>> findAll(@RequestParam(required = false) Map<String, String> allParams,
-                                                  Pageable pageable) {
+  public ResponseEntity<Page<OrderDto>> findAll(@RequestParam(required = false) Map<String, String> allParams,
+                                                Pageable pageable) {
     return allParams.isEmpty()
         ? ResponseEntity.ok(orderService.findAll(pageable))
         : ResponseEntity.ok(orderService.findAllByParams(allParams, pageable));
   }
 
+  @GetMapping("/{id}/items")
+  public ResponseEntity<Page<OrderItemDto>> findAllByOrderId(@Valid @PathVariable Long id,
+                                                             Pageable pageable) {
+    if (Objects.isNull(orderService.findById(id))) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(orderItemService.findAllByOrderId(id, pageable));
+  }
+
   @PostMapping
-  public ResponseEntity<ProductDto> create(@Valid @RequestBody ProductDto source) {
+  public ResponseEntity<OrderDto> create(@Valid @RequestBody OrderDto source) {
     return ResponseEntity.ok(orderService.save(source));
   }
 
+  @PostMapping("/{id}/items")
+  public ResponseEntity<OrderItemDto> create(@Valid @PathVariable Long id, @Valid @RequestBody OrderItemDto source) {
+    if (Objects.isNull(orderService.findById(id))) {
+      return ResponseEntity.notFound().build();
+    } else {
+      source.setOrderId(id);
+    }
+    return ResponseEntity.ok(orderItemService.save(source));
+  }
+
   @GetMapping("/{id}")
-  public ResponseEntity<ProductDto> findById(@Valid @PathVariable Long id) {
+  public ResponseEntity<OrderDto> findById(@Valid @PathVariable Long id) {
+
     return Objects.nonNull(orderService.findById(id))
         ? ResponseEntity.ok(orderService.findById(id))
         : ResponseEntity.notFound().build();
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<ProductDto> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody ProductDto source) {
+  public ResponseEntity<OrderDto> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody OrderDto source) {
+
     return ResponseEntity.ok(orderService.update(id, source));
   }
 
