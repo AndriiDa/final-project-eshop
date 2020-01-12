@@ -69,6 +69,7 @@ public class OrderController {
 
   @GetMapping("/{id}")
   public ResponseEntity<OrderDto> findById(@Valid @PathVariable Long id) {
+
     return Objects.nonNull(orderService.findById(id))
         ? ResponseEntity.ok(orderService.findById(id))
         : ResponseEntity.notFound().build();
@@ -76,6 +77,7 @@ public class OrderController {
 
   @PutMapping("/{id}")
   public ResponseEntity<OrderDto> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody OrderDto source) {
+
     return ResponseEntity.ok(orderService.update(id, source));
   }
 
