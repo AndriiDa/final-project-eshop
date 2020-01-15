@@ -75,14 +75,35 @@ public class OrderController {
         : ResponseEntity.notFound().build();
   }
 
+  @GetMapping("/{orderId}/items/{orderItemId}")
+  public ResponseEntity<OrderItemDto> findById(@Valid @PathVariable Long orderId, @Valid @PathVariable Long orderItemId) {
+    return Objects.nonNull(orderItemService.findOrderItemByIdAndOrder(orderItemId, orderId))
+        ? ResponseEntity.ok(orderItemService.findOrderItemByIdAndOrder(orderItemId, orderId))
+        : ResponseEntity.notFound().build();
+  }
+
   @PutMapping("/{id}")
   public ResponseEntity<OrderDto> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody OrderDto source) {
 
     return ResponseEntity.ok(orderService.update(id, source));
   }
 
+  @PutMapping("/{orderId}/items/{orderItemId}")
+  public ResponseEntity<OrderItemDto> updateOrderItem(@Valid @PathVariable("orderId") Long orderId,
+                                                      @Valid @PathVariable("orderItemId") Long orderItemId,
+                                                      @Valid @RequestBody OrderItemDto source) {
+
+    return ResponseEntity.ok(orderItemService.updateOrderItem(orderId, orderItemId, source));
+  }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<Object> deleteById(@PathVariable Long id) {
     return ResponseEntity.ok(orderService.deleteById(id));
+  }
+
+  @DeleteMapping("/{orderId}/items/{orderItemId}")
+  public ResponseEntity<Object> deleteOrderItemByIdAndOrderId(@Valid @PathVariable("orderId") Long orderId,
+                                                    @Valid @PathVariable("orderItemId") Long orderItemId) {
+    return ResponseEntity.ok(orderItemService.deleteOrderItemByIdAndOrderId(orderId, orderItemId));
   }
 }
