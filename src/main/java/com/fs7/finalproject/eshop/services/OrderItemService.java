@@ -1,8 +1,10 @@
 package com.fs7.finalproject.eshop.services;
 
 import com.fs7.finalproject.eshop.exceptions.ResourceNotFoundException;
+import com.fs7.finalproject.eshop.model.Order;
 import com.fs7.finalproject.eshop.model.OrderItem;
 import com.fs7.finalproject.eshop.model.Product;
+import com.fs7.finalproject.eshop.model.dto.OrderDto;
 import com.fs7.finalproject.eshop.model.dto.OrderItemDto;
 import com.fs7.finalproject.eshop.model.mapper.OrderItemMapper;
 import com.fs7.finalproject.eshop.repositories.OrderItemRepository;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.SerializationUtils;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class OrderItemService {
@@ -46,7 +49,10 @@ public class OrderItemService {
   }
 
   public Page<OrderItemDto> findAllByOrderId(Long id, Pageable pageable) {
-    return orderItemRepository.findOrderItemsByOrder(orderRepository.findById(id).get(), pageable)
+    return orderItemRepository
+        .findOrderItemsByOrder(orderRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Order", "OrderId", id)),
+            pageable)
         .map(item -> (mapper.toDto(item)));
   }
 
@@ -79,6 +85,14 @@ public class OrderItemService {
     return orderItemRepository.findAll(example, pageable).map(item -> (mapper.toDto(item)));
   }
 
+  public OrderItemDto findOrderItemByIdAndOrder(Long orderItemId, Long orderId) {
+    return orderItemRepository.findOrderItemByIdAndOrder(orderItemId,
+        orderRepository.findById(orderId)
+            .orElseThrow(() -> new ResourceNotFoundException("Order", "OrderId", orderId)))
+        .map(item -> (mapper.toDto(item)))
+        .orElseThrow(() -> new ResourceNotFoundException("OrderItem", "OrderItemId", orderItemId));
+  }
+
   public OrderItemDto update(Long id, OrderItemDto source) {
     return orderItemRepository.findById(id)
         .map(item -> {
@@ -102,6 +116,14 @@ public class OrderItemService {
         }).orElseThrow(() -> new ResourceNotFoundException("OrderItem", "OrderItemId", id));
   }
 
+  public OrderItemDto updateOrderItem(Long orderId, Long orderItemId, OrderItemDto source) {
+    return orderItemRepository.findOrderItemByIdAndOrder(orderItemId,
+        orderRepository.findById(orderId)
+            .orElseThrow(() -> new ResourceNotFoundException("Order", "OrderId", orderId)))
+        .map(item -> update(orderItemId, source))
+        .orElseThrow(() -> new ResourceNotFoundException("OrderItem", "OrderItemId", orderItemId));
+  }
+
   public OrderItemDto save(OrderItemDto source) {
     return mapper.toDto(orderItemRepository.save(mapper.toEntity(source)));
   }
@@ -117,6 +139,17 @@ public class OrderItemService {
       orderItemRepository.delete(item);
       return ResponseEntity.ok().build();
     }).orElseThrow(() -> new ResourceNotFoundException("OrderItem", "OrderItemId", id));
+  }
+
+  public ResponseEntity<Object> deleteOrderItemByIdAndOrderId(Long orderId, Long orderItemId) {
+    return orderItemRepository.findOrderItemByIdAndOrder(orderItemId,
+        orderRepository.findById(orderId)
+            .orElseThrow(() -> new ResourceNotFoundException("Order", "OrderId", orderId)))
+        .map(item -> {
+          orderItemRepository.delete(item);
+          return ResponseEntity.ok().build();
+        })
+        .orElseThrow(() -> new ResourceNotFoundException("OrderItem", "OrderItemId", orderItemId));
   }
 }
 
