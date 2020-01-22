@@ -9,21 +9,29 @@ import {
     setIsLoadingInProgress,
     addProductToCart,
     deleteProductFromCart,
-    getProducts,
+    requestProducts,
     checkProductsInCart
 } from "../../redux/reducers/productsPageReducer";
 import Products from "./Products";
 import Preloader from "../common/Preloader/Preloader";
+import {
+    getCart, getCurrentPageNumber,
+    getIsLoadingInProgress,
+    getPageSize, getProducts,
+    getTogglingAddRemoveCartButtonInProgress,
+    getTotalItemsCount
+} from "../../redux/selectors/productsSelector";
+import {compose} from "redux";
 
 class ProductsContainer extends React.Component {
     componentDidMount() {
-        this.props.getProducts(this.props.currentPage, this.props.pageSize);
+        this.props.requestProducts(this.props.currentPage, this.props.pageSize);
         this.props.checkProductsInCart(this.props.products);
     }
 
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.getProducts(pageNumber, this.props.pageSize);
+        this.props.requestProducts(pageNumber, this.props.pageSize);
         this.props.checkProductsInCart(this.props.products);
     };
 
@@ -49,23 +57,21 @@ class ProductsContainer extends React.Component {
 let
     mapStateToProps = (state) => {
         return {
-            products: state.productsPage.products,
-            pageSize: state.productsPage.pageSize,
-            totalItemsCount: state.productsPage.totalItemsCount,
-            currentPage: state.productsPage.currentPage,
-            isLoadingInProgress: state.productsPage.isLoadingInProgress,
-            togglingAddRemoveCartButtonInProgress: state.productsPage.togglingAddRemoveCartButtonInProgress,
-            cart: state.productsPage.cart
+            products: getProducts(state),
+            pageSize: getPageSize(state),
+            totalItemsCount: getTotalItemsCount(state),
+            currentPage: getCurrentPageNumber(state),
+            isLoadingInProgress: getIsLoadingInProgress(state),
+            togglingAddRemoveCartButtonInProgress: getTogglingAddRemoveCartButtonInProgress(state),
+            cart: getCart(state)
         }
     };
 
-export default connect(mapStateToProps, {
-    initializeProducts,
-    getProducts, checkProductsInCart, addProductToCart, deleteProductFromCart,
-    setProductActive, setProductInactive,
-    setCurrentPage, setTotalItemsCount, setIsLoadingInProgress
-})
-(
-    ProductsContainer
-)
-;
+export default compose(
+    connect(mapStateToProps, {
+            initializeProducts,
+            requestProducts, checkProductsInCart, addProductToCart, deleteProductFromCart,
+            setProductActive, setProductInactive,
+            setCurrentPage, setTotalItemsCount, setIsLoadingInProgress
+        }
+    ))(ProductsContainer);

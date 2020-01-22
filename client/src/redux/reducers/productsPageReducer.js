@@ -14,7 +14,7 @@ let initialState = {
     product: null,
     pageSize: 3,
     totalItemsCount: 1,
-    currentPage: 1,
+    currentPageNumber: 1,
     isLoadingInProgress: false,
     togglingAddRemoveCartButtonInProgress: [],
     cart: []
@@ -60,7 +60,7 @@ const productsPageReducer = (state = initialState, action) => {
         case SET_CURRENT_PAGE: {
             return {
                 ...state,
-                currentPage: action.currentPage
+                currentPageNumber: action.currentPageNumber
             };
         }
         case SET_TOTAL_ITEMS_COUNT: {
@@ -117,10 +117,10 @@ export const initializeProducts = (products) => {
     }
 };
 
-export const setCurrentPage = (currentPage) => {
+export const setCurrentPage = (currentPageNumber) => {
     return {
         type: SET_CURRENT_PAGE,
-        currentPage: currentPage
+        currentPageNumber: currentPageNumber
     }
 };
 
@@ -150,10 +150,10 @@ export const setProductForCart = (isProductInCart, productId) => {
     };
 };
 
-export const getProducts = (currentPage, pageSize) => {
+export const requestProducts = (currentPageNumber, pageSize) => {
     return (dispatch) => {
         dispatch(setIsLoadingInProgress(true));
-        productsApi.getProducts(currentPage - 1, pageSize)
+        productsApi.getProducts(currentPageNumber - 1, pageSize)
             .then(
                 data => {
                     dispatch(initializeProducts(data.content));
