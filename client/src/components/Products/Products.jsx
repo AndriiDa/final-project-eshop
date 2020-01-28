@@ -1,8 +1,9 @@
 import React from "react";
 import ProductItem from "./ProductItem/ProductItem";
 import styles from "./Products.module.scss";
+import Paginator from "../common/Paginator/Paginator";
 
-let Products = (props) => {
+let Products = ({currentPage, onPageChanged, pageSize, totalItemsCount, ...props}) => {
     let productItems = props.products.map(product => {
         return <ProductItem key={product.id} product={product}
                             setProductActive={props.setProductActive}
@@ -13,22 +14,13 @@ let Products = (props) => {
                             cart={props.cart}
         />
     });
-    let pagesCount = Math.ceil(props.totalItemsCount / props.pageSize);
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
-    }
     return (
         <div>
             <h2 className={styles.header}>Products</h2>
-            <div className={styles.pagination}>
-                {pages.map(p => {
-                    return <span key={p} className={props.currentPage === p ? styles.selected : styles.pageNumber}
-                                 onClick={(e) => {
-                                     props.onPageChanged(p)
-                                 }}>{p}</span>
-                })}
-            </div>
+
+            <Paginator currentPage={currentPage} onPageChanged={onPageChanged}
+                       totalItemsCount={totalItemsCount} pageSize={pageSize}/>
+
             <div className={styles.products}>
                 <div className={styles.productItems}>
                     {productItems}

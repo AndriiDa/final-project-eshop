@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./Product.module.scss";
-import Preloader from "../common/Preloader/Preloader";
+import LoadingIndicator from "../common/LoadingIndicator/LoadingIndicator";
 
 let Product = (props) => {
-    if (!props.product) return <Preloader/>;
+    if (!props.product) return <LoadingIndicator/>;
     return (
         <div className={styles.product}>
             <div className={styles.productInfo}>
