@@ -4,7 +4,7 @@ import {setProduct} from "../../redux/reducers/singleProductPageReducer";
 import {setIsFetchingInProgress} from "../../redux/reducers/commonTasksReducer";
 import Product from "./Product";
 import {withRouter} from "react-router-dom";
-import Preloader from "../common/Preloader/Preloader";
+import LoadingIndicator from "../common/LoadingIndicator/LoadingIndicator";
 import {productsApi} from "../../api/Api";
 
 class ProductContainer extends React.Component {
@@ -25,7 +25,7 @@ class ProductContainer extends React.Component {
 
     render() {
         return <>
-            {(this.props.setIsFetchingInProgress && !this.props.product) ? <Preloader/> :
+            {(this.props.setIsFetchingInProgress && !this.props.product) ? <LoadingIndicator/> :
                 <Product product={this.props.product}
                 />}
 

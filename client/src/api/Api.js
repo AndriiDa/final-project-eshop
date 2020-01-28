@@ -1,4 +1,4 @@
-import {API_BASE_URL} from '../constants';
+import {API_BASE_URL, ACCESS_TOKEN} from '../constants';
 import * as axios from "axios";
 
 const instance = axios.create({
@@ -68,9 +68,39 @@ export const productsApi = {
 
 export const usersApi = {
     authMe() {
+        if (!localStorage.getItem(ACCESS_TOKEN)) {
+            return Promise.reject("No access token set.");
+        }
         return instance.get(`users/me`)
             .then(response => {
                 return response.data;
             })
+    },
+    login(loginRequest) {
+        return instance.post(`auth/signin`, {
+            ...loginRequest
+        })
+            .then(
+                response => {
+                    return (response.data);
+                });
+    },
+    signup(signupRequest) {
+        return instance.post(`auth/signup`, {
+            ...signupRequest
+        })
+            .then(
+                response => {
+                    return (response.data);
+                });
+    },
+    logout() {
+        return false;
+    }
+};
+
+export const securityApi = {
+    getCaptchaUrl() {
+        return true;
     }
 };

@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "./Footer.module.scss";
+import React from 'react';
+import styles from './AppFooter.module.scss';
 
-const Footer = () => {
+const AppFooter = () => {
     return (
         <div className={styles.footer}>
           <span>
@@ -11,4 +11,4 @@ const Footer = () => {
     );
 };
 
-export default Footer;
+export default AppFooter;

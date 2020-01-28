@@ -19,11 +19,11 @@
 }
 
 .loginBlock {
- & a {
-   color: black;
-   text-decoration: none;
-   font-weight: bold;
- }
+  & a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+  }
 
   & a.active {
     color: darkblue;

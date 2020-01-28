@@ -13,7 +13,7 @@ import {
     checkProductsInCart
 } from "../../redux/reducers/productsPageReducer";
 import Products from "./Products";
-import Preloader from "../common/Preloader/Preloader";
+import LoadingIndicator from "../common/LoadingIndicator/LoadingIndicator";
 import {
     getCart, getCurrentPageNumber,
     getIsLoadingInProgress,
@@ -37,7 +37,7 @@ class ProductsContainer extends React.Component {
 
     render() {
         return <>
-            {this.props.isLoadingInProgress ? <Preloader/> : null}
+            {this.props.isLoadingInProgress ? <LoadingIndicator/> : null}
             <Products products={this.props.products}
                       totalItemsCount={this.props.totalItemsCount}
                       pageSize={this.props.pageSize}
