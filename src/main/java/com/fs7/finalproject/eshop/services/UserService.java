@@ -117,6 +117,9 @@ public class UserService {
   //  }
 
   public UserSummary getCurrentUser(UserPrincipal currentUser) {
+    if ( currentUser == null ) {
+      throw new ResourceNotFoundException("User", "currentUser", currentUser);
+    }
     return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getEmail());
   }
 

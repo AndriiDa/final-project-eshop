@@ -1,18 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {initializeCart} from "../../redux/reducers/cartPageReducer";
-import {withRouter} from "react-router-dom";
-import {cartApi} from "../../api/Api";
-import Cart from "./Cart";
+import {requestCart} from '../../redux/reducers/cartPageReducer';
+//import {withRouter} from 'react-router-dom';
+import Cart from './Cart';
+import {compose} from 'redux';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 class CartContainer extends React.Component {
     componentDidMount() {
-        cartApi.getCartByLoginName("ivanov")
-            .then(
-                data => {
-                    this.props.initializeCart(data.content);
-                }
-            );
+        this.props.requestCart(this.props.loginName);
     };
     render() {
         return <>
@@ -25,10 +21,14 @@ class CartContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        cart: state.cartPage.cart
+        cart: state.cartPage.cart,
+        loginName: state.auth.loginName
     }
 };
 
-export default connect(mapStateToProps, {
-    initializeCart
-})(withRouter(CartContainer));
+
+export default compose(
+    connect(mapStateToProps, {requestCart}),
+    //withRouter,
+    withAuthRedirect
+)(CartContainer);

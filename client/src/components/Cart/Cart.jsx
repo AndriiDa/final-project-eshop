@@ -1,6 +1,6 @@
-import React from "react";
-import CartItem from "./CartItem/CartItem";
-import styles from "./Cart.module.scss";
+import React from 'react';
+import CartItem from './CartItem/CartItem';
+import styles from './Cart.module.scss';
 
 let Cart = (props) => {
     let cartItems = props.cart.map(item => {

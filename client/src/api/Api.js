@@ -1,4 +1,4 @@
-import {API_BASE_URL} from '../constants';
+import {API_BASE_URL, ACCESS_TOKEN} from '../constants';
 import * as axios from "axios";
 
 const instance = axios.create({
@@ -6,18 +6,18 @@ const instance = axios.create({
     baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3NjQ0NDgyLCJleHAiOjE1NzgyNDkyODJ9.PKWADEvW6U-PlWtNuZVI2-4kO_iDLKpAAOJuXipFk5kCit5gU4z4t9FSV9oQhX6E1h4IMceFYnQtMmiZbmmiqw'
-
+        'Authorization': localStorage.getItem(ACCESS_TOKEN)
+            ? 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+            : undefined
     }
 });
 
 export const cartApi = {
-    getCartByLoginName(loginName = 'ivanov') {
+    getCartByLoginName(loginName) {
         return instance.get(`carts/${loginName}`)
             .then(
                 response => {
                     return response.data;
-
                 })
 
     },
@@ -62,15 +62,34 @@ export const productsApi = {
                     return response.data;
 
                 })
-
     }
 };
 
 export const usersApi = {
     authMe() {
-        return instance.get(`users/me`)
-            .then(response => {
-                return response.data;
-            })
+        // if (!localStorage.getItem(ACCESS_TOKEN)) {
+        //     return Promise.reject("No access token set.");
+        // }
+        return instance.get(`users/me`);
+    },
+    login(usernameOrEmail, password) {
+        return instance.post(`auth/signin`, {
+            usernameOrEmail,
+            password
+        });
+            // .then(
+            //     response => {
+            //         localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
+            //         return response.data;
+            //     });
+    },
+    signup(signupRequest) {
+        return instance.post(`auth/signup`, {
+            ...signupRequest
+        })
+            .then(
+                response => {
+                    return (response.data);
+                });
     }
 };
