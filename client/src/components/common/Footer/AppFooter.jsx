@@ -5,7 +5,7 @@ const AppFooter = () => {
     return (
         <div className={styles.footer}>
           <span>
-              DAN.IT fs7 footer
+              DAN.IT FS7 &copy;2020
           </span>
         </div>
     );

@@ -8,6 +8,7 @@ import commonTasksReducer from "./reducers/commonTasksReducer";
 import authReducer from "./reducers/authReducer";
 import cartPageReducer from "./reducers/cartPageReducer";
 import appReducer from "./reducers/appReducer";
+import { reducer as formReducer } from 'redux-form'
 import thunkMiddleware from "redux-thunk";
 
 let reducers = combineReducers({
@@ -19,7 +20,8 @@ let reducers = combineReducers({
     commonTasks: commonTasksReducer,
     cartPage: cartPageReducer,
     app: appReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 
 });
 

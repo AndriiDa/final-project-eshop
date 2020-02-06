@@ -1,14 +1,9 @@
-//import {usersApi} from '../../api/Api';
-//import {stopSubmit} from 'redux-form';
-import {getAuthUserData} from './authReducer';
+import {getLoggedInUserData} from './authReducer';
 
-const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
+const INITIALIZED_SUCCESS = 'fs7-eshop/app/INITIALIZED_SUCCESS';
 
 let initialState = {
     initialized: false,
-    currentUser: null,
-    isAuthenticated: false,
-    isLoading: false
 };
 
 const appReducer = (state = initialState, action) => {
@@ -24,16 +19,17 @@ const appReducer = (state = initialState, action) => {
     }
 };
 
-
 export const initializedSuccess = () => ({type: INITIALIZED_SUCCESS});
 
 export const initializeApp = () => (dispatch) => {
-    let promise = dispatch(getAuthUserData());
+    let promise = dispatch(getLoggedInUserData());
     Promise.all([promise])
         .then(() => {
             dispatch(initializedSuccess());
+        })
+        .catch((e)=> {
+            dispatch(initializedSuccess());
         });
 };
-
 
 export default appReducer;

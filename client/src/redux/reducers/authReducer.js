@@ -1,21 +1,19 @@
-import {usersApi, securityApi} from '../../api/Api';
+import {ACCESS_TOKEN} from '../../constants';
+import {usersApi} from '../../api/Api';
 import {stopSubmit} from 'redux-form';
 
 const SET_USER_DATA = 'fs7-eshop/auth/SET_USER_DATA';
-const GET_CAPTCHA_URL_SUCCESS = 'sfs7-eshop/auth/GET_CAPTCHA_URL_SUCCESS';
 
 let initialState = {
     userId: null,
     email: null,
-    login: null,
-    isAuth: false,
-    captchaUrl: null
+    loginName: null,
+    isLoggedIn: false,
 };
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER_DATA:
-        case GET_CAPTCHA_URL_SUCCESS:
             return {
                 ...state,
                 ...action.payload
@@ -25,52 +23,43 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
-
-export const setAuthUserData = (userId, email, login, isAuth) => ({
+export const setLoggedInUserData = (userId, email, loginName, isLoggedIn) => ({
     type: SET_USER_DATA, payload:
-        {userId, email, login, isAuth}
+        {userId, email, loginName, isLoggedIn}
 });
 
-export const getCaptchaUrlSuccess = (captchaUrl) => ({
-    type: GET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}
-});
-
-export const getAuthUserData = () => async (dispatch) => {
-    let response = await usersApi.me();
-
-    if (response.data.resultCode === 0) {
-        let {id, login, email} = response.data.data;
-        dispatch(setAuthUserData(id, email, login, true));
+export const getLoggedInUserData = () => (dispatch) => {
+    if (!localStorage.getItem(ACCESS_TOKEN)) {
+        return dispatch(setLoggedInUserData(null, null, null, false));
     }
+    usersApi.authMe()
+        .then(response => {
+            let {id, email, loginName} = response.data;
+            return dispatch(setLoggedInUserData(id, email, loginName, true));
+        })
+        .catch(() => {
+            return dispatch(setLoggedInUserData(null, null, null, false));
+        });
 };
 
-export const login = (email, password, rememberMe, captcha) => async (dispatch) => {
-    let response = await usersApi.login(email, password, rememberMe, captcha);
-    if (response.data.resultCode === 0) {
-        // success, get auth data
-        dispatch(getAuthUserData())
-    } else {
-        if (response.data.resultCode === 10) {
-            dispatch(getCaptchaUrl());
-        }
-
-        let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
-        dispatch(stopSubmit("login", {_error: message}));
-    }
+export const login = (usernameOrEmail, password, rememberMe) => async (dispatch) => {
+    usersApi.login(usernameOrEmail, password)
+        .then(response => {
+                if (response.data.tokenType === 'Bearer') {
+                    // success, get auth data
+                    localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
+                    dispatch(getLoggedInUserData());
+                }
+            })
+        .catch(err => {
+            let message = err.response.data.message;
+            dispatch(stopSubmit('login', {_error: message}));
+        });
 };
 
-export const getCaptchaUrl = () => async (dispatch) => {
-    const response = await securityApi.getCaptchaUrl();
-    const captchaUrl = response.data.url;
-    dispatch(getCaptchaUrlSuccess(captchaUrl));
-};
-
-export const logout = () => async (dispatch) => {
-    let response = await usersApi.logout();
-
-    if (response.data.resultCode === 0) {
-        dispatch(setAuthUserData(null, null, null, false));
-    }
+export const logout = () => (dispatch) => {
+    localStorage.removeItem(ACCESS_TOKEN);
+    return dispatch(setLoggedInUserData(null, null, null, false));
 };
 
 export default authReducer;

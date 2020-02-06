@@ -3,8 +3,10 @@ import LoadingIndicator from '../components/common/LoadingIndicator/LoadingIndic
 
 export const withSuspense = (Component) => {
     return (props) => {
-        return <React.Suspense fallback={LoadingIndicator} >
-            <Component {...props} />
-        </React.Suspense>
+        return (
+            <React.Suspense fallback={LoadingIndicator}>
+                <Component {...props} />
+            </React.Suspense>
+        )
     };
-}
+};
