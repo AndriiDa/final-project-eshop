@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {initializeApp} from "../redux/reducers/appReducer";
 import LoadingIndicator from "../components/common/LoadingIndicator/LoadingIndicator";
 import "./App.scss";
-import {withSuspense} from '../hoc/withSuspense';
+//import {withSuspense} from '../hoc/withSuspense';
 
 import Home from '../components/Home/Home';
 import HeaderContainer from "../components/common/Header/HeaderContainer";
@@ -13,29 +13,20 @@ import AppFooter from '../components/common/Footer/AppFooter';
 import Categories from '../components/Categories/Categories';
 import ProductsContainer from '../components/Products/ProductsContainer';
 import Sidebar1 from '../components/Sidebar1/Sidebar1';
-
-
-//import {usersApi} from '../api/Api';
-//import {ACCESS_TOKEN} from '../constants';
-
-//import Login from "../components/common/Login/Login";
-
-const ProductContainer = React.lazy(() => import('../components/Product/ProductContainer'));
-const CartContainer = React.lazy(() => import('../components/Cart/CartContainer'));
-const Brands = React.lazy(() => import('../components/Brands/Brands'));
-const Vendors = React.lazy(() => import('../components/Vendors/Vendors'));
-const CommentsContainer = React.lazy(() => import('../components/Comments/CommentsContainer'));
+import LoginPage from '../components/common/Login/Login';
+import ProductContainer from '../components/Product/ProductContainer';
+import CartContainer from '../components/Cart/CartContainer';
+import Brands from '../components/Brands/Brands';
+import Vendors from '../components/Vendors/Vendors';
+import CommentsContainer from '../components/Comments/CommentsContainer';
 
 class App extends Component {
     componentDidMount() {
-        //this.props.initializeApp();
+        this.props.initializeApp();
     }
 
     render() {
-        // if (!this.props.initialized) {
-        //     return <LoadingIndicator />
-        // }
-        if (false) {
+        if (!this.props.initialized) {
             return <LoadingIndicator />
         }
         return (
@@ -46,19 +37,15 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" render={() => <ProductsContainer/>}/>
                         <Route path="/categories" render={() => <Categories/>}/>
-                        <Route path="/brands" render={withSuspense(Brands)}/>
-                        <Route path="/vendors" render={withSuspense(Vendors)}/>
+                        <Route path="/brands" render={() => <Brands/>}/>
+                        <Route path="/vendors" render={() => <Vendors/>}/>
                         <Route path="/products" exact render={() => <ProductsContainer/>}/>
-                        <Route path="/products/:productId?" render={withSuspense(ProductContainer)}/>
-                        <Route path="/comments" render={withSuspense(CommentsContainer)}/>
+                        <Route path="/products/:productId?" render={() => <ProductContainer/>}/>
+                        <Route path="/comments" render={() => <CommentsContainer/>}/>
                         <Route path="/oldhomeexample" render={() => <Home/>}/>
-                        <Route path="/cart" render={withSuspense(CartContainer)}/>
+                        <Route path="/cart" render={() => <CartContainer/>}/>
 
-                        {/*<Route path="/login"*/}
-                        {/*render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>*/}
-                        {/*<Route path="/signup" component={Signup}></Route>*/}
-
-
+                        <Route path='/login' render={() => <LoginPage/>}/>
                     </Switch>
                 </div>
                 <AppFooter/>

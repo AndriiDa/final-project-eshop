@@ -1,4 +1,4 @@
-import {createSelector} from "reselect";
+import {createSelector} from 'reselect';
 
 const getProductsSelector = (state) => {
     return state.productsPage.products;
