@@ -49,6 +49,7 @@ class ProductsContainer extends React.Component {
                       deleteProductFromCart={this.props.deleteProductFromCart}
                       togglingAddRemoveCartButtonInProgress={this.props.togglingAddRemoveCartButtonInProgress}
                       cart={this.props.cart}
+                      isLoggedIn={this.props.isLoggedIn}
             />
         </>;
     }
@@ -63,7 +64,8 @@ let
             currentPage: getCurrentPageNumber(state),
             isLoadingInProgress: getIsLoadingInProgress(state),
             togglingAddRemoveCartButtonInProgress: getTogglingAddRemoveCartButtonInProgress(state),
-            cart: getCart(state)
+            cart: getCart(state),
+            isLoggedIn: state.auth.isLoggedIn
         }
     };
 
