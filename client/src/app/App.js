@@ -44,6 +44,8 @@ class App extends Component {
                         <Route path="/comments" render={() => <CommentsContainer/>}/>
                         <Route path="/oldhomeexample" render={() => <Home/>}/>
                         <Route path="/cart" render={() => <CartContainer/>}/>
+                        {/*<Route path="/orders" exact render={() => <OrdersContainer/>}/>*/}
+                        {/*<Route path="/orders/:orderId?" render={() => <OrderContainer/>}/>*/}
 
                         <Route path='/login' render={() => <LoginPage/>}/>
                     </Switch>
