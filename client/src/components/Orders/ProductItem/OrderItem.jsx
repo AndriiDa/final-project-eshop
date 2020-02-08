@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ProductItem.module.scss";
 import {NavLink} from "react-router-dom";
 
-const ProductItem = (props) => {
+const OrderItem = (props) => {
     return (
         <div className={styles.product}>
             <div className={styles.productInfo}>
@@ -64,4 +64,4 @@ const ProductItem = (props) => {
     );
 };
 
-export default ProductItem;
+export default OrderItem;

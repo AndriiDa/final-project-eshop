@@ -28,7 +28,7 @@ export const cartApi = {
                     return response.data;
                 })
     },
-    addItemToCart(userId = 1, productId = 1) {
+    addItemToCart(userId, productId) {
         return instance.post(`carts`, {
             'userId': userId,
             'productId': productId,
@@ -45,7 +45,19 @@ export const cartApi = {
                 response => {
                     return (response.data);
                 });
-    }
+    },
+    submitItemQuantityInCart(cart, quantity) {
+        return instance.put(`carts/${cart.id}`, {
+            'userId': cart.userId,
+            'productId': cart.productId,
+            'quantity': quantity
+        })
+            .then(
+                response => {
+                    return (response.data);
+                })
+    },
+
 };
 
 export const productsApi = {

@@ -12,6 +12,7 @@ let Products = ({currentPage, onPageChanged, pageSize, totalItemsCount, ...props
                             deleteProductFromCart={props.deleteProductFromCart}
                             togglingAddRemoveCartButtonInProgress={props.togglingAddRemoveCartButtonInProgress}
                             cart={props.cart}
+                            isLoggedIn={props.isLoggedIn}
         />
     });
     return (
