@@ -18,3 +18,19 @@
 .item {
   margin-left: 5px;
 }
+
+.quantityBlock {
+  display: flex;
+  margin-left: 10px;
+}
+
+.quantityBlockText {
+  margin-right: 10px;
+}
+
+.quantityBlockNumber {
+  display: block;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-weight: bold;
+}

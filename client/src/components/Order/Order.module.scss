@@ -1,0 +1,24 @@
+.productInfo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.productTitle {
+  font-weight: bold;
+}
+
+
+.productDesription {
+  margin-left: 50px;
+}
+
+.img {
+  width:250px;
+  height: 250px;
+}
+
+.button {
+  width: 50px;
+  height: 20px;
+}

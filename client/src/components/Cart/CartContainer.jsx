@@ -1,6 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {requestCart} from '../../redux/reducers/cartPageReducer';
+import {
+    requestCart,
+    increaseQuantityInCart,
+    decreaseQuantityInCart,
+    submitItemQuantityInCart
+} from '../../redux/reducers/cartPageReducer';
 //import {withRouter} from 'react-router-dom';
 import Cart from './Cart';
 import {compose} from 'redux';
@@ -13,6 +18,9 @@ class CartContainer extends React.Component {
     render() {
         return <>
             <Cart cart={this.props.cart}
+                  increaseQuantityInCart={this.props.increaseQuantityInCart}
+                  decreaseQuantityInCart={this.props.decreaseQuantityInCart}
+                  submitItemQuantityInCart={this.props.submitItemQuantityInCart}
                 />
 
         </>;
@@ -28,7 +36,12 @@ let mapStateToProps = (state) => {
 
 
 export default compose(
-    connect(mapStateToProps, {requestCart}),
+    connect(mapStateToProps, {
+        requestCart,
+        increaseQuantityInCart,
+        decreaseQuantityInCart,
+        submitItemQuantityInCart
+    }),
     //withRouter,
     withAuthRedirect
 )(CartContainer);
